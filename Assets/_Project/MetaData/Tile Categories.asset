@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ce6b2f19176441f398cf912637b2cccb, type: 3}
+  m_Name: Tile Categories
+  m_EditorClassIdentifier: Utilities.General::Utilities.General.KeyChain
+  m_keys:
+  - {fileID: 3086118456809188769}
+--- !u!114 &3086118456809188769
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 851f8d21064743fe81ca1e032fcc38ad, type: 3}
+  m_Name: Ground
+  m_EditorClassIdentifier: Assembly-CSharp::Project.Map.TileCategory
+  m_hash: -414774182
+  m_guid: 5929d696-112e-4941-abc0-04a0b83133e8

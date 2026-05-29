@@ -1,0 +1,60 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-4241764685697571949
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 80ea2f3fd9864057bafe2ef83d184035, type: 3}
+  m_Name: Water
+  m_EditorClassIdentifier: Assembly-CSharp::Project.Map.TileID
+  m_hash: -1202530977
+  m_guid: 4f8cd249-364d-4ad3-b127-30671d735601
+--- !u!114 &-3279134692063172354
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 80ea2f3fd9864057bafe2ef83d184035, type: 3}
+  m_Name: Sand
+  m_EditorClassIdentifier: Assembly-CSharp::Project.Map.TileID
+  m_hash: 84266092
+  m_guid: 16014d68-04a6-4a4a-9d35-1701bf92e4a3
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ce6b2f19176441f398cf912637b2cccb, type: 3}
+  m_Name: Tile IDs
+  m_EditorClassIdentifier: Utilities.General::Utilities.General.KeyChain
+  m_keys:
+  - {fileID: 5951234281938972194}
+  - {fileID: -3279134692063172354}
+  - {fileID: -4241764685697571949}
+--- !u!114 &5951234281938972194
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 80ea2f3fd9864057bafe2ef83d184035, type: 3}
+  m_Name: Grass
+  m_EditorClassIdentifier: Assembly-CSharp::Project.Map.TileID
+  m_hash: -1806619083
+  m_guid: fd7ea1b7-20db-4cb0-8c97-c05728f76a79
