@@ -41,6 +41,12 @@
       "dependencies": {},
       "hash": "df730afae50020648161f833f76729d4e832c5f7"
     },
+    "com.cooki.windows": {
+      "version": "file:com.cooki.windows",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {}
+    },
     "com.unity.burst": {
       "version": "1.8.28",
       "depth": 2,

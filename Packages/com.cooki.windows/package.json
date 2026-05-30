@@ -1,0 +1,13 @@
+{
+  "name": "com.cooki.windows",
+  "version": "0.8.0",
+  "displayName": "Windows",
+  "description": "Utility witch helps create UI.",
+  "author": {
+    "name": "\u0141ukasz D\u0105bek",
+    "email": "ukidabek@gmail.com"
+  },
+  "unity": "2020.1",
+  "_fingerprint": "fb88cd0b8824161932c4590bb961c08e3bdc0ae6",
+  "dependencies": {}
+}
