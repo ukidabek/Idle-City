@@ -1,0 +1,13 @@
+{
+  "name": "com.cooki.fade-manager",
+  "version": "0.0.1",
+  "displayName": "Fade manager",
+  "author": {
+    "name": "\u0141ukasz D\u0105bek",
+    "email": "ukidabek@gmail.com"
+  },
+  "unity": "2021.1",
+  "dependencies": {
+    "com.cooki.utilities": "1.0.1"
+  }
+}

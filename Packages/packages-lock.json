@@ -9,6 +9,14 @@
       },
       "hash": "5250467ade520269c8fa577376a7f898bf3f20ae"
     },
+    "com.cooki.fade-manager": {
+      "version": "file:com.cooki.fade-manager",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {
+        "com.cooki.utilities": "1.0.1"
+      }
+    },
     "com.cooki.game-flow": {
       "version": "file:com.cooki.game-flow",
       "depth": 0,
