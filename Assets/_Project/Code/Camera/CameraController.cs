@@ -1,11 +1,16 @@
+using cookie.Logging;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.InputSystem;
 using Utilities.General;
 
 namespace _Project.CameraManagement
 {
-    public class CameraController : MonoBehaviour
+    public class CameraController : MonoBehaviour, ILogEnabled
     {
+        public Color Color { get; } = new Color(0.4f, 0.8f, 1f);
+        [field: SerializeField] public LogMode Mode { get; private set; } = LogMode.All;
+        
         [SerializeField, ReadOnly] private Camera m_camera = null;
         [Space]
         [SerializeField] private InputActionReference m_clickActionAsset = null;
@@ -14,7 +19,9 @@ namespace _Project.CameraManagement
         [Space]
         [SerializeField] private Transform m_cameraTarget = null;
         [SerializeField, Min(0)] private float m_speed = 5f;
-
+        [Space]
+        [SerializeField] private UnityEvent<Vector3> OnPointSelected = new  UnityEvent<Vector3>();
+        
         private Plane m_plane = new Plane(Vector3.up, Vector3.zero);
         
         private void Awake()
@@ -29,7 +36,9 @@ namespace _Project.CameraManagement
             var position = m_positionActionAsset.action.ReadValue<Vector2>();
             var ray = m_camera.ScreenPointToRay(position);
             if(!m_plane.Raycast(ray, out var enter)) return;
-            Debug.Log(ray.GetPoint(enter));
+            var point = ray.GetPoint(enter);
+            this.Log($"Point {point: 0.00} selected!", LogType.Log, this);
+            OnPointSelected.Invoke(point);
         }
 
         private void ReadPosition(InputAction.CallbackContext obj)
@@ -44,5 +53,6 @@ namespace _Project.CameraManagement
             m_cameraTarget.position = position;
         }
 
+       
     }
 }

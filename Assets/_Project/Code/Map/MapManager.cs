@@ -1,7 +1,7 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using Random = UnityEngine.Random;
 
 namespace Project.Map
@@ -17,15 +17,16 @@ namespace Project.Map
         
         private Dictionary<Vector3Int,Tile> m_groundTiles;
 
+        public UnityEvent<Tile> OnTileSelected = new UnityEvent<Tile>();
+        
         private void Awake()
         {
             m_groundTiles = new Dictionary<Vector3Int, Tile>(m_size.x * m_size.y * 3);
         }
 
-        private IEnumerator Start()
+        private void Start()
         {
             var groundTiles = m_tileDatabase.GetTilesByCategory(m_groundTileCategory);
-            var waitForSeconds = new WaitForSeconds(.1f);
 
             for (var i = 0; i < m_size.y; i++)
             {
@@ -37,11 +38,16 @@ namespace Project.Map
                     var tile = groundTiles[index];
                     var instance = Instantiate(tile, position, Quaternion.identity, transform);
                     m_groundTiles.Add(cell, instance);
-                    yield return waitForSeconds;
                 }
             }
         }
 
         private void Reset() => m_grid = GetComponent<Grid>();
+
+        public void SelectTile(Vector3 position)
+        {
+            var cell = m_grid.WorldToCell(position);
+            OnTileSelected.Invoke(m_groundTiles.GetValueOrDefault(cell));
+        }
     }
 }
