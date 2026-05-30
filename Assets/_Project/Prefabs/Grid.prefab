@@ -10,7 +10,10 @@ GameObject:
   m_Component:
   - component: {fileID: 5284744147961814171}
   - component: {fileID: 1188115288072938390}
+  - component: {fileID: 1765913859238272364}
+  - component: {fileID: 2762695731500542621}
   - component: {fileID: 3575027027983449288}
+  - component: {fileID: 7131282848282929659}
   m_Layer: 0
   m_Name: Grid
   m_TagString: Untagged
@@ -33,6 +36,7 @@ Transform:
   m_Children:
   - {fileID: 200729108337686370}
   - {fileID: 1383493751666170622}
+  - {fileID: 967599231155151756}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!156049354 &1188115288072938390
@@ -43,10 +47,54 @@ Grid:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3523102907327602959}
   m_Enabled: 1
-  m_CellSize: {x: 1, y: 0, z: 1}
+  m_CellSize: {x: 1, y: 1, z: 0}
   m_CellGap: {x: 0, y: 0, z: 0}
   m_CellLayout: 0
   m_CellSwizzle: 1
+--- !u!114 &1765913859238272364
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3523102907327602959}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 89a975b71a6a4f45a4020397b1a67634, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Utilities.General::Utilities.General.Events.Vector3EventListener
+  Callback:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 3575027027983449288}
+        m_TargetAssemblyTypeName: Project.Map.MapManager, Assembly-CSharp
+        m_MethodName: SelectTile
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  m_event: {fileID: 11400000, guid: 1b97783965106764ea81d2a6c0108d44, type: 2}
+--- !u!114 &2762695731500542621
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3523102907327602959}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 58f69512684344d6b5c96b7499614cc8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Project.Map.TileBuilder
+  m_size: {x: 6, y: 6}
+  m_tileDatabase: {fileID: 11400000, guid: 1c808cd6af330b548906d809bf3e1ee9, type: 2}
+  m_groundTileCategory: {fileID: 3086118456809188769, guid: 517c341c2ae78ba4bb5877525d8a1b92, type: 2}
+  m_mapManager: {fileID: 3575027027983449288}
 --- !u!114 &3575027027983449288
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -60,12 +108,35 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Project.Map.MapManager
   m_grid: {fileID: 1188115288072938390}
-  m_size: {x: 6, y: 6}
-  m_tileDatabase: {fileID: 11400000, guid: 1c808cd6af330b548906d809bf3e1ee9, type: 2}
-  m_groundTileCategory: {fileID: 3086118456809188769, guid: 517c341c2ae78ba4bb5877525d8a1b92, type: 2}
   OnTileSelected:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 7131282848282929659}
+        m_TargetAssemblyTypeName: Project.Map.TileSelection, Assembly-CSharp
+        m_MethodName: SelectTile
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &7131282848282929659
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3523102907327602959}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca2c1fd930334a828f8419fbe90aec02, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Project.Map.TileSelection
+  m_selector: {fileID: 443124022276913462}
+  m_offset: {x: 0, y: 0.2, z: 0}
 --- !u!1 &5523770697931467383
 GameObject:
   m_ObjectHideFlags: 0
@@ -320,3 +391,128 @@ TilemapRenderer:
   m_SortOrder: 0
   m_Mode: 0
   m_DetectChunkCullingBounds: 0
+--- !u!1001 &785635292010562663
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 5284744147961814171}
+    m_Modifications:
+    - target: {fileID: -8679921383154817045, guid: bfee68ac7941ef644a332026f0e831ff, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: bfee68ac7941ef644a332026f0e831ff, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: bfee68ac7941ef644a332026f0e831ff, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: bfee68ac7941ef644a332026f0e831ff, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: bfee68ac7941ef644a332026f0e831ff, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: bfee68ac7941ef644a332026f0e831ff, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: bfee68ac7941ef644a332026f0e831ff, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: bfee68ac7941ef644a332026f0e831ff, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: bfee68ac7941ef644a332026f0e831ff, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: bfee68ac7941ef644a332026f0e831ff, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: bfee68ac7941ef644a332026f0e831ff, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: bfee68ac7941ef644a332026f0e831ff, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: bfee68ac7941ef644a332026f0e831ff, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: bfee68ac7941ef644a332026f0e831ff, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: c965ac9057bd12a4bb1bab3580b530aa, type: 2}
+    - target: {fileID: 919132149155446097, guid: bfee68ac7941ef644a332026f0e831ff, type: 3}
+      propertyPath: m_Name
+      value: selection-a
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: bfee68ac7941ef644a332026f0e831ff, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 503434152434148801}
+  m_SourcePrefab: {fileID: 100100000, guid: bfee68ac7941ef644a332026f0e831ff, type: 3}
+--- !u!1 &443124022276913462 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: bfee68ac7941ef644a332026f0e831ff, type: 3}
+  m_PrefabInstance: {fileID: 785635292010562663}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &503434152434148801
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 443124022276913462}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f8778927688ca104abf0ac49364c49c7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Project.Map.ScaleWithCurve
+  m_scaleCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  m_minScale: {x: 0.9, y: 1, z: 0.9}
+  m_maxScale: {x: 1.1, y: 1, z: 1.1}
+  m_duration: 1
+--- !u!4 &967599231155151756 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: bfee68ac7941ef644a332026f0e831ff, type: 3}
+  m_PrefabInstance: {fileID: 785635292010562663}
+  m_PrefabAsset: {fileID: 0}

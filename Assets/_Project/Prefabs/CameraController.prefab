@@ -28,7 +28,7 @@ Transform:
   m_GameObject: {fileID: 882270166127808863}
   serializedVersion: 2
   m_LocalRotation: {x: 0.31622782, y: 0, z: 0, w: 0.9486833}
-  m_LocalPosition: {x: 0, y: 6, z: -8}
+  m_LocalPosition: {x: 3, y: 6, z: -5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -134,7 +134,7 @@ Transform:
   m_GameObject: {fileID: 7601873995362511139}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 3, y: 0, z: 3}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -217,9 +217,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 96da2699259fe9240aa5dfcedabe6637, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::_Project.CameraManagement.CameraController
+  <Mode>k__BackingField: 2
   m_camera: {fileID: 0}
   m_clickActionAsset: {fileID: 689955829740420165, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   m_deltaActionAsset: {fileID: -5218058061562072900, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   m_positionActionAsset: {fileID: 5621174005635256458, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   m_cameraTarget: {fileID: 6274205022696327375}
-  m_speed: 1
+  m_speed: 5
+  OnPointSelected:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 11400000, guid: 1b97783965106764ea81d2a6c0108d44, type: 2}
+        m_TargetAssemblyTypeName: Utilities.General.Events.Vector3Event, Utilities.General
+        m_MethodName: Invoke
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
