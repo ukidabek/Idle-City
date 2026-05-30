@@ -1,8 +1,8 @@
-using System;
 using UnityEngine;
 
 namespace Project.Map
 {
+    [SelectionBase]
     public class Tile : MonoBehaviour
     {
         [SerializeField] private TileID m_key;
