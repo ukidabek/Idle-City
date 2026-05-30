@@ -13,11 +13,6 @@
 # Debug symbols
 *.pdb
 
-# NuGet Packages
-*.nupkg
-**/[Pp]ackages/*
-!**/[Pp]ackages/build/
-
 # .NET build artifacts
 artifacts/
 
@@ -102,7 +97,8 @@ output.json
 ._*
 
 # Custom folder icons
-Icon
+Icon
+
 
 # Volume root files
 .DocumentRevisions-V100
@@ -164,11 +160,11 @@ x86/
 [Bb]uild[Ll]og.*
 
 # NuGet
-*.nupkg
-**/[Pp]ackages/*
-!**/[Pp]ackages/build/
-*.nuget.props
-*.nuget.targets
+# *.nupkg
+# **/[Pp]ackages/*
+# !**/[Pp]ackages/build/
+# *.nuget.props
+# *.nuget.targets
 
 # Publish Web Output
 *.[Pp]ublish.xml
