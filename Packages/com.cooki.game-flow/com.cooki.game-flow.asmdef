@@ -1,0 +1,16 @@
+{
+    "name": "com.cooki.game-flow",
+    "rootNamespace": "",
+    "references": [
+        "GUID:4acc7160c80847e48b157260c1e4510a"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
