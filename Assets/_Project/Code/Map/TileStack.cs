@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace Project.Map
@@ -7,38 +8,35 @@ namespace Project.Map
     public class TileStack : IReadOnlyList<Tile>
     {
         private readonly List<Tile> m_tiles = new List<Tile>(5);
-
         public int Count => m_tiles.Count;
         public Tile Top => m_tiles.Count > 0 ? m_tiles[^1] : null;
-        
         public Tile this[int index] => m_tiles[index];
-
-        public TileStack(Tile tile)
-        {
-            m_tiles.Add(tile);
-        }
+        private readonly List<ITielComponent>  m_components = new List<ITielComponent>();
+        public IReadOnlyList<ITielComponent> Components => m_components;
+        public TileStack(Tile tile) => Add(tile);
 
         public void Push(Tile tile)
         {
-            // TODO: pre-push validation (e.g. check if tile is allowed on current top)
-        
-            m_tiles.Add(tile);
-            // TODO: post-push events (e.g. notify systems tile was added)
+            Add(tile);
             if (m_tiles.Count <= 1) return;
             tile.transform.position += Vector3.up * .2f;
         }
 
+        private void Add(Tile tile)
+        {
+            m_tiles.Add(tile);
+            m_components.AddRange(tile.GetComponents<ITielComponent>());
+        }
+
         public Tile Pop()
         {
-            // TODO: pre-pop validation (e.g. check if tile can be removed)
-        
             var listIndex = m_tiles.Count - 1;
             var tile = m_tiles[listIndex];
+            var components = tile.GetComponents<ITielComponent>();
+            m_components.RemoveAll(components.Contains);
             m_tiles.RemoveAt(listIndex);
         
-            // TODO: post-pop events (e.g. notify systems tile was removed)
-        
-            return tile;
+              return tile;
         }
 
         public Tile Peek() => m_tiles.Count == 0 ? null : m_tiles[^1];
@@ -54,13 +52,7 @@ namespace Project.Map
             return true;
         }
 
-        public void Clear()
-        {
-            // TODO: notify systems all tiles are being removed if needed
-            m_tiles.Clear();
-        }
-
-        // IEnumerable — iterates bottom to top (index 0 upward)
+        public void Clear() => m_tiles.Clear();
         public IEnumerator<Tile> GetEnumerator() => m_tiles.GetEnumerator();
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
     }

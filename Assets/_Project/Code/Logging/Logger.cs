@@ -32,7 +32,7 @@ namespace cookie.Logging
         public static void Log(
             this ILogEnabled logEnabled,
             string message,
-            LogType logType,
+            LogType logType = LogType.Log,
             UnityEngine.Object context = null,
             bool isEssential = false)
         {
@@ -44,7 +44,7 @@ namespace cookie.Logging
         [Conditional("UNITY_EDITOR")]
         [Conditional("DEVELOPMENT_BUILD")]
         [Conditional("DISABLE_LOGS")]
-        public static void LogException(
+        public static void Log(
             this ILogEnabled logEnabled,
             Exception exception,
             UnityEngine.Object context = null,
@@ -67,7 +67,7 @@ namespace cookie.Logging
         {
             var prefixColor  = ColorUtility.ToHtmlStringRGB(logEnabled.Color);
             var messageColor = LogTypeColors[logType];
-            return $"<color=#{prefixColor}>[{logEnabled.GetType().Name}]</color> <color={messageColor}>{message}</color>";
+            return $"[<color=#{prefixColor}>{logEnabled.GetType().Name}</color>] <color={messageColor}>{message}</color>";
         }
     }
 }
