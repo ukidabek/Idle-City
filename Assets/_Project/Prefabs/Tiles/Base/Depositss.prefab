@@ -56,7 +56,8 @@ PrefabInstance:
       propertyPath: m_tileCategory
       value: 
       objectReference: {fileID: 6153787698303020785, guid: 517c341c2ae78ba4bb5877525d8a1b92, type: 2}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 7044555683441144569, guid: e94be259234a88349a52d840d77840ba, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
