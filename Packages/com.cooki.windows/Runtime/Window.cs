@@ -5,7 +5,7 @@ namespace Windows
 {
     public abstract class Window : MonoBehaviour
     {
-        [SerializeField] private GameObject m_canvasHolder = null;
+        [SerializeField] protected GameObject m_canvasHolder = null;
         [SerializeField] private bool m_isOpen = false;
 
         protected virtual void Awake() => m_canvasHolder = m_canvasHolder == null ? gameObject : m_canvasHolder;
