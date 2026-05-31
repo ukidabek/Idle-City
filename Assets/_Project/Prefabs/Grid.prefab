@@ -94,6 +94,7 @@ MonoBehaviour:
   m_size: {x: 6, y: 6}
   m_tileDatabase: {fileID: 11400000, guid: 1c808cd6af330b548906d809bf3e1ee9, type: 2}
   m_groundTileCategory: {fileID: 3086118456809188769, guid: 517c341c2ae78ba4bb5877525d8a1b92, type: 2}
+  m_desertTileCategory: {fileID: 6153787698303020785, guid: 517c341c2ae78ba4bb5877525d8a1b92, type: 2}
   m_mapManager: {fileID: 3575027027983449288}
 --- !u!114 &3575027027983449288
 MonoBehaviour:

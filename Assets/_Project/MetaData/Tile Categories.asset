@@ -15,21 +15,7 @@ MonoBehaviour:
   m_keys:
   - {fileID: 3086118456809188769}
   - {fileID: 4217511573378795245}
-  - {fileID: 2387117553712512446}
---- !u!114 &2387117553712512446
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 851f8d21064743fe81ca1e032fcc38ad, type: 3}
-  m_Name: Deposit
-  m_EditorClassIdentifier: Assembly-CSharp::Project.Map.TileCategory
-  m_hash: 434039603
-  m_guid: ec39b423-f496-4571-9ca4-8fc4e67174b9
+  - {fileID: 6153787698303020785}
 --- !u!114 &3086118456809188769
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -58,3 +44,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Project.Map.TileCategory
   m_hash: 2117001461
   m_guid: c21c026a-440c-4bca-b0a6-5786af683d97
+--- !u!114 &6153787698303020785
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 851f8d21064743fe81ca1e032fcc38ad, type: 3}
+  m_Name: Deposit
+  m_EditorClassIdentifier: Assembly-CSharp::Project.Map.TileCategory
+  m_hash: -1773270811
+  m_guid: 1fce19e2-88a4-4615-8d00-a2b0689ac5ff

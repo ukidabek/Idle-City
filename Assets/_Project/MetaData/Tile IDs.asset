@@ -28,6 +28,34 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Project.Map.TileID
   m_hash: 84266092
   m_guid: 16014d68-04a6-4a4a-9d35-1701bf92e4a3
+--- !u!114 &-997958414207827887
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 80ea2f3fd9864057bafe2ef83d184035, type: 3}
+  m_Name: Cristal
+  m_EditorClassIdentifier: Assembly-CSharp::Project.Map.TileID
+  m_hash: 731083135
+  m_guid: 042c6bdb-d180-487c-8c32-d4cc7c8e28ad
+--- !u!114 &-900330210984012729
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 80ea2f3fd9864057bafe2ef83d184035, type: 3}
+  m_Name: Forest
+  m_EditorClassIdentifier: Assembly-CSharp::Project.Map.TileID
+  m_hash: -1684175617
+  m_guid: bf2a7c0a-da90-4898-a9e2-3e3969df182b
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -44,6 +72,8 @@ MonoBehaviour:
   - {fileID: 5951234281938972194}
   - {fileID: -3279134692063172354}
   - {fileID: -4241764685697571949}
+  - {fileID: -900330210984012729}
+  - {fileID: -997958414207827887}
 --- !u!114 &5951234281938972194
 MonoBehaviour:
   m_ObjectHideFlags: 0
