@@ -39,7 +39,7 @@
       "depth": 0,
       "source": "git",
       "dependencies": {},
-      "hash": "df730afae50020648161f833f76729d4e832c5f7"
+      "hash": "5068faabf1d2b8619dc5049a60dceb51e9b5ab91"
     },
     "com.cooki.windows": {
       "version": "file:com.cooki.windows",
