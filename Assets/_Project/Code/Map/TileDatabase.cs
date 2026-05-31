@@ -16,7 +16,7 @@ namespace Project.Map
 
         private void OnEnable()
         {
-            m_tileDictionary = m_tiles.ToDictionary(tile => tile.Key, tile => tile);
+            m_tileDictionary = m_tiles.ToDictionary(tile => tile.ID, tile => tile);
             m_tileCategoryDictionary = m_tiles
                 .GroupBy(tile => tile.TileCategory)
                 .ToDictionary(group => group.Key, group => group.ToList());

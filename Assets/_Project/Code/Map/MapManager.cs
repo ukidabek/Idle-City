@@ -1,9 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
-using Utilities.General;
-using Random = UnityEngine.Random;
 
 namespace Project.Map
 {
@@ -11,14 +8,15 @@ namespace Project.Map
     public class MapManager : MonoBehaviour
     {
         [SerializeField] private Grid m_grid = null;
-            
-        private readonly Dictionary<Vector3Int,Tile> m_groundTiles = new Dictionary<Vector3Int, Tile>(30);
-        public UnityEvent<Tile> OnTileSelected = new UnityEvent<Tile>();
-        [field: SerializeField,ReadOnly] public Tile SelectedTile { get; private set; }
 
-        public void PlaceTile(Tile destination, Tile tile)
+        private readonly Dictionary<Vector3Int, TileStack> m_tilesDictionary = new Dictionary<Vector3Int, TileStack>(30);
+        public UnityEvent<TileStack> OnTileSelected = new UnityEvent<TileStack>();
+        public TileStack SelectedTile { get; private set; }
+
+        public void PlaceTile(TileStack destinationStack, Tile tile)
         {
-            var position = destination.transform.position;
+            var destinationTile = destinationStack.Pop();
+            var position = destinationTile.transform.position;
             PlaceTile(position, tile);
         }
 
@@ -34,7 +32,12 @@ namespace Project.Map
             var tileTransform = tile.transform;
             tileTransform.position = position;
             tileTransform.SetParent(m_grid.transform);
-            m_groundTiles.Add(cell, tile);
+            if(m_tilesDictionary.TryGetValue(cell, out var stack))
+            {
+                stack.Push(tile);
+            }
+            else
+                m_tilesDictionary.Add(cell, new TileStack(tile));
 
         }
 
@@ -43,7 +46,7 @@ namespace Project.Map
         public void SelectTile(Vector3 position)
         {
             var cell = m_grid.WorldToCell(position);
-            SelectedTile = m_groundTiles.GetValueOrDefault(cell);
+            SelectedTile = m_tilesDictionary.GetValueOrDefault(cell);
             OnTileSelected.Invoke(SelectedTile);
         }
     }

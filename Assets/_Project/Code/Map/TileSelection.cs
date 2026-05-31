@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Linq;
+using UnityEngine;
 
 namespace Project.Map
 {
@@ -12,16 +13,23 @@ namespace Project.Map
             m_selector.SetActive(false);
         }
 
-        public void SelectTile(Tile tile)
+        public void SelectTile(TileStack tileStack)
         {
+            if (tileStack == null)
+            {
+                m_selector.gameObject.SetActive(false);
+                return;
+            }
+
+            var tile = tileStack.First();
             if (tile == null)
             {
                 m_selector.gameObject.SetActive(false);
                 return;
             }
-            
+
             m_selector.gameObject.SetActive(true);
-            m_selector.transform.position = tile.transform.position +  m_offset;
+            m_selector.transform.position = tile.transform.position + m_offset;
         }
     }
 }

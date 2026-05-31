@@ -1,13 +1,14 @@
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Project.Map
 {
     [SelectionBase]
     public class Tile : MonoBehaviour
     {
-        [SerializeField] private TileID m_key;
-        public TileID Key => m_key;
+        [FormerlySerializedAs("m_key")] 
+        [SerializeField] private TileID m_id;
+        public TileID ID => m_id;
         
         [SerializeField] private TileCategory m_tileCategory;
         public TileCategory TileCategory => m_tileCategory;
