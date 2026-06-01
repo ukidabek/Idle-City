@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1001 &7173595641570476607
+--- !u!1001 &8651759176508593052
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -48,12 +48,49 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8140385596400451846, guid: 82019dcdec04bb245b77cedc4c869f2b, type: 3}
+      propertyPath: m_tileCategory
+      value: 
+      objectReference: {fileID: 6123569073387416811, guid: 517c341c2ae78ba4bb5877525d8a1b92, type: 2}
     - target: {fileID: 8764736979679307166, guid: 82019dcdec04bb245b77cedc4c869f2b, type: 3}
       propertyPath: m_Name
-      value: Tile
+      value: Structure
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 8764736979679307166, guid: 82019dcdec04bb245b77cedc4c869f2b, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2926181330486889216}
   m_SourcePrefab: {fileID: 100100000, guid: 82019dcdec04bb245b77cedc4c869f2b, type: 3}
+--- !u!1 &122618608886396418 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8764736979679307166, guid: 82019dcdec04bb245b77cedc4c869f2b, type: 3}
+  m_PrefabInstance: {fileID: 8651759176508593052}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &2926181330486889216
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 122618608886396418}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 02c0e9834cd2417a880584f0ef09b3f9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Project.Map.Structure
+  <Tile>k__BackingField: {fileID: 642128757018235546}
+  m_data: {fileID: 0}
+--- !u!114 &642128757018235546 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8140385596400451846, guid: 82019dcdec04bb245b77cedc4c869f2b, type: 3}
+  m_PrefabInstance: {fileID: 8651759176508593052}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 122618608886396418}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 701d25539bb00dc499fe9029ee8fdd7e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Project.Map.Tile

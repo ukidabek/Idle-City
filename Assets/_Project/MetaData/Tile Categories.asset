@@ -16,6 +16,7 @@ MonoBehaviour:
   - {fileID: 3086118456809188769}
   - {fileID: 4217511573378795245}
   - {fileID: 6153787698303020785}
+  - {fileID: 6123569073387416811}
 --- !u!114 &3086118456809188769
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -44,6 +45,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Project.Map.TileCategory
   m_hash: 2117001461
   m_guid: c21c026a-440c-4bca-b0a6-5786af683d97
+--- !u!114 &6123569073387416811
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 851f8d21064743fe81ca1e032fcc38ad, type: 3}
+  m_Name: Structure
+  m_EditorClassIdentifier: Assembly-CSharp::Project.Map.TileCategory
+  m_hash: -1940673453
+  m_guid: df5690e5-6b89-4573-869e-7f6c53e683d8
 --- !u!114 &6153787698303020785
 MonoBehaviour:
   m_ObjectHideFlags: 0

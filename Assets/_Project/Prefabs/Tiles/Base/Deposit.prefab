@@ -64,6 +64,17 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 5568293681235779511}
   m_SourcePrefab: {fileID: 100100000, guid: 82019dcdec04bb245b77cedc4c869f2b, type: 3}
+--- !u!114 &2838864025262234377 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8140385596400451846, guid: 82019dcdec04bb245b77cedc4c869f2b, type: 3}
+  m_PrefabInstance: {fileID: 6313446723243203087}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3332460865713618833}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 701d25539bb00dc499fe9029ee8fdd7e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Project.Map.Tile
 --- !u!1 &3332460865713618833 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8764736979679307166, guid: 82019dcdec04bb245b77cedc4c869f2b, type: 3}
@@ -81,4 +92,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5755c1f6a0f423982aeaf1344256885, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Project.Map.Deposit
-  m_depositData: {fileID: 0}
+  <Tile>k__BackingField: {fileID: 2838864025262234377}
+  m_data: {fileID: 0}

@@ -56,6 +56,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Project.Map.TileID
   m_hash: -1684175617
   m_guid: bf2a7c0a-da90-4898-a9e2-3e3969df182b
+--- !u!114 &-720806664477548334
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 80ea2f3fd9864057bafe2ef83d184035, type: 3}
+  m_Name: PowerPlant
+  m_EditorClassIdentifier: Assembly-CSharp::Project.Map.TileID
+  m_hash: 1300417492
+  m_guid: 9f30105c-6959-4855-a09c-d797ca20ab53
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -74,6 +88,23 @@ MonoBehaviour:
   - {fileID: -4241764685697571949}
   - {fileID: -900330210984012729}
   - {fileID: -997958414207827887}
+  - {fileID: 8032995266062480039}
+  - {fileID: -720806664477548334}
+  - {fileID: 72243281340745634}
+--- !u!114 &72243281340745634
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 80ea2f3fd9864057bafe2ef83d184035, type: 3}
+  m_Name: Vein
+  m_EditorClassIdentifier: Assembly-CSharp::Project.Map.TileID
+  m_hash: -1623186690
+  m_guid: 6c6d54f8-3f45-4569-b4b5-a2be9eeb680c
 --- !u!114 &5951234281938972194
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -88,3 +119,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Project.Map.TileID
   m_hash: -1806619083
   m_guid: fd7ea1b7-20db-4cb0-8c97-c05728f76a79
+--- !u!114 &8032995266062480039
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 80ea2f3fd9864057bafe2ef83d184035, type: 3}
+  m_Name: Mine
+  m_EditorClassIdentifier: Assembly-CSharp::Project.Map.TileID
+  m_hash: -1698246232
+  m_guid: a38d4036-7dc3-4fc2-829a-32fc5043fac0
