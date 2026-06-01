@@ -2,7 +2,7 @@
 using Windows.View;
 using UnityEngine.EventSystems;
 
-namespace Project.Map
+namespace Project.Map.UI
 {
     public abstract class TileComponentView : UIBehaviour, IWindowView<ITielComponent>
     {

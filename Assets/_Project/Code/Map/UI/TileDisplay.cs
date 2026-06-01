@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Windows;
@@ -7,7 +6,7 @@ using cookie.Logging;
 using UnityEngine;
 using Utilities.General;
 
-namespace Project.Map
+namespace Project.Map.UI
 {
     public class TileDisplay : Window, ILogEnabled
     {
@@ -31,6 +30,7 @@ namespace Project.Map
         {
             if (tileStack == null)
             {
+                m_selectedStack = null;
                 Hide();
                 return;
             }
@@ -65,15 +65,5 @@ namespace Project.Map
         }
 
         private void LateUpdate() => UpdatePosition();
-
-        public override void Show()
-        {
-            base.Show();
-        }
-
-        public override void Hide()
-        {
-            base.Hide();
-        }
     }
 }
