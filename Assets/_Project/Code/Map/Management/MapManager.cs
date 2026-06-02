@@ -32,13 +32,19 @@ namespace Project.Map
             var tileTransform = tile.transform;
             tileTransform.position = position;
             tileTransform.SetParent(m_grid.transform);
-            if(m_tilesDictionary.TryGetValue(cell, out var stack))
-            {
+            
+            if (m_tilesDictionary.TryGetValue(cell, out var stack))
                 stack.Push(tile);
-            }
             else
                 m_tilesDictionary.Add(cell, new TileStack(tile));
+        }
 
+        public void RemoveTile(Tile tile)
+        {
+            var cell = m_grid.WorldToCell(tile.transform.position);
+            if (!m_tilesDictionary.TryGetValue(cell, out var stack)) return;
+            tile =  stack.Pop();
+            Destroy(tile.gameObject);
         }
 
         private void Reset() => m_grid = GetComponent<Grid>();

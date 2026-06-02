@@ -1,33 +1,30 @@
 ﻿using Windows.View;
 using UnityEngine;
-using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 namespace Project.Map.UI
 {
     [RequireComponent(typeof(Button))]
-    public  class TileOptionView : UIBehaviour, IWindowView<TileStack>
+    public abstract class TileOptionView : UIBehaviour, IWindowView<TileStack>
     {
-        protected TileStack m_tileStack = null;
         [SerializeField] private Button m_button = null;
-
-        public UnityEvent<Tile> OnClick = new UnityEvent<Tile>();
+        
+        protected TileStack m_tileStack = null;
         
         protected override void Awake()
         {
             base.Awake();
             m_button.onClick.AddListener(OnClickCallback);
         }
-
-
+        
         protected override void OnDestroy()
         {
-            base.OnDestroy();
             m_button.onClick.RemoveListener(OnClickCallback);
+            base.OnDestroy();
         }
 
-        protected virtual void OnClickCallback() => OnClick.Invoke(m_tileStack.Peek());
+        protected abstract void OnClickCallback();
 
         protected virtual bool Validate(TileStack data) => true;
 
@@ -38,6 +35,7 @@ namespace Project.Map.UI
                 Clear();
                 return;
             }
+            m_tileStack = data;
             gameObject.SetActive(true);
         }
 

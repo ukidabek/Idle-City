@@ -1,6 +1,6 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 namespace Project.Map
@@ -9,10 +9,12 @@ namespace Project.Map
     {
         private readonly List<Tile> m_tiles = new List<Tile>(5);
         public int Count => m_tiles.Count;
-        public Tile Top => m_tiles.Count > 0 ? m_tiles[^1] : null;
         public Tile this[int index] => m_tiles[index];
-        private readonly List<ITielComponent>  m_components = new List<ITielComponent>();
-        public IReadOnlyList<ITielComponent> Components => m_components;
+        
+        public event Action StackChanged;
+        public event Action OnTilePopped;
+        public event Action OnTilePushed;
+        
         public TileStack(Tile tile) => Add(tile);
 
         public void Push(Tile tile)
@@ -33,15 +35,17 @@ namespace Project.Map
             }
 
             m_tiles.Add(tile);
-            m_components.AddRange(tile.GetComponents<ITielComponent>());
+            OnTilePushed?.Invoke();
+            StackChanged?.Invoke();
         }
 
         public Tile Pop()
         {
+            if (m_tiles.Count <= 1) return null;
+            
             var listIndex = m_tiles.Count - 1;
             var tile = m_tiles[listIndex];
-            var components = tile.GetComponents<ITielComponent>();
-            m_components.RemoveAll(components.Contains);
+
             m_tiles.RemoveAt(listIndex);
 
             var first = Peek();
@@ -51,13 +55,17 @@ namespace Project.Map
             foreach (var effect in effects) 
                 effect.Undo();
 
+            OnTilePopped?.Invoke();
+            StackChanged?.Invoke();
             return tile;
         }
 
         public Tile Peek() => m_tiles.Count == 0 ? null : m_tiles[^1];
         
         public void Clear() => m_tiles.Clear();
+        
         public IEnumerator<Tile> GetEnumerator() => m_tiles.GetEnumerator();
+        
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
     }
 }

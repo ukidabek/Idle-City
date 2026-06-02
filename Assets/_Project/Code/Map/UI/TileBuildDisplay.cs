@@ -22,6 +22,8 @@ namespace Project.Map.UI
         private HashSet<IStructure> m_structures = new HashSet<IStructure>(30);
         private ObjectPool<BuildTileView> m_buildTileViewPools = null;
         private HashSet<BuildTileView> m_activeViews = new HashSet<BuildTileView>();
+        private TileStack m_selectedStack = null;
+
         
         protected override void Awake()
         {
@@ -50,19 +52,40 @@ namespace Project.Map.UI
 
         public void OnTileStackSelected(TileStack tileStack)
         {
-            if (tileStack == null) return;
-            
+            if (tileStack == null)
+            {
+                m_selectedStack.StackChanged -= UpdateButtons;
+                m_selectedStack = null;
+                Hide();
+                return;
+            }
+
+            m_selectedStack = tileStack;
+            UpdateButtons();
+        }
+
+        private void UpdateButtons()
+        {
             ReleaseAllActiveViews();
 
-            var tile = tileStack.Peek();
-            var tileID = tile.ID;
+            m_selectedStack.StackChanged += UpdateButtons;
             
+            var tile = m_selectedStack.Peek();
+            var tileID = tile.ID;
+
             IEnumerable<IStructure> availableStructures = Array.Empty<IStructure>();
-            if (tile.TryGetComponent(out IGround _)) 
+
+            if (tile.TryGetComponent(out IGround _))
                 availableStructures = m_structures.Where(structure => structure.TileRequirements.Contains(tileID));
 
-            if (tile.TryGetComponent(out IDeposit _)) 
+            if (tile.TryGetComponent(out IDeposit _))
                 availableStructures = m_structures.Where(structure => structure.TileRequirements.Contains(tileID));
+
+            if (!availableStructures.Any())
+            {
+                Hide();
+                return;
+            }
 
             foreach (var structure in availableStructures)
             {
@@ -70,6 +93,8 @@ namespace Project.Map.UI
                 view.Initialize(structure);
                 view.gameObject.SetActive(true);
             }
+
+            Show();
         }
 
         private void ReleaseAllActiveViews()
