@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 1188115288072938390}
   - component: {fileID: 1765913859238272364}
   - component: {fileID: 1402124921845473833}
+  - component: {fileID: 1189747114037986183}
   - component: {fileID: 2762695731500542621}
   - component: {fileID: 3575027027983449288}
   m_Layer: 0
@@ -104,6 +105,34 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   m_event: {fileID: 11400000, guid: d0a866b3e0c31314bac6f1ccf627c9c5, type: 2}
+--- !u!114 &1189747114037986183
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3523102907327602959}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1b5722f4a5f040c79e5eca4f2bcdb307, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Project.Map.Events.TileEventListener
+  Callback:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 3575027027983449288}
+        m_TargetAssemblyTypeName: Project.Map.MapManager, Assembly-CSharp
+        m_MethodName: RemoveTile
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  m_event: {fileID: 11400000, guid: 89bafb6ca0274234299bad5fc7f2c58d, type: 2}
 --- !u!114 &2762695731500542621
 MonoBehaviour:
   m_ObjectHideFlags: 0

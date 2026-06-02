@@ -50,7 +50,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1101042789944778022, guid: 6ac6a261b611f5346be110980c154321, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: 3579.1016
       objectReference: {fileID: 0}
     - target: {fileID: 1101042789944778022, guid: 6ac6a261b611f5346be110980c154321, type: 3}
       propertyPath: m_LocalRotation.w
@@ -70,11 +70,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1101042789944778022, guid: 6ac6a261b611f5346be110980c154321, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 107.68701
       objectReference: {fileID: 0}
     - target: {fileID: 1101042789944778022, guid: 6ac6a261b611f5346be110980c154321, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -402.00003
       objectReference: {fileID: 0}
     - target: {fileID: 1101042789944778022, guid: 6ac6a261b611f5346be110980c154321, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -122,6 +122,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Project.Map.UI.DestroyTileOptionView
   m_button: {fileID: 6711190890014966578}
+  m_destroyTileEvent: {fileID: 11400000, guid: 89bafb6ca0274234299bad5fc7f2c58d, type: 2}
 --- !u!114 &6711190890014966578 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7486720830173432022, guid: 6ac6a261b611f5346be110980c154321, type: 3}
