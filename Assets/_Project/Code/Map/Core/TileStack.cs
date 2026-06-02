@@ -24,6 +24,14 @@ namespace Project.Map
 
         private void Add(Tile tile)
         {
+            var last = Peek();
+            if (last != null)
+            {
+                var coveredEffects = last.GetComponents<IOnCoveredEffect>();
+                foreach (var effect in coveredEffects)
+                    effect.Apply();
+            }
+
             m_tiles.Add(tile);
             m_components.AddRange(tile.GetComponents<ITielComponent>());
         }
@@ -35,23 +43,19 @@ namespace Project.Map
             var components = tile.GetComponents<ITielComponent>();
             m_components.RemoveAll(components.Contains);
             m_tiles.RemoveAt(listIndex);
-        
-              return tile;
+
+            var first = Peek();
+            if (first == null) return tile;
+            
+            var effects = first.GetComponents<IOnCoveredEffect>();
+            foreach (var effect in effects) 
+                effect.Undo();
+
+            return tile;
         }
 
         public Tile Peek() => m_tiles.Count == 0 ? null : m_tiles[^1];
-
-        public bool TryPop(out Tile tile)
-        {
-            if (m_tiles.Count == 0)
-            {
-                tile = null;
-                return false;
-            }
-            tile = Pop();
-            return true;
-        }
-
+        
         public void Clear() => m_tiles.Clear();
         public IEnumerator<Tile> GetEnumerator() => m_tiles.GetEnumerator();
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();

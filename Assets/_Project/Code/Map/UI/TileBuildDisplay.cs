@@ -50,6 +50,8 @@ namespace Project.Map.UI
 
         public void OnTileStackSelected(TileStack tileStack)
         {
+            if (tileStack == null) return;
+            
             ReleaseAllActiveViews();
 
             var tile = tileStack.Peek();

@@ -15,7 +15,7 @@ namespace Project.Map
 
         public void PlaceTile(TileStack destinationStack, Tile tile)
         {
-            var destinationTile = destinationStack.Pop();
+            var destinationTile = destinationStack.Peek();
             var position = destinationTile.transform.position;
             PlaceTile(position, tile);
         }
