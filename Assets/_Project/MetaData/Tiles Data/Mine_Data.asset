@@ -12,4 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ded23e107c7949ae98a40cd3b04357ff, type: 3}
   m_Name: Mine_Data
   m_EditorClassIdentifier: Assembly-CSharp::Project.Map.StructureData
-  <TileRequirements>k__BackingField: []
+  <TileRequirements>k__BackingField:
+  - {fileID: 72243281340745634, guid: 2249f772577da99469269188074d9d0f, type: 2}
