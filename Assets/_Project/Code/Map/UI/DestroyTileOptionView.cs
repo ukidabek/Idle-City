@@ -1,18 +1,14 @@
-﻿namespace Project.Map.UI
+﻿using Project.Map.Events;
+using UnityEngine;
+
+namespace Project.Map.UI
 {
     public class DestroyTileOptionView : TileOptionView
     {
-        protected override bool Validate(TileStack data)
-        {
-            var tile = data.Peek();
-            return tile != null && tile.TryGetComponent(out Structure _);
-        }
+        [SerializeField] private TileEvent m_destroyTileEvent;
+        
+        protected override bool Validate(Tile data) => data != null && data.TryGetComponent(out Structure _);
 
-        protected override void OnClickCallback()
-        {
-            if (m_tileStack.Count == 0) return;
-            var tile = m_tileStack.Pop();
-            Destroy(tile.gameObject);
-        }
+        protected override void OnClickCallback() => m_destroyTileEvent?.Invoke(m_tile);
     }
 }

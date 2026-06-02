@@ -6,11 +6,11 @@ using UnityEngine.UI;
 namespace Project.Map.UI
 {
     [RequireComponent(typeof(Button))]
-    public abstract class TileOptionView : UIBehaviour, IWindowView<TileStack>
+    public abstract class TileOptionView : UIBehaviour, IWindowView<Tile>
     {
         [SerializeField] private Button m_button = null;
         
-        protected TileStack m_tileStack = null;
+        protected Tile m_tile = null;
         
         protected override void Awake()
         {
@@ -26,16 +26,16 @@ namespace Project.Map.UI
 
         protected abstract void OnClickCallback();
 
-        protected virtual bool Validate(TileStack data) => true;
+        protected virtual bool Validate(Tile data) => true;
 
-        public void Initialize(TileStack data)
+        public void Initialize(Tile data)
         {
             if (!Validate(data))
             {
                 Clear();
                 return;
             }
-            m_tileStack = data;
+            m_tile = data;
             gameObject.SetActive(true);
         }
 
@@ -47,7 +47,7 @@ namespace Project.Map.UI
 
         public virtual void Clear()
         {
-            m_tileStack = null;
+            m_tile = null;
             gameObject.SetActive(false);
         }
     }

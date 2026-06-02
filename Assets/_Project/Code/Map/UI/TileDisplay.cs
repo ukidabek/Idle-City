@@ -48,9 +48,10 @@ namespace Project.Map.UI
         private void UpdateButtons()
         {
             m_activeOptionViews.Clear();
+            var top = m_selectedStack.Peek();
             m_activeOptionViews.AddRange(m_optionsViews.Where(view =>
             {
-                view.Initialize(m_selectedStack);
+                view.Initialize(top);
                 return view.gameObject.activeSelf;
             }));
 
