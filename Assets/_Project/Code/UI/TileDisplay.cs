@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using Windows;
 using cookie.Logging;
+using Project.Map;
 using UnityEngine;
 using Utilities.General;
 
-namespace Project.Map.UI
+namespace Project.UI
 {
     public class TileDisplay : Window, ILogEnabled
     {

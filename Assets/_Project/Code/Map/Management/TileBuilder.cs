@@ -33,7 +33,7 @@ namespace Project.Map
                     var instance = Instantiate(groundTiles[index]);
                     m_mapManager.PlaceTile(cell, instance);
 
-                    if(!instance.TryGetComponent(out IGround ground)) continue;
+                    if(!instance.TryGetComponent(out Ground ground)) continue;
 
                     var availableDeposits = ground.AvailableDeposits;
                     if (availableDeposits.Count == 0) continue;

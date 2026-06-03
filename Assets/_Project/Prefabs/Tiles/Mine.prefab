@@ -69,8 +69,43 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 5134794832270331952, guid: 97ca06653da479a43a30a98fad08032d, type: 3}
       insertIndex: -1
       addedObject: {fileID: 6939918356157782342}
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 122618608886396418, guid: 97ca06653da479a43a30a98fad08032d, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: -5560906187859783965}
   m_SourcePrefab: {fileID: 100100000, guid: 97ca06653da479a43a30a98fad08032d, type: 3}
+--- !u!1 &3851973773203703999 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 122618608886396418, guid: 97ca06653da479a43a30a98fad08032d, type: 3}
+  m_PrefabInstance: {fileID: 3803102166561537725}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &-5560906187859783965
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3851973773203703999}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a76d4f18cc03410b8e63fd0cd8cf352f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Project.Map.Client
+  <Tile>k__BackingField: {fileID: 4336432038179089447}
+  <Resource>k__BackingField: {fileID: 11400000, guid: d238c2fb62ada9e4c9e04f083aa98209, type: 2}
+  <Type>k__BackingField: 0
+  <Amount>k__BackingField: 0.25
+--- !u!114 &4336432038179089447 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 642128757018235546, guid: 97ca06653da479a43a30a98fad08032d, type: 3}
+  m_PrefabInstance: {fileID: 3803102166561537725}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3851973773203703999}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 701d25539bb00dc499fe9029ee8fdd7e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Project.Map.Tile
 --- !u!4 &8324096820294135437 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5134794832270331952, guid: 97ca06653da479a43a30a98fad08032d, type: 3}

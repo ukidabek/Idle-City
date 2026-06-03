@@ -2,11 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using Windows.View;
+using Project.Map;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-namespace Project.Map.UI
+namespace Project.UI
 {
     public class TileView : UIBehaviour, IWindowView<Tile>
     {

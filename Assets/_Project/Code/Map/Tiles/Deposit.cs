@@ -1,6 +1,6 @@
 ﻿namespace Project.Map
 {
-    public class Deposit : DataTile<DepositData>, ITielComponent, IDeposit
+    public class Deposit : DataTileComponent<DepositData>
     {
     }
 }

@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using Windows;
 using cookie.Logging;
+using Project.Map;
 using UnityEngine;
 using UnityEngine.Pool;
 
-namespace Project.Map.UI
+namespace Project.UI
 {
     public class TileBuildDisplay : Window, ILogEnabled
     {
@@ -19,7 +20,7 @@ namespace Project.Map.UI
         [SerializeField] private Transform m_viewsParent = null;
         [SerializeField] private BuildTileView m_buildTileViewPrefab = null;
         
-        private HashSet<IStructure> m_structures = new HashSet<IStructure>(30);
+        private HashSet<Structure> m_structures = new HashSet<Structure>(30);
         private ObjectPool<BuildTileView> m_buildTileViewPools = null;
         private HashSet<BuildTileView> m_activeViews = new HashSet<BuildTileView>();
         private TileStack m_selectedStack = null;
@@ -31,9 +32,9 @@ namespace Project.Map.UI
             var structures = m_database.GetTilesByCategory(m_structureCategory);
             foreach (var tile in structures)
             {
-                if (!tile.TryGetComponent(out IStructure structure))
+                if (!tile.TryGetComponent(out Structure structure))
                 {
-                    this.Log($"{nameof(Tile)} is missing {nameof(IStructure)} component! Ignoring", LogType.Warning, tile, true);
+                    this.Log($"{nameof(Tile)} is missing {nameof(Structure)} component! Ignoring", LogType.Warning, tile, true);
                     continue;
                 }
 
@@ -73,12 +74,12 @@ namespace Project.Map.UI
             var tile = m_selectedStack.Peek();
             var tileID = tile.ID;
 
-            IEnumerable<IStructure> availableStructures = Array.Empty<IStructure>();
+            IEnumerable<Structure> availableStructures = Array.Empty<Structure>();
 
-            if (tile.TryGetComponent(out IGround _))
+            if (tile.TryGetComponent(out Ground _))
                 availableStructures = m_structures.Where(structure => structure.TileRequirements.Contains(tileID));
 
-            if (tile.TryGetComponent(out IDeposit _))
+            if (tile.TryGetComponent(out Deposit _))
                 availableStructures = m_structures.Where(structure => structure.TileRequirements.Contains(tileID));
 
             if (!availableStructures.Any())

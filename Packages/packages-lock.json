@@ -41,6 +41,12 @@
       "dependencies": {},
       "hash": "5068faabf1d2b8619dc5049a60dceb51e9b5ab91"
     },
+    "com.cooki.values": {
+      "version": "file:com.cooki.values",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {}
+    },
     "com.cooki.windows": {
       "version": "file:com.cooki.windows",
       "depth": 0,

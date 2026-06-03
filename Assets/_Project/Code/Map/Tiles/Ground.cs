@@ -2,7 +2,7 @@
 
 namespace Project.Map
 {
-    public class Ground : DataTile<GroundData>, IGround
+    public class Ground : DataTileComponent<GroundData>
     {
         public IReadOnlyList<TileID> AvailableDeposits => m_data.AvailableDeposits;
     }

@@ -2,7 +2,7 @@
 
 namespace Project.Map
 {
-    public class Structure : DataTile<StructureData>, IStructure
+    public class Structure : DataTileComponent<StructureData>
     {
         public IReadOnlyList<TileID> TileRequirements => m_data.TileRequirements;
     }

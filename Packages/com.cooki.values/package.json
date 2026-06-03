@@ -1,0 +1,13 @@
+{
+  "name": "com.cooki.values",
+  "version": "0.0.1",
+  "displayName": "Values",
+  "description": "",
+  "author": {
+    "name": "\u0141ukasz D\u0105bek",
+    "email": "ukidabek@gmail.com"
+  },
+  "unity": "2021.1",
+  "dependencies": {
+  }
+}

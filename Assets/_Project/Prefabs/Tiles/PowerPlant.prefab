@@ -66,8 +66,43 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 5134794832270331952, guid: 97ca06653da479a43a30a98fad08032d, type: 3}
       insertIndex: -1
       addedObject: {fileID: 3180023269533315156}
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 122618608886396418, guid: 97ca06653da479a43a30a98fad08032d, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 4593848555999866459}
   m_SourcePrefab: {fileID: 100100000, guid: 97ca06653da479a43a30a98fad08032d, type: 3}
+--- !u!1 &62157967808500744 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 122618608886396418, guid: 97ca06653da479a43a30a98fad08032d, type: 3}
+  m_PrefabInstance: {fileID: 103429607237689866}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &4593848555999866459
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 62157967808500744}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a76d4f18cc03410b8e63fd0cd8cf352f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Project.Map.Client
+  <Tile>k__BackingField: {fileID: 686297693790384272}
+  <Resource>k__BackingField: {fileID: 11400000, guid: 771cffa6f95876d418ee2caa7f65b270, type: 2}
+  <Type>k__BackingField: 0
+  <Amount>k__BackingField: 5
+--- !u!114 &686297693790384272 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 642128757018235546, guid: 97ca06653da479a43a30a98fad08032d, type: 3}
+  m_PrefabInstance: {fileID: 103429607237689866}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 62157967808500744}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 701d25539bb00dc499fe9029ee8fdd7e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Project.Map.Tile
 --- !u!4 &5056698093330051642 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5134794832270331952, guid: 97ca06653da479a43a30a98fad08032d, type: 3}

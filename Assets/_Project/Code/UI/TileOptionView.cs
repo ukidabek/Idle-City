@@ -1,9 +1,10 @@
 ﻿using Windows.View;
+using Project.Map;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-namespace Project.Map.UI
+namespace Project.UI
 {
     [RequireComponent(typeof(Button))]
     public abstract class TileOptionView : UIBehaviour, IWindowView<Tile>
