@@ -11,48 +11,54 @@ namespace Project.Resources
         [field: SerializeField] public float BaseGain { get; private set; } = .25f;
         public float AmountAdd { get; private set; }
         public float AmountSubtract { get; private set; }
+        [field: SerializeField] public Sprite Image { get; private set; }
 
-        protected HashSet<IClient>  m_clients = new HashSet<IClient>(30);
-        
+        private HashSet<IClient> m_consumers = new HashSet<IClient>(30);
+        private HashSet<IClient> m_producers = new HashSet<IClient>(30);
+
+        public override float Value
+        {
+            get => base.Value; 
+            set => base.Value = Mathf.Clamp(value, 0, float.MaxValue);
+        }
+
         public void Update(int tickRate = 1)
         {
             AmountAdd = AmountSubtract = 0;
-            foreach (var client in m_clients)
-            {
-                switch (client.Type)
-                {
-                    case ClientType.Producer:
-                        AmountAdd += client.Amount;
-                        break;
-                    case ClientType.Consumer:
-                        AmountSubtract += client.Amount;
-                        break;
-                }
-            }
-
-            Value += (BaseGain + AmountAdd - AmountSubtract) / tickRate;
+            using (BulkEdit())
+            
+            foreach (var consumer in m_consumers)
+                Value -= consumer.Amount / tickRate;
+            
+            foreach (var producer in m_producers) 
+                Value += producer.Amount / tickRate;
         }
 
         private void OnEnable()
         {
-            m_clients.Clear();
+            m_consumers.Clear();
+            m_producers.Clear();
             Value = 0;
         }
 
-        public void RegisterClient(IClient client) => m_clients.Add(client);
+        public void RegisterClient(IClient client) => GetHashSet(client).Add(client);
+        
+        public void UnregisterClient(IClient client) => GetHashSet(client).Remove(client);
 
-        public void UnregisterClient(IClient client) => m_clients.Remove(client);
+        private HashSet<IClient> GetHashSet(IClient client)
+        {
+            var set = client.Type switch
+            {
+                ClientType.Consumer => m_consumers,
+                ClientType.Producer => m_producers,
+            };
+            return set;
+        }
     }
 
     public enum ClientType
     {
         Producer,
         Consumer    
-    }
-    
-    public interface IClient
-    {
-        ClientType Type { get; }
-        float Amount { get; }
     }
 }
