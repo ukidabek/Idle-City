@@ -7,7 +7,7 @@ using Project.Map;
 using UnityEngine;
 using UnityEngine.Pool;
 
-namespace Project.UI
+namespace Project.UI.Tiles
 {
     public class TileBuildDisplay : Window, ILogEnabled
     {

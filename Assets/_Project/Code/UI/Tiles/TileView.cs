@@ -7,7 +7,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-namespace Project.UI
+namespace Project.UI.Tiles
 {
     public class TileView : UIBehaviour, IWindowView<Tile>
     {

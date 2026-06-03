@@ -2,7 +2,7 @@
 using Project.Map.Events;
 using UnityEngine;
 
-namespace Project.UI
+namespace Project.UI.Tiles
 {
     public class DestroyTileOptionView : TileOptionView
     {

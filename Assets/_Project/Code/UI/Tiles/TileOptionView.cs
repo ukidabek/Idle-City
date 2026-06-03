@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-namespace Project.UI
+namespace Project.UI.Tiles
 {
     [RequireComponent(typeof(Button))]
     public abstract class TileOptionView : UIBehaviour, IWindowView<Tile>
