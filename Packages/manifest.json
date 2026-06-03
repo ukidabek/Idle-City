@@ -3,6 +3,7 @@
     "com.cooki.cheats": "https://github.com/ukidabek/com.cookie.cheats.git",
     "com.cooki.states": "https://github.com/ukidabek/com.cooki.states.git",
     "com.cooki.utilities": "https://github.com/ukidabek/com.cooki.utilities.git",
+    "com.unity.2d.sprite": "1.0.0",
     "com.unity.cinemachine": "3.1.6",
     "com.unity.ide.rider": "3.0.40",
     "com.unity.inputsystem": "1.18.0",
