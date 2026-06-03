@@ -66,20 +66,20 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 5134794832270331952, guid: 97ca06653da479a43a30a98fad08032d, type: 3}
       insertIndex: -1
       addedObject: {fileID: 8180322442133257726}
-    - targetCorrespondingSourceObject: {fileID: 5134794832270331952, guid: 97ca06653da479a43a30a98fad08032d, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 6939918356157782342}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 122618608886396418, guid: 97ca06653da479a43a30a98fad08032d, type: 3}
       insertIndex: -1
-      addedObject: {fileID: -5560906187859783965}
+      addedObject: {fileID: 4219500815829257494}
+    - targetCorrespondingSourceObject: {fileID: 122618608886396418, guid: 97ca06653da479a43a30a98fad08032d, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2553899628084999837}
   m_SourcePrefab: {fileID: 100100000, guid: 97ca06653da479a43a30a98fad08032d, type: 3}
 --- !u!1 &3851973773203703999 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 122618608886396418, guid: 97ca06653da479a43a30a98fad08032d, type: 3}
   m_PrefabInstance: {fileID: 3803102166561537725}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &-5560906187859783965
+--- !u!114 &4219500815829257494
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -88,13 +88,29 @@ MonoBehaviour:
   m_GameObject: {fileID: 3851973773203703999}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a76d4f18cc03410b8e63fd0cd8cf352f, type: 3}
+  m_Script: {fileID: 11500000, guid: d791179b219148d8a680e6787d160799, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Project.Map.Client
+  m_EditorClassIdentifier: Assembly-CSharp::Project.Map.Consumer
+  <Tile>k__BackingField: {fileID: 4336432038179089447}
+  <Resource>k__BackingField: {fileID: 11400000, guid: 771cffa6f95876d418ee2caa7f65b270, type: 2}
+  m_amount: 0.1
+--- !u!114 &2553899628084999837
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3851973773203703999}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 147d5c344e7449c2baa8a24f8ea14d9b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Project.Map.Producer
   <Tile>k__BackingField: {fileID: 4336432038179089447}
   <Resource>k__BackingField: {fileID: 11400000, guid: d238c2fb62ada9e4c9e04f083aa98209, type: 2}
-  <Type>k__BackingField: 0
-  <Amount>k__BackingField: 0.25
+  m_amount: 0.1
+  m_consumers:
+  - {fileID: 4219500815829257494}
 --- !u!114 &4336432038179089447 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 642128757018235546, guid: 97ca06653da479a43a30a98fad08032d, type: 3}
@@ -111,72 +127,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 5134794832270331952, guid: 97ca06653da479a43a30a98fad08032d, type: 3}
   m_PrefabInstance: {fileID: 3803102166561537725}
   m_PrefabAsset: {fileID: 0}
---- !u!1001 &7477439401472179885
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 8324096820294135437}
-    m_Modifications:
-    - target: {fileID: -8679921383154817045, guid: e6ef38af42f95144eb3dd8eff0569aab, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: e6ef38af42f95144eb3dd8eff0569aab, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: e6ef38af42f95144eb3dd8eff0569aab, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: e6ef38af42f95144eb3dd8eff0569aab, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: e6ef38af42f95144eb3dd8eff0569aab, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: e6ef38af42f95144eb3dd8eff0569aab, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: e6ef38af42f95144eb3dd8eff0569aab, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: e6ef38af42f95144eb3dd8eff0569aab, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: e6ef38af42f95144eb3dd8eff0569aab, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: e6ef38af42f95144eb3dd8eff0569aab, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: -7511558181221131132, guid: e6ef38af42f95144eb3dd8eff0569aab, type: 3}
-      propertyPath: 'm_Materials.Array.data[0]'
-      value: 
-      objectReference: {fileID: 2100000, guid: c965ac9057bd12a4bb1bab3580b530aa, type: 2}
-    - target: {fileID: 919132149155446097, guid: e6ef38af42f95144eb3dd8eff0569aab, type: 3}
-      propertyPath: m_Name
-      value: tile-spawn-end
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: e6ef38af42f95144eb3dd8eff0569aab, type: 3}
---- !u!4 &6939918356157782342 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: e6ef38af42f95144eb3dd8eff0569aab, type: 3}
-  m_PrefabInstance: {fileID: 7477439401472179885}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &8506436124229458453
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -191,7 +141,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 0666992e1a62f2945b141e08ffa1e9e9, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.2
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 0666992e1a62f2945b141e08ffa1e9e9, type: 3}
       propertyPath: m_LocalPosition.z

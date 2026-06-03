@@ -12,5 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ded23e107c7949ae98a40cd3b04357ff, type: 3}
   m_Name: PowerPlant_Data
   m_EditorClassIdentifier: Assembly-CSharp::Project.Map.StructureData
+  <Image>k__BackingField: {fileID: 21300000, guid: 4672b043a1940f046ab2d1f5a4b602a5, type: 3}
   <TileRequirements>k__BackingField:
   - {fileID: -997958414207827887, guid: 2249f772577da99469269188074d9d0f, type: 2}
