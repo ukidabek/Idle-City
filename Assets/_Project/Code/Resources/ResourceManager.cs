@@ -28,7 +28,7 @@ namespace Project.Resources
             foreach (var resourceHandler in m_resources)
             {
                 var oldValue = resourceHandler.Value;
-                resourceHandler.Update(m_tickRate);
+                resourceHandler.Tick(m_tickRate);
                 var newValue = resourceHandler.Value;
                 this.Log($"[<b>{resourceHandler.name}</b>] Changed form {oldValue:F2} to: {newValue:F2}", LogType.Log, resourceHandler);
             }

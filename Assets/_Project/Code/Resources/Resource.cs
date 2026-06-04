@@ -13,8 +13,8 @@ namespace Project.Resources
         public float AmountSubtract { get; private set; }
         [field: SerializeField] public Sprite Image { get; private set; }
 
-        private HashSet<IClient> m_consumers = new HashSet<IClient>(30);
-        private HashSet<IClient> m_producers = new HashSet<IClient>(30);
+        private HashSet<IResourceClient> m_consumers = new HashSet<IResourceClient>(30);
+        private HashSet<IResourceClient> m_producers = new HashSet<IResourceClient>(30);
 
         public override float Value
         {
@@ -22,7 +22,7 @@ namespace Project.Resources
             set => base.Value = Mathf.Clamp(value, 0, float.MaxValue);
         }
 
-        public void Update(int tickRate = 1)
+        public void Tick(int tickRate = 1)
         {
             AmountAdd = AmountSubtract = 0;
             using (BulkEdit())
@@ -41,16 +41,17 @@ namespace Project.Resources
             Value = 0;
         }
 
-        public void RegisterClient(IClient client) => GetHashSet(client).Add(client);
+        public void RegisterClient(IResourceClient client) => GetHashSet(client).Add(client);
         
-        public void UnregisterClient(IClient client) => GetHashSet(client).Remove(client);
+        public void UnregisterClient(IResourceClient client) => GetHashSet(client).Remove(client);
 
-        private HashSet<IClient> GetHashSet(IClient client)
+        private HashSet<IResourceClient> GetHashSet(IResourceClient client)
         {
             var set = client.Type switch
             {
                 ClientType.Consumer => m_consumers,
                 ClientType.Producer => m_producers,
+                _ => throw new ArgumentOutOfRangeException()
             };
             return set;
         }
