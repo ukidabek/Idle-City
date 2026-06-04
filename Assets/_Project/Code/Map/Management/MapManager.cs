@@ -1,11 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
 namespace Project.Map
 {
     [RequireComponent(typeof(Grid))]
-    public class MapManager : MonoBehaviour
+    public class MapManager : MonoBehaviour, IReadOnlyDictionary<Vector3Int, TileStack>
     {
         [SerializeField] private Grid m_grid = null;
 
@@ -33,6 +34,8 @@ namespace Project.Map
             tileTransform.position = position;
             tileTransform.SetParent(m_grid.transform);
             
+            tile.Place(cell, this);
+            
             if (m_tilesDictionary.TryGetValue(cell, out var stack))
                 stack.Push(tile);
             else
@@ -55,5 +58,18 @@ namespace Project.Map
             SelectedTile = m_tilesDictionary.GetValueOrDefault(cell);
             OnTileSelected.Invoke(SelectedTile);
         }
+
+        public IEnumerator<KeyValuePair<Vector3Int, TileStack>> GetEnumerator() => m_tilesDictionary.GetEnumerator();
+        IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+
+        public int Count => m_tilesDictionary.Count;
+        public bool ContainsKey(Vector3Int key) => m_tilesDictionary.ContainsKey(key);
+
+        public bool TryGetValue(Vector3Int key, out TileStack value) => m_tilesDictionary.TryGetValue(key, out value);
+
+        public TileStack this[Vector3Int key] => m_tilesDictionary[key];
+
+        public IEnumerable<Vector3Int> Keys => m_tilesDictionary.Keys;
+        public IEnumerable<TileStack> Values =>  m_tilesDictionary.Values;
     }
 }

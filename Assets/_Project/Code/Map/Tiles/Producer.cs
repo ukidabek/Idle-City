@@ -15,8 +15,7 @@ namespace Project.Map
             {
                 if (m_consumers == null || m_consumers.Length == 0)
                     return base.Amount;
-                
-                return m_consumers.All(c => c.Satisfied) ? base.Amount : 0;
+                return m_consumers.All(consumer => consumer.Satisfied) ? base.Amount : 0;
             }
         }
     }
