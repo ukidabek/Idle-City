@@ -239,6 +239,7 @@ MonoBehaviour:
   m_resources:
   - {fileID: 11400000, guid: 771cffa6f95876d418ee2caa7f65b270, type: 2}
   - {fileID: 11400000, guid: d238c2fb62ada9e4c9e04f083aa98209, type: 2}
+  - {fileID: 11400000, guid: a9f85ee0c6ab2334c8dbe3a1f23e45c3, type: 2}
   m_resourceViewPrefab: {fileID: 2971278740085419342, guid: 9f3814264c1f8284e8e4e712ec45b9ac, type: 3}
 --- !u!1 &330585543
 GameObject:

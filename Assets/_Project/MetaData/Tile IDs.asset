@@ -1,5 +1,19 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-8820190904997899372
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 80ea2f3fd9864057bafe2ef83d184035, type: 3}
+  m_Name: LumberMill
+  m_EditorClassIdentifier: Assembly-CSharp::Project.Map.TileID
+  m_hash: 193565471
+  m_guid: b5b995ed-2844-4fc7-9510-93ba5eb4fa4f
 --- !u!114 &-4241764685697571949
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -91,6 +105,7 @@ MonoBehaviour:
   - {fileID: 8032995266062480039}
   - {fileID: -720806664477548334}
   - {fileID: 72243281340745634}
+  - {fileID: -8820190904997899372}
 --- !u!114 &72243281340745634
 MonoBehaviour:
   m_ObjectHideFlags: 0

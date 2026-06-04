@@ -10,8 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0c24a830300b451418826a23a16cb59c, type: 3}
-  m_Name: Stone
+  m_Name: Wood
   m_EditorClassIdentifier: Assembly-CSharp::Project.Resources.Resource
-  m_value: 498.4518
+  m_value: 0
   <BaseGain>k__BackingField: 0.25
-  <Image>k__BackingField: {fileID: 21300000, guid: d71b465325f0f774baca2d2e9b705ca9, type: 3}
+  <Image>k__BackingField: {fileID: 21300000, guid: 69841da463efc0944824ea3371fc260b, type: 3}
