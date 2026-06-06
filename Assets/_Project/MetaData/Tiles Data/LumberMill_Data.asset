@@ -16,3 +16,8 @@ MonoBehaviour:
   <TileRequirements>k__BackingField:
   - {fileID: 5951234281938972194, guid: 2249f772577da99469269188074d9d0f, type: 2}
   - {fileID: -3279134692063172354, guid: 2249f772577da99469269188074d9d0f, type: 2}
+  m_costs:
+  - m_resource: {fileID: 11400000, guid: d238c2fb62ada9e4c9e04f083aa98209, type: 2}
+    m_amount: 10
+  - m_resource: {fileID: 11400000, guid: 771cffa6f95876d418ee2caa7f65b270, type: 2}
+    m_amount: 20
