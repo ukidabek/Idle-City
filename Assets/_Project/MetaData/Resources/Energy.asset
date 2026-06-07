@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c24a830300b451418826a23a16cb59c, type: 3}
   m_Name: Energy
   m_EditorClassIdentifier: Assembly-CSharp::Project.Resources.Resource
-  m_value: 756.03894
-  <BaseGain>k__BackingField: 0.25
+  m_value: 0.005
+  <BaseGain>k__BackingField: 0.1
   <Image>k__BackingField: {fileID: 21300052, guid: 1eaee135ce037439d925cee5e41ce026, type: 3}

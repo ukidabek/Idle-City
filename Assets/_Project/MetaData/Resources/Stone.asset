@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c24a830300b451418826a23a16cb59c, type: 3}
   m_Name: Stone
   m_EditorClassIdentifier: Assembly-CSharp::Project.Resources.Resource
-  m_value: 498.4518
-  <BaseGain>k__BackingField: 0.25
+  m_value: 17.364395
+  <BaseGain>k__BackingField: 0.1
   <Image>k__BackingField: {fileID: 21300000, guid: d71b465325f0f774baca2d2e9b705ca9, type: 3}

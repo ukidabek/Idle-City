@@ -52,6 +52,34 @@ PrefabInstance:
       propertyPath: m_tileCategory
       value: 
       objectReference: {fileID: 6123569073387416811, guid: 517c341c2ae78ba4bb5877525d8a1b92, type: 2}
+    - target: {fileID: 8140385596400451846, guid: 82019dcdec04bb245b77cedc4c869f2b, type: 3}
+      propertyPath: OnTilePlaced.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8140385596400451846, guid: 82019dcdec04bb245b77cedc4c869f2b, type: 3}
+      propertyPath: OnTilePlaced.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8140385596400451846, guid: 82019dcdec04bb245b77cedc4c869f2b, type: 3}
+      propertyPath: OnTilePlaced.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 2926181330486889216}
+    - target: {fileID: 8140385596400451846, guid: 82019dcdec04bb245b77cedc4c869f2b, type: 3}
+      propertyPath: OnTilePlaced.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8140385596400451846, guid: 82019dcdec04bb245b77cedc4c869f2b, type: 3}
+      propertyPath: OnTilePlaced.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ConsumeResources
+      objectReference: {fileID: 0}
+    - target: {fileID: 8140385596400451846, guid: 82019dcdec04bb245b77cedc4c869f2b, type: 3}
+      propertyPath: OnTilePlaced.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: Project.Map.Structure, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 8140385596400451846, guid: 82019dcdec04bb245b77cedc4c869f2b, type: 3}
+      propertyPath: OnTilePlaced.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 8764736979679307166, guid: 82019dcdec04bb245b77cedc4c869f2b, type: 3}
       propertyPath: m_Name
       value: Structure
