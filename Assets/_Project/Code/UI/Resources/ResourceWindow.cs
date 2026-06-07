@@ -7,7 +7,7 @@ namespace Project.UI.Resources
 {
     public class ResourceWindow : Window
     {
-        [SerializeField] protected Resource[] m_resources;
+        [SerializeField] protected ResourceCollection m_resources;
         [SerializeField] protected ResourceView m_resourceViewPrefab;
         
         protected ObjectPool<ResourceView> m_resourceViewPool= null;

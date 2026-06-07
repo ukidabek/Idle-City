@@ -26,16 +26,16 @@ namespace Project.Map
             var cell = m_grid.WorldToCell(position);
             PlaceTile(cell, tile);
         }
-        
+
         public void PlaceTile(Vector3Int cell, Tile tile)
         {
             var position = m_grid.GetCellCenterWorld(cell);
             var tileTransform = tile.transform;
             tileTransform.position = position;
             tileTransform.SetParent(m_grid.transform);
-            
+
             tile.Place(cell, this);
-            
+
             if (m_tilesDictionary.TryGetValue(cell, out var stack))
                 stack.Push(tile);
             else
@@ -46,7 +46,7 @@ namespace Project.Map
         {
             var cell = m_grid.WorldToCell(tile.transform.position);
             if (!m_tilesDictionary.TryGetValue(cell, out var stack)) return;
-            tile =  stack.Pop();
+            tile = stack.Pop();
             Destroy(tile.gameObject);
         }
 

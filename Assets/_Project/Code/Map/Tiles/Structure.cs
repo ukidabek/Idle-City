@@ -9,7 +9,8 @@ namespace Project.Map
         public IReadOnlyList<TileID> TileRequirements => m_data.TileRequirements;
         public IReadOnlyList<Cost> Costs => m_data.Costs;
         public bool CanAfford => m_data.CanAfford;
-
+        public float CostReturnMultiplayer => m_data.CostReturnMultiplayer;
+        
         public void ConsumeResources()
         {
             foreach (var cost in Costs) 

@@ -32,6 +32,8 @@ namespace Project.UI.Tiles
         {
             if (tileStack == null)
             {
+                if (m_selectedStack == null) return;
+                
                 m_selectedStack.StackChanged -= UpdateButtons;
                 m_selectedStack = null;
                 Hide();

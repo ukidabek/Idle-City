@@ -55,9 +55,12 @@ namespace Project.UI.Tiles
         {
             if (tileStack == null)
             {
+                if (m_selectedStack == null) return;
+                
                 m_selectedStack.StackChanged -= UpdateButtons;
                 m_selectedStack = null;
                 Hide();
+
                 return;
             }
 
@@ -68,7 +71,7 @@ namespace Project.UI.Tiles
         private void UpdateButtons()
         {
             ReleaseAllActiveViews();
-
+            
             m_selectedStack.StackChanged += UpdateButtons;
             
             var tile = m_selectedStack.Peek();

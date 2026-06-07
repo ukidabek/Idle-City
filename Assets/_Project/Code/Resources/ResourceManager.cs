@@ -8,7 +8,7 @@ namespace Project.Resources
         public Color Color { get; } = new Color(1f, 0.84f, 0.2f, 1f); // #FFD633
 
         [field: SerializeField] public LogMode Mode { get; private set; } = LogMode.All;
-        [SerializeField] private Resource[] m_resources;
+        [SerializeField] private ResourceCollection m_resources;
         [SerializeField, Min(0)] protected int m_tickRate = 20;
 
         private float m_interval = 0f;

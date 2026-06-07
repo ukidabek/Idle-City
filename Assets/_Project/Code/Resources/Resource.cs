@@ -5,7 +5,7 @@ using Values;
 
 namespace Project.Resources
 {
-    [CreateAssetMenu(fileName = "Resource", menuName = "Resource")]
+    [CreateAssetMenu(fileName = "Resource", menuName = "Resource/Resource")]
     public class Resource : BaseValue<float>, IModiferHandler
     {
         [field: SerializeField] public float BaseGain { get; private set; } = .25f;
@@ -69,24 +69,12 @@ namespace Project.Resources
             return set;
         }
 
-        public void Apply(IEnumerable<AmountModifier> modifiers)
-        {
-            
-        }
+        public void Apply(IEnumerable<AmountModifier> modifiers) => m_modifierHandler.Apply(modifiers);
 
-        public void Remove(IEnumerable<AmountModifier> modifiers)
-        {
-            
-        }
+        public void Remove(IEnumerable<AmountModifier> modifiers) => m_modifierHandler.Remove(modifiers);
 
-        public void Apply(AmountModifier modifier)
-        {
-            
-        }
+        public void Apply(AmountModifier modifier) => m_modifierHandler.Apply(modifier);
 
-        public void Remove(AmountModifier modifier)
-        {
-            
-        }
+        public void Remove(AmountModifier modifier) => m_modifierHandler.Remove(modifier);
     }
 }

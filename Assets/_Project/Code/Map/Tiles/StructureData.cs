@@ -8,11 +8,12 @@ namespace Project.Map
     public class StructureData : ScriptableObject
     {
         [field: SerializeField] public Sprite Image { get; private set; } = null;
-        [field: SerializeField] public TileID[] TileRequirements  { get; private set; } = null;
-        
+        [field: SerializeField] public TileID[] TileRequirements { get; private set; } = null;
+
         [SerializeField] private Cost[] m_costs = null;
         public IReadOnlyList<Cost> Costs => m_costs;
-        
+
         public bool CanAfford => m_costs.All(cost => cost.CanAfford());
+        [field: SerializeField, Min(0f)] public float CostReturnMultiplayer { get; private set; } = .5f;
     }
 }
