@@ -127,6 +127,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Project.Map.Destroyable
   <Tile>k__BackingField: {fileID: 642128757018235546}
+  m_structure: {fileID: 2926181330486889216}
 --- !u!114 &642128757018235546 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 8140385596400451846, guid: 82019dcdec04bb245b77cedc4c869f2b, type: 3}
