@@ -24,7 +24,6 @@ namespace Values
 				m_baseValue.OnValueChanged.Invoke(m_baseValue.Value);
 			}
 		}
-
 		
 		private bool m_isSilent = false;
 		public event Action<T> OnValueChanged;
