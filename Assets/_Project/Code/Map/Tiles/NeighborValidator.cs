@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Project.Resources;
 using UnityEngine;
 
 namespace Project.Map
@@ -9,7 +10,7 @@ namespace Project.Map
         [SerializeField] private NeighborDirection m_neighborDirection = NeighborDirection.Up | NeighborDirection.Down | NeighborDirection.Left | NeighborDirection.Right;
         [SerializeField] private NeighborCondition[] m_neighborConditions = null;
         [SerializeField] private Client[] m_affectedClients = null;
-        private readonly List<ClientModifier> m_modifiersCache = new List<ClientModifier>(10);
+        private readonly List<AmountModifier> m_modifiersCache = new List<AmountModifier>(10);
         
         public static IEnumerable<Vector3Int> ToOffsets(NeighborDirection direction, Vector3Int offset = default)
         {

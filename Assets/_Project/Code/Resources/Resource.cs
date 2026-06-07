@@ -6,16 +6,18 @@ using Values;
 namespace Project.Resources
 {
     [CreateAssetMenu(fileName = "Resource", menuName = "Resource")]
-    public class Resource : BaseValue<float>
+    public class Resource : BaseValue<float>, IModiferHandler
     {
         [field: SerializeField] public float BaseGain { get; private set; } = .25f;
-        public float AmountAdd { get; private set; }
-        public float AmountSubtract { get; private set; }
+        public float Gain { get; private set; }
+        
         [field: SerializeField] public Sprite Image { get; private set; }
 
         private HashSet<IResourceClient> m_consumers = new HashSet<IResourceClient>(30);
         private HashSet<IResourceClient> m_producers = new HashSet<IResourceClient>(30);
 
+        private ModiferHandler m_modifierHandler = null;
+        
         public override float Value
         {
             get => base.Value; 
@@ -24,11 +26,12 @@ namespace Project.Resources
 
         public void Tick(int tickRate = 1)
         {
-            AmountAdd = AmountSubtract = 0;
             using (BulkEdit())
             
             foreach (var consumer in m_consumers)
                 Value -= consumer.Amount / tickRate;
+            
+            Value += BaseGain / tickRate;
             
             foreach (var producer in m_producers) 
                 Value += producer.Amount / tickRate;
@@ -39,6 +42,16 @@ namespace Project.Resources
             m_consumers.Clear();
             m_producers.Clear();
             Value = 0;
+            Gain = BaseGain;
+            m_modifierHandler = new ModiferHandler(() => BaseGain, OnValueRecalculated);
+        }
+
+        private void OnValueRecalculated(float value) => Gain = value;
+
+        private void OnDestroy()
+        {
+            m_modifierHandler.Dispose();
+            m_modifierHandler = null;
         }
 
         public void RegisterClient(IResourceClient client) => GetHashSet(client).Add(client);
@@ -55,11 +68,25 @@ namespace Project.Resources
             };
             return set;
         }
-    }
 
-    public enum ClientType
-    {
-        Producer,
-        Consumer    
+        public void Apply(IEnumerable<AmountModifier> modifiers)
+        {
+            
+        }
+
+        public void Remove(IEnumerable<AmountModifier> modifiers)
+        {
+            
+        }
+
+        public void Apply(AmountModifier modifier)
+        {
+            
+        }
+
+        public void Remove(AmountModifier modifier)
+        {
+            
+        }
     }
 }

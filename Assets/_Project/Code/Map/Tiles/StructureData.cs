@@ -13,6 +13,6 @@ namespace Project.Map
         [SerializeField] private Cost[] m_costs = null;
         public IReadOnlyList<Cost> Costs => m_costs;
         
-        public bool CanAfford => m_costs.All(cost => cost.CanAfford);
+        public bool CanAfford => m_costs.All(cost => cost.CanAfford());
     }
 }

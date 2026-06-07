@@ -1,4 +1,5 @@
 ﻿using System;
+using Project.Resources;
 using UnityEngine;
 
 namespace Project.Map
@@ -10,14 +11,14 @@ namespace Project.Map
         [SerializeField] private ModifierType m_type;
         [SerializeField] private float m_value;
 
-        public ClientModifier Build(Tile tile)
+        public AmountModifier Build(Tile tile)
         {
             if(tile.ID != m_neighborId) return null;
 
             return m_type switch
             {
-                ModifierType.Value => new ValueClientModifier(m_value),
-                ModifierType.Percent => new PercentClientModifier(m_value),
+                ModifierType.Value => new ValueAmountModifier(m_value),
+                ModifierType.Percent => new PercentAmountModifier(m_value),
                 _ => null
             };
         }

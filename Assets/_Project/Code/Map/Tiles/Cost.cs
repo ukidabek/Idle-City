@@ -13,6 +13,6 @@ namespace Project.Map
         [SerializeField] private int m_amount = 0;
         public int Amount => m_amount;
         
-        public bool CanAfford => m_resource.Value >= m_amount;
+        public bool CanAfford(float multiplayer = 1f) => m_resource.Value >= m_amount * multiplayer;
     }
 }

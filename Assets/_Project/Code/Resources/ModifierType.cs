@@ -1,4 +1,4 @@
-﻿namespace Project.Map
+﻿namespace Project.Resources
 {
     public enum ModifierType
     {

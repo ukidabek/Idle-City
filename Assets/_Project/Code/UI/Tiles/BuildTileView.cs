@@ -45,7 +45,11 @@ namespace Project.UI.Tiles
                 });
         }
 
-        public void Build() => m_buildTileEvent.Invoke(m_structure.Tile);
+        public void Build()
+        {
+            if (!m_structure.CanAfford) return;
+            m_buildTileEvent.Invoke(m_structure.Tile);
+        }
 
         public void Initialize(Structure data)
         {
