@@ -1,9 +1,12 @@
 ﻿using System.Collections.Generic;
+using UnityEngine;
 
 namespace Project.Map
 {
-    public class Ground : DataTileComponent<GroundData>
+    public class Ground : TileComponent, IDataTileComponent<GroundData>
     {
-        public IReadOnlyList<TileID> AvailableDeposits => m_data.AvailableDeposits;
+        [SerializeField] private GroundData m_data = null;
+        public GroundData Data => m_data;
+        public IReadOnlyList<TileID> AvailableDeposits => Data.AvailableDeposits;
     }
 }

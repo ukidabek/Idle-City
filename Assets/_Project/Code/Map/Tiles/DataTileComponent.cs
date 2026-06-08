@@ -1,10 +1,7 @@
-﻿using UnityEngine;
-
-namespace Project.Map
+﻿namespace Project.Map
 {
-    [RequireComponent(typeof(Tile))]
-    public abstract class DataTileComponent<DataType> : TileComponent where DataType : ScriptableObject
+    public interface IDataTileComponent<out DataType>  where DataType : TileData
     {
-        [SerializeField] protected DataType m_data = null;
+        DataType Data { get; }
     }
 }

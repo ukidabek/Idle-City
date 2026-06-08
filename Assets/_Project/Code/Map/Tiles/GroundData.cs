@@ -4,7 +4,7 @@ using UnityEngine;
 namespace Project.Map
 {
     [CreateAssetMenu(menuName = "Map/Tiles/GroundData", fileName = "GroundData")]
-    public class GroundData : ScriptableObject
+    public class GroundData : TileData
     {
         [SerializeField] private TileID[] m_availableDeposits;
         public IReadOnlyList<TileID> AvailableDeposits => m_availableDeposits;
