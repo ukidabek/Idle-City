@@ -24,8 +24,6 @@ namespace Project.Map
         private Vector2 m_InspectorScrollPos;
 
         private string m_SearchFilter = string.Empty;
-        private bool m_ShowCount = true;
-
         
         private float m_SidebarCurrentWidth = k_SidebarWidth;
         private bool m_IsDraggingSplitter;
@@ -53,7 +51,6 @@ namespace Project.Map
             InitialiseStylesIfNeeded();
             DrawToolbar();
 
-            // Main split layout
             var mainRect = new Rect(0, k_ToolbarHeight, position.width, position.height - k_ToolbarHeight);
 
             var sidebarRect = new Rect(mainRect.x, mainRect.y, m_SidebarCurrentWidth, mainRect.height);
@@ -68,7 +65,6 @@ namespace Project.Map
             HandleSplitterDrag(splitterRect);
         }
 
-        // ── Toolbar ───────────────────────────────────────────────────────
         private void DrawToolbar()
         {
             var toolbarRect = new Rect(0, 0, position.width, k_ToolbarHeight);
@@ -84,20 +80,16 @@ namespace Project.Map
                 GUILayout.Space(4);
 
                 EditorGUI.BeginChangeCheck();
-                m_SearchFilter = EditorGUILayout.TextField(m_SearchFilter,
-                    EditorStyles.toolbarSearchField, GUILayout.MinWidth(120), GUILayout.ExpandWidth(true));
+                m_SearchFilter = EditorGUILayout.TextField(m_SearchFilter, EditorStyles.toolbarSearchField, GUILayout.MinWidth(120), GUILayout.ExpandWidth(true));
+                
                 if (EditorGUI.EndChangeCheck())
                 {
                     ApplyFilter();
-                    // Clear selection if it's no longer visible
-                    if (m_SelectedTileData != null && !m_FilteredTileData.Contains(m_SelectedTileData))
-                    {
+                    if (m_SelectedTileData != null && !m_FilteredTileData.Contains(m_SelectedTileData)) 
                         SelectTileData(null);
-                    }
                 }
 
-                if (GUILayout.Button("✕", EditorStyles.toolbarButton, GUILayout.Width(20)) &&
-                    m_SearchFilter.Length > 0)
+                if (GUILayout.Button("✕", EditorStyles.toolbarButton, GUILayout.Width(20)) && m_SearchFilter.Length > 0)
                 {
                     m_SearchFilter = string.Empty;
                     ApplyFilter();
@@ -163,9 +155,8 @@ namespace Project.Map
             if (m_FilteredTileData.Count != 0) return;
             
             var emptyRect = new Rect(0, 0, contentRect.width, 40);
-            GUI.Label(emptyRect, m_SearchFilter.Length > 0
-                ? "No results found."
-                : "No TileData assets found.\nClick Refresh to search.", EditorStyles.centeredGreyMiniLabel);
+            var labelText = m_SearchFilter.Length > 0 ? "No results found." : "No TileData assets found.\nClick Refresh to search.";
+            GUI.Label(emptyRect, labelText, EditorStyles.centeredGreyMiniLabel);
         }
 
         
