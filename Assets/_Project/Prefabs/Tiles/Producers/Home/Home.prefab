@@ -277,6 +277,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Project.Map.Producer
   <Tile>k__BackingField: {fileID: 77400681769943921}
+  <Data>k__BackingField: {fileID: 11400000, guid: 73d556e51bc203b4c8da77690a3ffd0a, type: 2}
   <Resource>k__BackingField: {fileID: 11400000, guid: 4c62a609686f85e409c57d12f5007889, type: 2}
   <BaseAmount>k__BackingField: 0.01
   <Amount>k__BackingField: 0
@@ -296,6 +297,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Project.Map.Consumer
   <Tile>k__BackingField: {fileID: 77400681769943921}
+  <Data>k__BackingField: {fileID: 11400000, guid: b870a00a0772efa45baaec3797166217, type: 2}
   <Resource>k__BackingField: {fileID: 11400000, guid: 771cffa6f95876d418ee2caa7f65b270, type: 2}
   <BaseAmount>k__BackingField: 0.5
   <Amount>k__BackingField: 0
@@ -312,6 +314,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Project.Map.Consumer
   <Tile>k__BackingField: {fileID: 77400681769943921}
+  <Data>k__BackingField: {fileID: 11400000, guid: 7b332c57e85d7bb47911a5394100189f, type: 2}
   <Resource>k__BackingField: {fileID: 11400000, guid: 10593118195ff9645b777622ae17085d, type: 2}
   <BaseAmount>k__BackingField: 0.5
   <Amount>k__BackingField: 0

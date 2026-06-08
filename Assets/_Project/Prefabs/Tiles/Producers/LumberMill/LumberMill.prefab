@@ -154,8 +154,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Project.Map.Producer
   <Tile>k__BackingField: {fileID: 221919947086035347}
+  <Data>k__BackingField: {fileID: 11400000, guid: ef9d16f0cf2682f4986bc485cf0ceb4e, type: 2}
   <Resource>k__BackingField: {fileID: 11400000, guid: a9f85ee0c6ab2334c8dbe3a1f23e45c3, type: 2}
-  <BaseAmount>k__BackingField: 0.1
   <Amount>k__BackingField: 0
   m_consumers:
   - {fileID: 5533540944439012878}
@@ -172,8 +172,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Project.Map.Consumer
   <Tile>k__BackingField: {fileID: 221919947086035347}
+  <Data>k__BackingField: {fileID: 11400000, guid: b870a00a0772efa45baaec3797166217, type: 2}
   <Resource>k__BackingField: {fileID: 11400000, guid: 771cffa6f95876d418ee2caa7f65b270, type: 2}
-  <BaseAmount>k__BackingField: 0.1
   <Amount>k__BackingField: 0
 --- !u!114 &8982402105213005706
 MonoBehaviour:
