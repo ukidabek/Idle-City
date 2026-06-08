@@ -8,6 +8,7 @@ namespace Project.Map
     {
         private const float k_SidebarWidth = 220f;
         private const float k_SidebarItemHeight = 28f;
+        private const float k_SidebarGroupHeaderHeight = 22f;
         private const float k_SplitterWidth = 4f;
         private const float k_ToolbarHeight = 26f;
         private const float k_MinWindowWidth = 600f;
@@ -28,9 +29,15 @@ namespace Project.Map
         private float m_SidebarCurrentWidth = k_SidebarWidth;
         private bool m_IsDraggingSplitter;
 
+        // Grouping
+        private Dictionary<string, List<TileData>> m_GroupedTileData = new();
+        private List<string> m_SortedGroupKeys = new();
+        private Dictionary<string, bool> m_GroupFoldouts = new();
+
         private GUIStyle m_SidebarItemStyle;
         private GUIStyle m_SidebarItemSelectedStyle;
         private GUIStyle m_SidebarHeaderStyle;
+        private GUIStyle m_SidebarGroupHeaderStyle;
         private bool m_StylesInitialised;
 
         [MenuItem(k_MenuPath)]
@@ -41,9 +48,7 @@ namespace Project.Map
             window.Show();
         }
 
-        
         private void OnEnable() => RefreshAssets();
-
         private void OnDisable() => DestroyEditorIfExists();
         
         private void OnGUI()
@@ -52,11 +57,8 @@ namespace Project.Map
             DrawToolbar();
 
             var mainRect = new Rect(0, k_ToolbarHeight, position.width, position.height - k_ToolbarHeight);
-
             var sidebarRect = new Rect(mainRect.x, mainRect.y, m_SidebarCurrentWidth, mainRect.height);
-
             var splitterRect = new Rect(sidebarRect.xMax, mainRect.y, k_SplitterWidth, mainRect.height);
-
             var inspectorRect = new Rect(splitterRect.xMax, mainRect.y, mainRect.width - m_SidebarCurrentWidth - k_SplitterWidth, mainRect.height);
 
             DrawSidebar(sidebarRect);
@@ -73,9 +75,7 @@ namespace Project.Map
             using (new EditorGUILayout.HorizontalScope(EditorStyles.toolbar))
             {
                 if (GUILayout.Button("Refresh", EditorStyles.toolbarButton, GUILayout.Width(60)))
-                {
                     RefreshAssets();
-                }
 
                 GUILayout.Space(4);
 
@@ -114,52 +114,93 @@ namespace Project.Map
 
             var scrollRect = new Rect(rect.x, rect.y + k_SidebarItemHeight, rect.width, rect.height - k_SidebarItemHeight);
 
-            var contentHeight = m_FilteredTileData.Count * k_SidebarItemHeight;
+            // Calculate total content height accounting for collapsed groups
+            var contentHeight = 0f;
+            foreach (var groupKey in m_SortedGroupKeys)
+            {
+                contentHeight += k_SidebarGroupHeaderHeight;
+                if (m_GroupFoldouts.TryGetValue(groupKey, out var isExpanded) && isExpanded)
+                    contentHeight += m_GroupedTileData[groupKey].Count * k_SidebarItemHeight;
+            }
+            if (m_SortedGroupKeys.Count == 0)
+                contentHeight = 40f;
+
             var contentRect = new Rect(0, 0, scrollRect.width - 14f, contentHeight);
 
             using var scrollView = new GUI.ScrollViewScope(scrollRect, m_SidebarScrollPos, contentRect);
             m_SidebarScrollPos = scrollView.scrollPosition;
 
-            for (var itemIndex = 0; itemIndex < m_FilteredTileData.Count; itemIndex++)
+            var cursor = 0f;
+            var globalItemIndex = 0; // for alternating rows across all groups
+
+            foreach (var groupKey in m_SortedGroupKeys)
             {
-                var tileData = m_FilteredTileData[itemIndex];
-                if (tileData == null) continue;
+                var groupItems = m_GroupedTileData[groupKey];
 
-                var itemRect = new Rect(0, itemIndex * k_SidebarItemHeight,
-                    contentRect.width, k_SidebarItemHeight);
+                // ── Group header ──────────────────────────────────────────
+                var groupHeaderRect = new Rect(0, cursor, contentRect.width, k_SidebarGroupHeaderHeight);
+                var isExpanded = m_GroupFoldouts.GetValueOrDefault(groupKey, true);
 
-                var isSelected = tileData == m_SelectedTileData;
-                var itemStyle = isSelected ? m_SidebarItemSelectedStyle : m_SidebarItemStyle;
+                EditorGUI.DrawRect(groupHeaderRect, new Color(0.15f, 0.15f, 0.15f, 1f));
 
-                if (!isSelected && itemIndex % 2 == 1) 
-                    EditorGUI.DrawRect(itemRect, new Color(0, 0, 0, 0.04f));
+                var foldoutRect = new Rect(groupHeaderRect.x + 2, groupHeaderRect.y, groupHeaderRect.width - 2, groupHeaderRect.height);
+                var newExpanded = EditorGUI.Foldout(foldoutRect, isExpanded,
+                    $"  {groupKey}  ({groupItems.Count})", true, m_SidebarGroupHeaderStyle);
 
-                Texture assetIcon = AssetPreview.GetMiniThumbnail(tileData);
-                var itemContent = assetIcon != null ? new GUIContent($"  {tileData.name}", assetIcon) : new GUIContent($"  {tileData.name}");
-
-                if (GUI.Button(itemRect, itemContent, itemStyle))
+                if (newExpanded != isExpanded)
                 {
-                    SelectTileData(tileData);
-
-                    if (Event.current.clickCount == 2)
-                    {
-                        EditorGUIUtility.PingObject(tileData);
-                    }
+                    m_GroupFoldouts[groupKey] = newExpanded;
+                    Repaint();
                 }
 
-                if (Event.current.type != EventType.ContextClick || !itemRect.Contains(Event.current.mousePosition)) continue;
-                ShowContextMenu(tileData);
-                Event.current.Use();
+                cursor += k_SidebarGroupHeaderHeight;
+
+                if (!newExpanded) continue;
+
+                // ── Group items ───────────────────────────────────────────
+                for (var itemIndex = 0; itemIndex < groupItems.Count; itemIndex++, globalItemIndex++)
+                {
+                    var tileData = groupItems[itemIndex];
+                    if (tileData == null) continue;
+
+                    var itemRect = new Rect(0, cursor, contentRect.width, k_SidebarItemHeight);
+
+                    var isSelected = tileData == m_SelectedTileData;
+                    var itemStyle = isSelected ? m_SidebarItemSelectedStyle : m_SidebarItemStyle;
+
+                    if (!isSelected && globalItemIndex % 2 == 1)
+                        EditorGUI.DrawRect(itemRect, new Color(0, 0, 0, 0.04f));
+
+                    Texture assetIcon = AssetPreview.GetMiniThumbnail(tileData);
+                    var itemContent = assetIcon != null
+                        ? new GUIContent($"    {tileData.name}", assetIcon)
+                        : new GUIContent($"    {tileData.name}");
+
+                    if (GUI.Button(itemRect, itemContent, itemStyle))
+                    {
+                        SelectTileData(tileData);
+                        if (Event.current.clickCount == 2)
+                            EditorGUIUtility.PingObject(tileData);
+                    }
+
+                    if (Event.current.type == EventType.ContextClick && itemRect.Contains(Event.current.mousePosition))
+                    {
+                        ShowContextMenu(tileData);
+                        Event.current.Use();
+                    }
+
+                    cursor += k_SidebarItemHeight;
+                }
             }
 
-            if (m_FilteredTileData.Count != 0) return;
-            
-            var emptyRect = new Rect(0, 0, contentRect.width, 40);
-            var labelText = m_SearchFilter.Length > 0 ? "No results found." : "No TileData assets found.\nClick Refresh to search.";
-            GUI.Label(emptyRect, labelText, EditorStyles.centeredGreyMiniLabel);
+            if (m_SortedGroupKeys.Count == 0)
+            {
+                var emptyRect = new Rect(0, 0, contentRect.width, 40);
+                var labelText = m_SearchFilter.Length > 0 ? "No results found." : "No TileData assets found.\nClick Refresh to search.";
+                GUI.Label(emptyRect, labelText, EditorStyles.centeredGreyMiniLabel);
+            }
         }
 
-        
         private void DrawInspector(Rect rect)
         {
             if (m_SelectedTileData == null)
@@ -172,8 +213,7 @@ namespace Project.Map
             var headerRect = new Rect(rect.x, rect.y, rect.width, k_SidebarItemHeight);
             EditorGUI.DrawRect(headerRect, new Color(0.24f, 0.24f, 0.24f, 1f));
 
-            var labelRect = new Rect(headerRect.x + 6, headerRect.y,
-                headerRect.width - 60, headerRect.height);
+            var labelRect = new Rect(headerRect.x + 6, headerRect.y, headerRect.width - 60, headerRect.height);
             var pingRect = new Rect(headerRect.xMax - 56, headerRect.y + 3, 52, 20);
 
             GUI.Label(labelRect, m_SelectedTileData.name, EditorStyles.boldLabel);
@@ -184,19 +224,16 @@ namespace Project.Map
                 Selection.activeObject = m_SelectedTileData;
             }
 
-            var inspectorScrollRect = new Rect(rect.x, rect.y + k_SidebarItemHeight,
-                rect.width, rect.height - k_SidebarItemHeight);
-
+            var inspectorScrollRect = new Rect(rect.x, rect.y + k_SidebarItemHeight, rect.width, rect.height - k_SidebarItemHeight);
             var screenRect = new Rect(0, 0, inspectorScrollRect.width - 14f, 10000f);
+
             using var scrollView = new GUI.ScrollViewScope(inspectorScrollRect, m_InspectorScrollPos, screenRect);
             m_InspectorScrollPos = scrollView.scrollPosition;
 
             using (new GUILayout.AreaScope(screenRect))
             {
                 GUILayout.Space(4);
-
                 if (m_CachedEditor != null) m_CachedEditor.OnInspectorGUI();
-
                 GUILayout.Space(8);
             }
         }
@@ -226,7 +263,6 @@ namespace Project.Map
                 currentEvent.Use();
             }
 
-            
             if (currentEvent.type != EventType.MouseUp) return;
             m_IsDraggingSplitter = false;
             currentEvent.Use();
@@ -242,12 +278,16 @@ namespace Project.Map
                 EditorGUIUtility.PingObject(tileData);
             });
 
-            menu.AddItem(new GUIContent("Copy Asset Path"), false, () => { EditorGUIUtility.systemCopyBuffer = AssetDatabase.GetAssetPath(tileData); });
+            menu.AddItem(new GUIContent("Copy Asset Path"), false, () =>
+            {
+                EditorGUIUtility.systemCopyBuffer = AssetDatabase.GetAssetPath(tileData);
+            });
+
             menu.AddSeparator(string.Empty);
+
             menu.AddItem(new GUIContent("Delete Asset"), false, () =>
             {
                 if (!EditorUtility.DisplayDialog("Delete TileData", $"Are you sure you want to delete '{tileData.name}'?", "Delete", "Cancel")) return;
-                
                 var assetPath = AssetDatabase.GetAssetPath(tileData);
                 AssetDatabase.DeleteAsset(assetPath);
                 RefreshAssets();
@@ -266,7 +306,6 @@ namespace Project.Map
             {
                 var assetPath = AssetDatabase.GUIDToAssetPath(guid);
                 var tileData = AssetDatabase.LoadAssetAtPath<TileData>(assetPath);
-
                 if (tileData == null) continue;
                 m_AllTileData.Add(tileData);
             }
@@ -275,8 +314,7 @@ namespace Project.Map
 
             ApplyFilter();
 
-            // Re-validate selection
-            if (m_SelectedTileData != null && !m_AllTileData.Contains(m_SelectedTileData)) 
+            if (m_SelectedTileData != null && !m_AllTileData.Contains(m_SelectedTileData))
                 SelectTileData(null);
 
             Repaint();
@@ -289,15 +327,43 @@ namespace Project.Map
             if (string.IsNullOrWhiteSpace(m_SearchFilter))
             {
                 m_FilteredTileData.AddRange(m_AllTileData);
-                return;
+            }
+            else
+            {
+                var lowerFilter = m_SearchFilter.ToLowerInvariant();
+                foreach (var tileData in m_AllTileData)
+                {
+                    if (tileData.name.ToLowerInvariant().Contains(lowerFilter))
+                        m_FilteredTileData.Add(tileData);
+                }
             }
 
-            var lowerFilter = m_SearchFilter.ToLowerInvariant();
+            RebuildGroups();
+        }
 
-            foreach (var tileData in m_AllTileData)
+        private void RebuildGroups()
+        {
+            m_GroupedTileData.Clear();
+            m_SortedGroupKeys.Clear();
+
+            foreach (var tileData in m_FilteredTileData)
             {
-                if (!tileData.name.ToLowerInvariant().Contains(lowerFilter)) continue;
-                m_FilteredTileData.Add(tileData);
+                var typeName = tileData.GetType().Name;
+
+                if (!m_GroupedTileData.ContainsKey(typeName))
+                    m_GroupedTileData[typeName] = new List<TileData>();
+
+                m_GroupedTileData[typeName].Add(tileData);
+            }
+
+            m_SortedGroupKeys.AddRange(m_GroupedTileData.Keys);
+            m_SortedGroupKeys.Sort(System.StringComparer.OrdinalIgnoreCase);
+
+            // Ensure foldout state exists for every group (default: expanded)
+            foreach (var key in m_SortedGroupKeys)
+            {
+                if (!m_GroupFoldouts.ContainsKey(key))
+                    m_GroupFoldouts[key] = true;
             }
         }
 
@@ -311,9 +377,7 @@ namespace Project.Map
             DestroyEditorIfExists();
 
             if (m_SelectedTileData != null)
-            {
                 m_CachedEditor = UnityEditor.Editor.CreateEditor(m_SelectedTileData);
-            }
 
             Repaint();
         }
@@ -324,7 +388,7 @@ namespace Project.Map
             DestroyImmediate(m_CachedEditor);
             m_CachedEditor = null;
         }
-        
+
         private void InitialiseStylesIfNeeded()
         {
             if (m_StylesInitialised) return;
@@ -350,6 +414,17 @@ namespace Project.Map
                 padding = new RectOffset(6, 0, 0, 0),
                 fontSize = 11,
             };
+
+            m_SidebarGroupHeaderStyle = new GUIStyle(EditorStyles.foldout)
+            {
+                fixedHeight = k_SidebarGroupHeaderHeight,
+                alignment = TextAnchor.MiddleLeft,
+                padding = new RectOffset(16, 4, 0, 0),
+                fontSize = 11,
+                fontStyle = FontStyle.Bold,
+            };
+            m_SidebarGroupHeaderStyle.normal.textColor = new Color(0.75f, 0.85f, 1f, 1f);
+            m_SidebarGroupHeaderStyle.onNormal.textColor = new Color(0.75f, 0.85f, 1f, 1f);
 
             m_StylesInitialised = true;
         }

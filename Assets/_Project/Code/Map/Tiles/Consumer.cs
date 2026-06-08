@@ -22,7 +22,7 @@ namespace Project.Map
         {
             get
             {
-                m_satisfied = Resource.Value >= base.Amount;
+                m_satisfied = Data.Resource.Value >= base.Amount;
                 return base.Amount;
             }
         }
