@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ded23e107c7949ae98a40cd3b04357ff, type: 3}
+  m_Name: Home_Data
+  m_EditorClassIdentifier: Assembly-CSharp::Project.Map.StructureData
+  <Image>k__BackingField: {fileID: 0}
+  <TileRequirements>k__BackingField:
+  - {fileID: 5951234281938972194, guid: 2249f772577da99469269188074d9d0f, type: 2}
+  - {fileID: -3279134692063172354, guid: 2249f772577da99469269188074d9d0f, type: 2}
+  m_costs:
+  - m_resource: {fileID: 11400000, guid: 10593118195ff9645b777622ae17085d, type: 2}
+    m_amount: 25
+  - m_resource: {fileID: 11400000, guid: a9f85ee0c6ab2334c8dbe3a1f23e45c3, type: 2}
+    m_amount: 50
+  <CostReturnMultiplayer>k__BackingField: 0.5
