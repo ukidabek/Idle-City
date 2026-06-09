@@ -91,11 +91,14 @@ namespace Project.UI.Tiles
                 return;
             }
 
+            availableStructures = availableStructures.OrderBy(availableStructures => availableStructures.name);
+
             foreach (var structure in availableStructures)
             {
                 var view = m_buildTileViewPools.Get();
                 view.Initialize(structure);
                 view.gameObject.SetActive(true);
+                view.transform.SetAsLastSibling();
             }
 
             Show();

@@ -9,6 +9,8 @@ namespace Project.Map
     public class DataTileComponentEditor : Editor
     {
         private SerializedProperty m_dataProperty = null;
+        private bool m_isRenaming = false;
+        private string m_renameBuffer = string.Empty;
 
         private void OnEnable() => m_dataProperty = FindDataSerializedProperty();
 
@@ -22,6 +24,8 @@ namespace Project.Map
 
             var data = m_dataProperty.objectReferenceValue as ScriptableObject;
             if (data == null) return;
+
+            DrawRenameRow(data);
 
             EditorGUILayout.Space();
             EditorGUILayout.LabelField(data.GetType().Name + " Inspector", EditorStyles.boldLabel);
@@ -37,20 +41,55 @@ namespace Project.Map
             EditorGUILayout.EndVertical();
         }
 
+        private void DrawRenameRow(ScriptableObject data)
+        {
+            EditorGUILayout.BeginHorizontal();
+
+            if (m_isRenaming)
+            {
+                GUI.SetNextControlName("RenameField");
+                m_renameBuffer = EditorGUILayout.TextField(m_renameBuffer);
+                EditorGUI.FocusTextInControl("RenameField");
+
+                if (GUILayout.Button("Confirm", GUILayout.Width(60)))
+                    ApplyRename(data);
+
+                if (GUILayout.Button("Cancel", GUILayout.Width(55)))
+                    m_isRenaming = false;
+            }
+            else
+            {
+                if (GUILayout.Button("Rename Data"))
+                {
+                    m_isRenaming = true;
+                    m_renameBuffer = data.name;
+                }
+            }
+
+            EditorGUILayout.EndHorizontal();
+        }
+
+        private void ApplyRename(ScriptableObject data)
+        {
+            if (!string.IsNullOrWhiteSpace(m_renameBuffer))
+            {
+                var assetPath = AssetDatabase.GetAssetPath(data);
+                AssetDatabase.RenameAsset(assetPath, m_renameBuffer);
+                AssetDatabase.SaveAssets();
+            }
+
+            m_isRenaming = false;
+        }
+
         private void DrawCreateDataButton()
         {
-            if (m_dataProperty == null) return;
+            if (m_dataProperty != null && m_dataProperty.objectReferenceValue != null) return;
 
             var dataType = GetDataTypeViaReflection();
             if (dataType == null) return;
 
-            var hasData = m_dataProperty.objectReferenceValue != null;
-
-            using (new EditorGUI.DisabledScope(hasData))
-            {
-                if (GUILayout.Button($"Create {dataType.Name}"))
-                    CreateAndAssignData(dataType);
-            }
+            if (GUILayout.Button($"Create {dataType.Name}"))
+                CreateAndAssignData(dataType);
         }
 
         private SerializedProperty FindDataSerializedProperty()
@@ -107,10 +146,10 @@ namespace Project.Map
                 ? "Assets"
                 : System.IO.Path.GetDirectoryName(prefabPath);
 
-            var assetName = target.name + "_Data";
+            var assetName = $"{target.name}_{target.GetType().Name}_Data";
             var assetPath = AssetDatabase.GenerateUniqueAssetPath($"{folder}/{assetName}.asset");
 
-            var newData = ScriptableObject.CreateInstance(dataType);
+            var newData = CreateInstance(dataType);
             AssetDatabase.CreateAsset(newData, assetPath);
             AssetDatabase.SaveAssets();
 
