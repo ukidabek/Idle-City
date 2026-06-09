@@ -218,13 +218,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::_Project.CameraManagement.CameraController
   <Mode>k__BackingField: 2
+  m_cinemachineFallow: {fileID: 2190407644897693429}
+  m_zoomSpeed: 2
+  m_minFov: {x: 0, y: 2.25, z: -3}
+  m_maxFov: {x: 0, y: 6, z: -8}
+  m_lerpValue: 1
   m_camera: {fileID: 0}
   m_eventSystem: {fileID: 0}
   m_clickActionAsset: {fileID: 689955829740420165, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   m_deltaActionAsset: {fileID: -5218058061562072900, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   m_positionActionAsset: {fileID: 5621174005635256458, guid: 052faaac586de48259a63d0c4782560b, type: 3}
+  m_zoomActionAsset: {fileID: -7372357617810134354, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   m_cameraTarget: {fileID: 6274205022696327375}
-  m_speed: 5
+  m_speed: 2
   OnPointSelected:
     m_PersistentCalls:
       m_Calls:
