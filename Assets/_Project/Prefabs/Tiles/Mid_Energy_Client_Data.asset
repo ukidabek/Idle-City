@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d96414fbdf1b4ff28936fc49d04c6d00, type: 3}
-  m_Name: Low_Wood_Client_Data
+  m_Name: Mid_Energy_Client_Data
   m_EditorClassIdentifier: Assembly-CSharp::Project.Map.ClientData
-  <Resource>k__BackingField: {fileID: 11400000, guid: a9f85ee0c6ab2334c8dbe3a1f23e45c3, type: 2}
+  <Resource>k__BackingField: {fileID: 11400000, guid: 771cffa6f95876d418ee2caa7f65b270, type: 2}
   <BaseAmount>k__BackingField: 0.1

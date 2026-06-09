@@ -363,7 +363,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Project.Map.Producer
   <Tile>k__BackingField: {fileID: 5574504842554929193}
-  <Data>k__BackingField: {fileID: 11400000, guid: 7b332c57e85d7bb47911a5394100189f, type: 2}
+  <Data>k__BackingField: {fileID: 11400000, guid: d875d80ba9299aa4595b494a70f4089f, type: 2}
   <Amount>k__BackingField: 0
   m_consumers:
   - {fileID: -8414859400282503961}

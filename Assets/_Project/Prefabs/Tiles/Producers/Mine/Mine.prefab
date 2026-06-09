@@ -347,6 +347,9 @@ PrefabInstance:
       addedObject: {fileID: 4219500815829257494}
     - targetCorrespondingSourceObject: {fileID: 122618608886396418, guid: 97ca06653da479a43a30a98fad08032d, type: 3}
       insertIndex: -1
+      addedObject: {fileID: 1895992818083942728}
+    - targetCorrespondingSourceObject: {fileID: 122618608886396418, guid: 97ca06653da479a43a30a98fad08032d, type: 3}
+      insertIndex: -1
       addedObject: {fileID: 2553899628084999837}
   m_SourcePrefab: {fileID: 100100000, guid: 97ca06653da479a43a30a98fad08032d, type: 3}
 --- !u!1 &3851973773203703999 stripped
@@ -369,6 +372,21 @@ MonoBehaviour:
   <Tile>k__BackingField: {fileID: 4336432038179089447}
   <Data>k__BackingField: {fileID: 11400000, guid: b870a00a0772efa45baaec3797166217, type: 2}
   <Amount>k__BackingField: 0
+--- !u!114 &1895992818083942728
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3851973773203703999}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d791179b219148d8a680e6787d160799, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Project.Map.Consumer
+  <Tile>k__BackingField: {fileID: 4336432038179089447}
+  <Data>k__BackingField: {fileID: 11400000, guid: c85bd4e7402826248a7de0cf1a8c6446, type: 2}
+  <Amount>k__BackingField: 0
 --- !u!114 &2553899628084999837
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -386,6 +404,7 @@ MonoBehaviour:
   <Amount>k__BackingField: 0
   m_consumers:
   - {fileID: 4219500815829257494}
+  - {fileID: 1895992818083942728}
 --- !u!114 &4336432038179089447 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 642128757018235546, guid: 97ca06653da479a43a30a98fad08032d, type: 3}

@@ -61,7 +61,7 @@ MonoBehaviour:
     FieldOfView: 60
     OrthographicSize: 5
     NearClipPlane: 0.3
-    FarClipPlane: 1000
+    FarClipPlane: 25
     Dutch: 0
     ModeOverride: 0
     PhysicalProperties:
@@ -219,6 +219,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::_Project.CameraManagement.CameraController
   <Mode>k__BackingField: 2
   m_camera: {fileID: 0}
+  m_eventSystem: {fileID: 0}
   m_clickActionAsset: {fileID: 689955829740420165, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   m_deltaActionAsset: {fileID: -5218058061562072900, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   m_positionActionAsset: {fileID: 5621174005635256458, guid: 052faaac586de48259a63d0c4782560b, type: 3}

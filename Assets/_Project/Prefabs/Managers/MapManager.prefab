@@ -145,7 +145,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 58f69512684344d6b5c96b7499614cc8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Project.Map.TileBuilder
-  m_size: {x: 6, y: 6}
+  m_size: {x: 64, y: 64}
   m_tileDatabase: {fileID: 11400000, guid: 1c808cd6af330b548906d809bf3e1ee9, type: 2}
   m_groundTileCategory: {fileID: 3086118456809188769, guid: 517c341c2ae78ba4bb5877525d8a1b92, type: 2}
   m_desertTileCategory: {fileID: 6153787698303020785, guid: 517c341c2ae78ba4bb5877525d8a1b92, type: 2}
