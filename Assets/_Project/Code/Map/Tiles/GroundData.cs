@@ -8,6 +8,8 @@ namespace Project.Map
     {
         [SerializeField] private TileID[] m_availableDeposits;
         public IReadOnlyList<TileID> AvailableDeposits => m_availableDeposits;
-        
+
+        [field: SerializeField, Min(0)] public int Order { get; private set; } = 0;
+
     }
 }

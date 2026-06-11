@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using Utilities.General;
 
 namespace Code.Generator
 {
@@ -9,6 +8,7 @@ namespace Code.Generator
         [SerializeField] private int m_seed = 2137;
         [SerializeField] private Size m_size = Size._32;
         [SerializeField] private Texture2D m_texture;
+        public Texture2D Texture => m_texture;
         
         [SerializeReference] private INoiseGeneratorStep[] m_generatorSteps;
         [SerializeReference] private INoiseToTextureConverter m_converter;
@@ -16,7 +16,7 @@ namespace Code.Generator
 
         public void Generate()
         {
-            var noise = new Noise((int)m_size);
+            var noise = new Noise((int)m_size, m_seed);
             if (m_generatorSteps != null)
                 foreach (var generatorStep in m_generatorSteps)
                     generatorStep.Process(noise);

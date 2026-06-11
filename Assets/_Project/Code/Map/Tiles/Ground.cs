@@ -8,5 +8,7 @@ namespace Project.Map
         [SerializeField] private GroundData m_data = null;
         public GroundData Data => m_data;
         public IReadOnlyList<TileID> AvailableDeposits => Data.AvailableDeposits;
+        
+        public int Order => Data.Order;
     }
 }
