@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: Mid_Energy_Client_Data
   m_EditorClassIdentifier: Assembly-CSharp::Project.Map.ClientData
   <Resource>k__BackingField: {fileID: 11400000, guid: 771cffa6f95876d418ee2caa7f65b270, type: 2}
-  <BaseAmount>k__BackingField: 0.1
+  <BaseAmount>k__BackingField: 0.5

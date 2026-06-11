@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ded23e107c7949ae98a40cd3b04357ff, type: 3}
   m_Name: Field_Data
   m_EditorClassIdentifier: Assembly-CSharp::Project.Map.StructureData
-  <Image>k__BackingField: {fileID: 21300000, guid: 4672b043a1940f046ab2d1f5a4b602a5, type: 3}
+  <Image>k__BackingField: {fileID: 21300000, guid: 9a8e16191d8a62243b0a12e8e4ca1acf, type: 3}
   <TileRequirements>k__BackingField:
   - {fileID: 5951234281938972194, guid: 2249f772577da99469269188074d9d0f, type: 2}
   m_costs:
