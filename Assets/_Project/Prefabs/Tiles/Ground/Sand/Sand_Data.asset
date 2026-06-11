@@ -14,3 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Project.Map.GroundData
   m_availableDeposits:
   - {fileID: -997958414207827887, guid: 2249f772577da99469269188074d9d0f, type: 2}
+  <Order>k__BackingField: 1
