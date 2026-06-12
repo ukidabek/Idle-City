@@ -9,27 +9,29 @@ namespace Code.Generator
         [SerializeField] private Size m_size = Size._32;
         [SerializeField] private Texture2D m_texture;
         public Texture2D Texture => m_texture;
-        
-        [SerializeReference] private INoiseGeneratorStep[] m_generatorSteps;
+
+        [SerializeReference] private NoiseTrack[] m_tracks = { new NoiseTrack() };
         [SerializeReference] private INoiseToTextureConverter m_converter;
         [SerializeReference] private ITexturePostProcessor[] m_postProcessors;
 
         public void Generate()
         {
-            var noise = new Noise((int)m_size, m_seed);
-            if (m_generatorSteps != null)
-                foreach (var generatorStep in m_generatorSteps)
-                    generatorStep.Process(noise);
+            var channelNoises = new Noise[m_tracks?.Length ?? 0];
+            if (m_tracks != null)
+                for (var channel = 0; channel < m_tracks.Length; channel++)
+                    channelNoises[channel] = m_tracks[channel]?.Generate((int)m_size, m_seed);
 
             if (m_converter != null)
-                m_texture = m_converter.Convert(noise);
+                m_texture = m_converter.Convert(channelNoises);
 
             if (m_texture == null || m_postProcessors == null) return;
             foreach (var postProcessor in m_postProcessors)
-                postProcessor.PostProcess(m_texture);
+                postProcessor?.PostProcess(m_texture);
         }
     }
     
+    public enum NoiseChannel { R = 0, G = 1, B = 2, A = 3 }
+
     public enum Size
     {
         [InspectorName("32")]    _32    = 1 << 5,
