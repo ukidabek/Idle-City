@@ -6,6 +6,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 - **`var` everywhere** — use `var` for all local variable declarations where the type can be inferred.
 - **`m_` prefix** — private instance fields use `m_camelCase` (e.g. `m_tileDatabase`, `m_currentHealth`).
+- **`const` PascalCase** — `const` fields use PascalCase (e.g. `MaxTracks`), not the `k_` prefix.
 - **Inline when possible** — prefer expression bodies (`=>`) for single-expression methods/properties; collapse trivial `if` bodies to one line.
 - **Early return** — guard clauses at the top of methods instead of deeply nested `if` blocks.
 - **Fun variable names** — use creative, characterful names for locals where context allows (e.g. `var mightyStack` instead of `var stack`). Keep public API and serialized field names descriptive and conventional.
