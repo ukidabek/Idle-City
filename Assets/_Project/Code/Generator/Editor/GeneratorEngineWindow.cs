@@ -273,7 +273,9 @@ namespace Code.Generator
                             }
                         }
                     }
-
+                    
+                    GUILayout.FlexibleSpace();
+                    
                     if (GUILayout.Button("Set Converter"))
                         OpenSearch(SelectionMode.Converter, -1);
                 }
