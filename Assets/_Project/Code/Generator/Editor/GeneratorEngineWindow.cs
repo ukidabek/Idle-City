@@ -13,15 +13,17 @@ namespace Code.Generator
     public class GeneratorEngineWindow : EditorWindow, ISearchWindowProvider
     {
         private const int MaxTracks = 4;
-        private const float StepBlockWidth = 320;
+        private const float StepBlockWidth = 320f;
         private const float TrackHeaderWidth = 80f;
-        private const float TrackRowHeight = 200f;
-        private const float ColumnWidth = 260f;
-        private const float TextureColumnWidth = 350;
+        private const float TrackRowHeight = 230f;
+        private const float ColumnWidth = 300f;
+        private const float TextureColumnWidth = 512f;
         private const float ButtonWidth = 22f;
-        private const float ArrowWidth = 16f;
+        private const float ArrowWidth = 22f;
 
         [SerializeField] private GeneratorEngine m_engine;
+        [SerializeField] private bool m_locked = false;
+        private bool m_generating = false;
 
         private SerializedObject m_serializedObject;
         private SerializedProperty m_seedProperty;
@@ -79,6 +81,26 @@ namespace Code.Generator
         {
             if (m_serializedObject != null && m_serializedObject.targetObject == m_engine) return;
             Bind(m_engine);
+        }
+
+        private void ShowButton(Rect rect)
+        {
+            var icon = EditorGUIUtility.IconContent(m_locked ? "IN LockButton on" : "IN LockButton");
+            if (!GUI.Button(rect, icon, GUIStyle.none)) return;
+            m_locked = !m_locked;
+            if (!m_locked && Selection.activeObject is GeneratorEngine freshPick)
+            {
+                Bind(freshPick);
+                Repaint();
+            }
+        }
+
+        private void OnSelectionChange()
+        {
+            if (m_locked) return;
+            if (Selection.activeObject is not GeneratorEngine freshPick) return;
+            Bind(freshPick);
+            Repaint();
         }
 
         private void BuildSearchTrees()
@@ -162,13 +184,11 @@ namespace Code.Generator
                             if (GUILayout.Button("-", GUILayout.Width(ButtonWidth))) 
                                 toDelete = i;
                             EditorGUILayout.LabelField($"{(NoiseChannel)i}", m_headerStyle, GUILayout.Width(TrackHeaderWidth));
-                            
-                            if (GUILayout.Button("+", GUILayout.Width(ButtonWidth)))
-                                OpenSearch(SelectionMode.NoiseGenerator, i);
                         }
                         
                         m_trackScrolls[i] = EditorGUILayout.BeginScrollView(m_trackScrolls[i], GUILayout.Height(TrackRowHeight));
-                        DrawStepBlocks(m_tracksProperty.GetArrayElementAtIndex(i).FindPropertyRelative("m_steps"));
+                        DrawStepBlocks(m_tracksProperty.GetArrayElementAtIndex(i).FindPropertyRelative("m_steps"), i);
+                        
                         EditorGUILayout.EndScrollView();
                     }
                 }
@@ -182,7 +202,7 @@ namespace Code.Generator
             EditorGUILayout.EndScrollView();
         }
 
-        private void DrawStepBlocks(SerializedProperty stepsProperty)
+        private void DrawStepBlocks(SerializedProperty stepsProperty, int trackIndex)
         {
             if (stepsProperty == null) return;
             var count = stepsProperty.arraySize;
@@ -193,9 +213,9 @@ namespace Code.Generator
                 for (var i = 0; i < count; i++)
                 {
                     var step = stepsProperty.GetArrayElementAtIndex(i);
-                    using (new EditorGUILayout.VerticalScope(GUI.skin.box, GUILayout.Width(StepBlockWidth), GUILayout.MinHeight(TrackRowHeight - 8f)))
+                    using (new EditorGUILayout.VerticalScope(GUI.skin.box, GUILayout.Width(StepBlockWidth), GUILayout.MinHeight(TrackRowHeight - 20)))
                     {
-                        DrawManagedReferenceBody(step);
+                        DrawManagedReferenceBody(step, false);
                         
                         GUILayout.FlexibleSpace();
                         
@@ -215,7 +235,14 @@ namespace Code.Generator
                     }
 
                     if (i < count - 1)
+                    {
                         EditorGUILayout.LabelField("→", m_arrowStyle, GUILayout.Width(ArrowWidth), GUILayout.ExpandHeight(true));
+                    }
+                    else
+                    {
+                        if (GUILayout.Button("+", GUILayout.Width(ButtonWidth), GUILayout.ExpandHeight(true)))
+                            OpenSearch(SelectionMode.NoiseGenerator, trackIndex);
+                    }
                 }
             }
         }
@@ -234,15 +261,16 @@ namespace Code.Generator
                 using (new EditorGUILayout.VerticalScope(GUI.skin.box, GUILayout.MinHeight(SectionMinHeight)))
                 {
                     EditorGUILayout.LabelField("Noise To Texture Converter", EditorStyles.boldLabel);
+                    
                     if (m_converterProperty.managedReferenceValue != null)
                     {
                         using (new EditorGUILayout.VerticalScope(GUI.skin.box))
-                        using (new EditorGUILayout.HorizontalScope())
                         {
-                            using (new EditorGUILayout.VerticalScope())
-                                DrawManagedReferenceBody(m_converterProperty);
-                            if (GUILayout.Button("✕", GUILayout.Width(24f)))
-                                m_converterProperty.managedReferenceValue = null;
+                            using (new EditorGUILayout.HorizontalScope())
+                            {
+                                using (new EditorGUILayout.VerticalScope())
+                                    DrawManagedReferenceBody(m_converterProperty, true);
+                            }
                         }
                     }
 
@@ -289,13 +317,10 @@ namespace Code.Generator
                     GUI.DrawTexture(claimedRect, texture2D, ScaleMode.ScaleToFit);
                     EditorGUILayout.LabelField($"{texture2D.width} × {texture2D.height}  ({texture2D.format})", EditorStyles.centeredGreyMiniLabel);
 
-                    if (GUILayout.Button("Generate"))
+                    using (new EditorGUI.DisabledScope(m_generating))
                     {
-                        m_engine.Generate();
-                        m_serializedObject.Update();
-                        SaveTextureAsSubAsset();
-                        m_serializedObject.Update();
-                        Repaint();
+                        if (GUILayout.Button("Generate"))
+                            _ = RunGenerateAsync();
                     }
                 }
 
@@ -303,6 +328,18 @@ namespace Code.Generator
             }
         }
         
+
+        private async Awaitable RunGenerateAsync()
+        {
+            m_generating = true;
+            Repaint();
+            await m_engine.Generate();
+            m_serializedObject.Update();
+            SaveTextureAsSubAsset();
+            m_serializedObject.Update();
+            m_generating = false;
+            Repaint();
+        }
 
         private void DisplayVerticalList(SerializedProperty listProperty)
         {
@@ -317,7 +354,7 @@ namespace Code.Generator
                     using (new EditorGUILayout.HorizontalScope())
                     {
                         using (new EditorGUILayout.VerticalScope())
-                            DrawManagedReferenceBody(element);
+                            DrawManagedReferenceBody(element, false);
 
                         var layout = GUILayout.Width(ButtonWidth);
                         using (new EditorGUILayout.VerticalScope(layout))
@@ -340,9 +377,17 @@ namespace Code.Generator
             }
         }
 
-        private void DrawManagedReferenceBody(SerializedProperty property)
+        private void DrawManagedReferenceBody(SerializedProperty property, bool showClearButton)
         {
-            EditorGUILayout.LabelField(property.managedReferenceValue?.GetType().Name ?? "null", EditorStyles.boldLabel);
+            using (new EditorGUILayout.HorizontalScope())
+            {
+                EditorGUILayout.LabelField(property.managedReferenceValue?.GetType().Name ?? "null", EditorStyles.boldLabel);
+                if (showClearButton && GUILayout.Button("✕", GUILayout.Width(ButtonWidth)))
+                {
+                    m_converterProperty.managedReferenceValue = null;
+                    return;
+                }
+            }
 
             var child = property.Copy();
             var end = property.GetEndProperty();
@@ -350,13 +395,12 @@ namespace Code.Generator
 
             var prevWideMode = EditorGUIUtility.wideMode;
             EditorGUIUtility.wideMode = true;
-            EditorGUI.indentLevel++;
+            
             while (!SerializedProperty.EqualContents(child, end))
             {
-                EditorGUILayout.PropertyField(child, true);
+                EditorGUILayout.PropertyField(child, true, GUILayout.ExpandWidth(true));
                 if (!child.NextVisible(false)) break;
             }
-            EditorGUI.indentLevel--;
             EditorGUIUtility.wideMode = prevWideMode;
         }
 

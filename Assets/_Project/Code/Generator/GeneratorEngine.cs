@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System.Linq;
+using System.Threading.Tasks;
+using UnityEngine;
 
 namespace Code.Generator
 {
@@ -14,16 +16,18 @@ namespace Code.Generator
         [SerializeReference] private INoiseToTextureConverter m_converter;
         [SerializeReference] private ITexturePostProcessor[] m_postProcessors;
 
-        public void Generate()
+        public async Awaitable Generate()
         {
-            var channelNoises = new Noise[m_tracks?.Length ?? 0];
-            if (m_tracks != null)
-                for (var channel = 0; channel < m_tracks.Length; channel++)
-                    channelNoises[channel] = m_tracks[channel]?.Generate((int)m_size, m_seed);
-
+            await Awaitable.BackgroundThreadAsync();
+            
+            var activeTracks = m_tracks.Select(track => track.GenerateAsync((int)m_size, m_seed));
+            var channelNoises = await Task.WhenAll(activeTracks);
+            
+            await Awaitable.MainThreadAsync();
+            
             if (m_converter != null)
                 m_texture = m_converter.Convert(channelNoises);
-
+            
             if (m_texture == null || m_postProcessors == null) return;
             foreach (var postProcessor in m_postProcessors)
                 postProcessor?.PostProcess(m_texture);

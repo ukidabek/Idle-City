@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using UnityEngine;
 
 namespace Code.Generator
@@ -18,5 +20,9 @@ namespace Code.Generator
                 step?.Process(Noise);
             return Noise;
         }
+
+        public Task<Noise> GenerateAsync(int size, int seed) => !Steps.Any() ? 
+            Task.FromResult<Noise>(null) : 
+            Task.Run(() => Generate(size, seed));
     }
 }
