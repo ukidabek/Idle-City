@@ -228,7 +228,7 @@ MonoBehaviour:
   m_clickActionAsset: {fileID: 689955829740420165, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   m_deltaActionAsset: {fileID: -5218058061562072900, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   m_positionActionAsset: {fileID: 5621174005635256458, guid: 052faaac586de48259a63d0c4782560b, type: 3}
-  m_zoomActionAsset: {fileID: -7372357617810134354, guid: 052faaac586de48259a63d0c4782560b, type: 3}
+  m_zoomActionAsset: {fileID: 9220869704085319745, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   m_cameraTarget: {fileID: 6274205022696327375}
   m_speed: 2
   OnPointSelected:
