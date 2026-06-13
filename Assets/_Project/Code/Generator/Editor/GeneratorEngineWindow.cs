@@ -59,7 +59,7 @@ namespace Code.Generator
         [OnOpenAsset]
         private static bool OnOpenAsset(int instanceId, int line)
         {
-            if (EditorUtility.InstanceIDToObject(instanceId) is not GeneratorEngine engine) return false;
+            if (EditorUtility.EntityIdToObject(instanceId) is not GeneratorEngine engine) return false;
             Open(engine);
             return true;
         }

@@ -13,9 +13,6 @@ namespace Code.Generator
 
         public override void OnInspectorGUI()
         {
-            if (GUILayout.Button("Open Editor"))
-                GeneratorEngineWindow.Open(target as GeneratorEngine);
-
             serializedObject.Update();
             var freshBake = m_textureProperty.objectReferenceValue as Texture2D;
             if (freshBake == null) return;
