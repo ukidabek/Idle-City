@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 1765913859238272364}
   - component: {fileID: 1402124921845473833}
   - component: {fileID: 1189747114037986183}
-  - component: {fileID: 2762695731500542621}
   - component: {fileID: 3575027027983449288}
   m_Layer: 0
   m_Name: MapManager
@@ -92,7 +91,7 @@ MonoBehaviour:
   Callback:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2762695731500542621}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: Project.Map.TileBuilder, Assembly-CSharp
         m_MethodName: BuildTile
         m_Mode: 0
@@ -133,23 +132,6 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   m_event: {fileID: 11400000, guid: 89bafb6ca0274234299bad5fc7f2c58d, type: 2}
---- !u!114 &2762695731500542621
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3523102907327602959}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 58f69512684344d6b5c96b7499614cc8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Project.Map.TileBuilder
-  m_size: {x: 64, y: 64}
-  m_tileDatabase: {fileID: 11400000, guid: 1c808cd6af330b548906d809bf3e1ee9, type: 2}
-  m_groundTileCategory: {fileID: 3086118456809188769, guid: 517c341c2ae78ba4bb5877525d8a1b92, type: 2}
-  m_desertTileCategory: {fileID: 6153787698303020785, guid: 517c341c2ae78ba4bb5877525d8a1b92, type: 2}
-  m_mapManager: {fileID: 3575027027983449288}
 --- !u!114 &3575027027983449288
 MonoBehaviour:
   m_ObjectHideFlags: 0
