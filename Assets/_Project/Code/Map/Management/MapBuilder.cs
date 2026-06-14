@@ -4,28 +4,29 @@ using Code.Generator;
 using UnityEngine;
 using UnityEngine.Events;
 
-namespace Project.Map
+namespace Project.Map.Generation
 {
-    public class TileBuilder : MonoBehaviour
+    public class MapBuilder : MonoBehaviour
     {
-        [SerializeField, Min(0)] private Vector2Int m_size = new Vector2Int(1, 1);
-
         [SerializeField] private TileDatabase m_tileDatabase = null;
         [SerializeField] private TileCategory m_groundTileCategory = null;
         [SerializeField] private TileCategory m_desertTileCategory = null;
         [Space]
         [SerializeField] private MapManager m_mapManager = null;
+
         [SerializeField] private GeneratorEngine  m_generatorEngine = null;
+
         [Space]
         UnityEvent<IReadOnlyList<Tile>> OnAvailableTilesSelected = new UnityEvent<IReadOnlyList<Tile>>();
-        
-        
+
         private class RangeCollection<T>
         {
             private class Range<T>
             {
                 public readonly float Min;
+
                 public readonly float Max;
+
                 public readonly T Item;
 
                 public Range(float min, float max, T item)
