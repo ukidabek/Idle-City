@@ -16,8 +16,9 @@ namespace Project.Map
         private const string WindowTitle = "Tile Data Browser";
         private const string MenuPath = "Tools/Tile Data Browser";
 
-        private List<TileData> m_allTileData = new List<TileData>(100);
-        private List<TileData> m_filteredTileData = new List<TileData>(100);
+        private readonly List<TileData> m_allTileData = new List<TileData>(100);
+        private readonly List<TileData> m_filteredTileData = new List<TileData>(100);
+        
         private TileData m_selectedTileData = null;
         private Editor m_cachedEditor = null;
 
@@ -30,13 +31,12 @@ namespace Project.Map
         private bool m_isDraggingSplitter = false;
 
         private Dictionary<string, List<TileData>> m_GroupedTileData = new Dictionary<string, List<TileData>>(100);
-        private Dictionary<string, bool> m_groupFoldouts = new Dictionary<string, bool>(100);
-        private List<string> m_sortedGroupKeys = new List<string>(100);
+        private readonly Dictionary<string, bool> m_groupFoldouts = new Dictionary<string, bool>(100);
+        private readonly List<string> m_sortedGroupKeys = new List<string>(100);
 
-        // Rename state
         private bool m_isRenaming = false;
         private string m_renameBuffer = string.Empty;
-        private const string k_RenameControlName = "TileDataRenameField";
+        private const string RenameControlName = "TileDataRenameField";
 
         private GUIStyle m_sidebarItemStyle;
         private GUIStyle m_sidebarItemSelectedStyle;
@@ -204,13 +204,9 @@ namespace Project.Map
             EditorGUI.DrawRect(headerRect, new Color(0.24f, 0.24f, 0.24f, 1f));
 
             if (m_isRenaming)
-            {
                 DrawInspectorRenameHeader(headerRect);
-            }
             else
-            {
                 DrawInspectorNormalHeader(headerRect);
-            }
 
             var inspectorScrollRect = new Rect(rect.x, rect.y + SidebarItemHeight, rect.width, rect.height - SidebarItemHeight);
             var screenRect = new Rect(0, 0, inspectorScrollRect.width - 14f, 10000f);
@@ -228,9 +224,9 @@ namespace Project.Map
 
         private void DrawInspectorNormalHeader(Rect headerRect)
         {
-            var labelRect  = new Rect(headerRect.x + 6,      headerRect.y, headerRect.width - 114, headerRect.height);
-            var renameRect = new Rect(headerRect.xMax - 110,  headerRect.y + 3, 52, 20);
-            var pingRect   = new Rect(headerRect.xMax - 56,   headerRect.y + 3, 52, 20);
+            var labelRect = new Rect(headerRect.x + 6, headerRect.y, headerRect.width - 114, headerRect.height);
+            var renameRect = new Rect(headerRect.xMax - 115, headerRect.y + 3, 60, 20);
+            var pingRect = new Rect(headerRect.xMax - 56, headerRect.y + 3, 52, 20);
 
             GUI.Label(labelRect, m_selectedTileData.name, EditorStyles.boldLabel);
 
@@ -250,13 +246,12 @@ namespace Project.Map
             var confirmRect = new Rect(headerRect.xMax - 126,  headerRect.y + 3, 52, 20);
             var cancelRect  = new Rect(headerRect.xMax - 70,   headerRect.y + 3, 66, 20);
 
-            GUI.SetNextControlName(k_RenameControlName);
+            GUI.SetNextControlName(RenameControlName);
             m_renameBuffer = GUI.TextField(fieldRect, m_renameBuffer);
 
-            if (GUI.GetNameOfFocusedControl() != k_RenameControlName)
-                EditorGUI.FocusTextInControl(k_RenameControlName);
+            if (GUI.GetNameOfFocusedControl() != RenameControlName)
+                EditorGUI.FocusTextInControl(RenameControlName);
 
-            // Keyboard shortcuts
             var e = Event.current;
             if (e.type == EventType.KeyDown)
             {

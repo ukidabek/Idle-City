@@ -2,12 +2,48 @@ using System.Collections.Generic;
 using System.Linq;
 using Code.Generator;
 using UnityEngine;
+using UnityEngine.Assertions;
 using UnityEngine.Events;
 
 namespace Project.Map.Generation
 {
     public class MapBuilder : MonoBehaviour
     {
+        private class DepostiSampler
+        {
+            public Tile Tile { get; }
+            private readonly Deposit m_deposit;
+            private readonly Texture2D m_texture;
+            public float Sample { get; private set; }
+
+            public DepostiSampler(Tile tile, Texture2D texture)
+            {
+                Tile = tile;
+                m_texture = texture;
+                m_deposit = tile.GetComponent<Deposit>();
+                Assert.IsNotNull(m_deposit);
+            }
+
+            public DepostiSampler SamplePosition(int x, int y)
+            {
+                var depositData = m_deposit.Data;
+                var position = new Vector2Int(x, y);
+                var color = m_texture.GetPixel(position.x, position.y);
+                
+                Sample = color.b >= depositData.MinimalWaterDistance ? 0 : -1;
+                if (Sample < 0) return this;
+
+                Sample = Random.value <= depositData.SpawnChance ? 0 : -1;
+                if (Sample < 0) return this;
+               
+                position = depositData.NoiseOffset + position;
+                color = m_texture.GetPixel(position.x, position.y);
+                Sample = color.g;
+                
+                return this;
+            }
+        }
+        
         [SerializeField] private TileDatabase m_tileDatabase = null;
         [SerializeField] private TileCategory m_groundTileCategory = null;
         [SerializeField] private TileCategory m_desertTileCategory = null;
@@ -37,7 +73,7 @@ namespace Project.Map.Generation
                 }
             }
             
-            private Range<T>[] m_range;
+            private readonly Range<T>[] m_range;
 
             public T Get(float value)
             {
@@ -67,14 +103,17 @@ namespace Project.Map.Generation
         
         private void Start()
         {
-            var groundTiles = new RangeCollection<Tile>( m_tileDatabase.GetTilesByCategory(m_groundTileCategory)
+            var groundTiles = new RangeCollection<Tile>(m_tileDatabase.GetTilesByCategory(m_groundTileCategory)
                 .OrderBy(tile =>
                 {
                     var ground = tile.GetComponent<Ground>();
                     return ground.Order;
                 }));
-            var depositTiles = m_tileDatabase.GetTilesByCategory(m_desertTileCategory);
             var texture = m_generatorEngine.Texture;
+            var depositTiles = m_tileDatabase
+                .GetTilesByCategory(m_desertTileCategory)
+                .Select(tile => new DepostiSampler(tile, texture))
+                .ToList();
             
             for (var i = 0; i < texture.height; i++)
             {
@@ -85,6 +124,15 @@ namespace Project.Map.Generation
                     var read = color.r;
                     var tile = groundTiles.Get(read);
                     m_mapManager.PlaceTile(cell, Instantiate(tile));
+
+                    var sampletDeposits = depositTiles
+                        .Select(tile => tile.SamplePosition(i, j))
+                        .OrderByDescending(tile => tile.Sample)
+                        .Where(tile => tile.Sample > 0);
+
+                    var deposit = sampletDeposits.FirstOrDefault();
+                    if (deposit == null) continue;
+                    m_mapManager.PlaceTile(cell, Instantiate(deposit.Tile));
                 }
             }
         }

@@ -9,7 +9,7 @@ namespace Project.Map.Generation
     [Serializable, Preserve]
     public class WaterDistancePostProcessor : ITexturePostProcessor
     {
-        [SerializeField, Range(0f, 1f)] private float m_waterThreshold = 0.5f;
+        [SerializeField, Range(0f, 1f)] private float m_waterThreshold = 0.333f;
         [SerializeField] private NoiseChannel m_sourceChannel = NoiseChannel.R;
         [SerializeField] private NoiseChannel m_outputChannel = NoiseChannel.B;
 
@@ -50,13 +50,13 @@ namespace Project.Map.Generation
             while (m_waterTiles.Count > 0)
             {
                 var cell = m_waterTiles.Dequeue();
-                var heare = distance[cell.x, cell.y];
+                var here = distance[cell.x, cell.y];
                 foreach (var offset in m_offsets)
                 {
                     var next = cell + offset;
-                    if (next.x < 0 || next.x >= width || next.y < 0 || next.y >= height)
-                        continue;
-                    var nextValue = heare + 1;
+                    if (next.x < 0 || next.x >= width || next.y < 0 || next.y >= height) continue;
+                    var nextValue = here + 1;
+                   
                     if (distance[next.x, next.y] <= nextValue) continue;
 
                     distance[next.x, next.y] = nextValue;
