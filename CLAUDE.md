@@ -2,6 +2,10 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
+## Collaboration Rules
+
+- **Preview before editing** — when the user says "show me changes", "show me how it would look", or similar, output the proposed diff or modified code sections as text first. Only apply edits after the user explicitly approves (e.g. "looks good", "do it", "apply it").
+
 ## Coding Conventions
 
 - **`var` everywhere** — use `var` for all local variable declarations where the type can be inferred.
