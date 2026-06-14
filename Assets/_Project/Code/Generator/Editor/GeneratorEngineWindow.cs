@@ -25,9 +25,7 @@ namespace Code.Generator
         [SerializeField] private bool m_locked = false;
         private bool m_generating = false;
 
-        [Flags] private enum ChannelMask { R = 1, G = 2, B = 4, A = 8, All = R | G | B | A }
-        private ChannelMask m_channelMask = ChannelMask.All;
-        private Texture2D m_channelPreviewTexture;
+        private readonly TextureChannelPreview m_channelPreview = new();
 
         private SerializedObject m_serializedObject;
         private SerializedProperty m_seedProperty;
@@ -79,7 +77,7 @@ namespace Code.Generator
             m_converterProperty = m_serializedObject.FindProperty("m_converter");
             m_postProcessorsProperty = m_serializedObject.FindProperty("m_postProcessors");
             BuildSearchTrees();
-            RebuildChannelPreview();
+            m_channelPreview.Rebuild(m_textureProperty.objectReferenceValue as Texture2D);
         }
 
         private void EnsureBound()
@@ -316,28 +314,14 @@ namespace Code.Generator
 
                     var texture2D = m_textureProperty.objectReferenceValue as Texture2D;
                     if (texture2D == null) return;
-
-                    if (m_channelPreviewTexture != null)
+                    
+                    if (m_channelPreview.PreviewTexture != null)
                     {
                         var claimedRect = GUILayoutUtility.GetRect(0, TextureColumnWidth, 0, TextureColumnWidth);
-                        GUI.DrawTexture(claimedRect, m_channelPreviewTexture, ScaleMode.ScaleToFit);
+                        GUI.DrawTexture(claimedRect, m_channelPreview.PreviewTexture, ScaleMode.ScaleToFit);
                     }
 
-                    using (new EditorGUILayout.HorizontalScope())
-                    {
-                        GUILayout.FlexibleSpace();
-                        DrawChannelToggle("R", ChannelMask.R, new Color(1f, 0.4f, 0.4f));
-                        DrawChannelToggle("G", ChannelMask.G, new Color(0.4f, 1f, 0.4f));
-                        DrawChannelToggle("B", ChannelMask.B, new Color(0.4f, 0.6f, 1f));
-                        DrawChannelToggle("A", ChannelMask.A, Color.white);
-                        if (GUILayout.Button("All", GUILayout.Width(36f)))
-                        {
-                            m_channelMask = ChannelMask.All;
-                            RebuildChannelPreview();
-                        }
-                        GUILayout.FlexibleSpace();
-                    }
-                    
+                    m_channelPreview.DrawToggles(texture2D, Repaint);
                     EditorGUILayout.LabelField($"{texture2D.width} × {texture2D.height}  ({texture2D.format})", EditorStyles.centeredGreyMiniLabel);
 
                     using (new EditorGUI.DisabledScope(m_generating))
@@ -350,43 +334,6 @@ namespace Code.Generator
                 GUILayout.FlexibleSpace();
             }
         }
-
-        private void DrawChannelToggle(string label, ChannelMask channel, Color color)
-        {
-            var active = m_channelMask.HasFlag(channel);
-            var prev = GUI.contentColor;
-            GUI.contentColor = active ? color : Color.grey;
-            if (GUILayout.Button(label, GUILayout.Width(28f)))
-            {
-                m_channelMask ^= channel;
-                RebuildChannelPreview();
-            }
-            GUI.contentColor = prev;
-        }
-
-        private void RebuildChannelPreview()
-        {
-            var source = m_textureProperty.objectReferenceValue as Texture2D;
-            if (source == null) return;
-
-            if (m_channelPreviewTexture == null || m_channelPreviewTexture.width != source.width || m_channelPreviewTexture.height != source.height)
-                m_channelPreviewTexture = new Texture2D(source.width, source.height, source.format, false);
-
-            var pixels = source.GetPixels();
-            for (var i = 0; i < pixels.Length; i++)
-            {
-                var p = pixels[i];
-                pixels[i] = new Color(
-                    m_channelMask.HasFlag(ChannelMask.R) ? p.r : 0f,
-                    m_channelMask.HasFlag(ChannelMask.G) ? p.g : 0f,
-                    m_channelMask.HasFlag(ChannelMask.B) ? p.b : 0f,
-                    m_channelMask.HasFlag(ChannelMask.A) ? p.a : 1f
-                );
-            }
-
-            m_channelPreviewTexture.SetPixels(pixels);
-            m_channelPreviewTexture.Apply();
-        }
         
 
         private async Awaitable RunGenerateAsync()
@@ -397,7 +344,7 @@ namespace Code.Generator
             m_serializedObject.Update();
             SaveTextureAsSubAsset();
             m_serializedObject.Update();
-            RebuildChannelPreview();
+            m_channelPreview.Rebuild(m_textureProperty.objectReferenceValue as Texture2D);
             m_generating = false;
             Repaint();
         }
