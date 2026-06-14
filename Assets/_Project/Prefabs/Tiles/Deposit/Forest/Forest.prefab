@@ -466,6 +466,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Forest
       objectReference: {fileID: 0}
+    - target: {fileID: 5568293681235779511, guid: e9a646e72f6c3bf459d9696f048a5674, type: 3}
+      propertyPath: <Data>k__BackingField
+      value: 
+      objectReference: {fileID: 11400000, guid: 129f859cf4aeb45f2893a4767f3372b1, type: 2}
     - target: {fileID: 7552136112932297123, guid: e9a646e72f6c3bf459d9696f048a5674, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
