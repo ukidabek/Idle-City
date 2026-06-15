@@ -83,6 +83,11 @@ namespace _Project.CameraManagement
             m_cameraTarget.position = position;
         }
 
+        public void FocusOn(Vector2Int gridCoordinates)
+        {
+            m_cameraTarget.position = new Vector3(gridCoordinates.x, 0f, gridCoordinates.y);
+        }
+
         private void Update() => m_isOverUI = m_eventSystem.IsPointerOverGameObject();
 
 

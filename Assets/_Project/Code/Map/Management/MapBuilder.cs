@@ -1,9 +1,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using Code.Generator;
+using Project.Map.Events;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.Events;
+using Utilities.General.Events;
 
 namespace Project.Map.Generation
 {
@@ -48,9 +50,12 @@ namespace Project.Map.Generation
         [SerializeField] private TileCategory m_groundTileCategory = null;
         [SerializeField] private TileCategory m_desertTileCategory = null;
         [Space]
-        [SerializeField] private MapManager m_mapManager = null;
-
         [SerializeField] private GeneratorEngine  m_generatorEngine = null;
+        [SerializeField] private TilePlacementEvent m_tilePlacementEvent = null;
+        [Space]
+        [SerializeField, Range(0f, 1f)] private float m_focusX = 0.5f;
+        [SerializeField, Range(0f, 1f)] private float m_focusY = 0.5f;
+        [SerializeField] private Vector2IntEvent m_onMapReadyEvent = null;
 
         [Space]
         UnityEvent<IReadOnlyList<Tile>> OnAvailableTilesSelected = new UnityEvent<IReadOnlyList<Tile>>();
@@ -123,7 +128,8 @@ namespace Project.Map.Generation
                     var color = texture.GetPixel(i, j);
                     var read = color.r;
                     var tile = groundTiles.Get(read);
-                    m_mapManager.PlaceTile(cell, Instantiate(tile));
+                    var groundInstance = Instantiate(tile);
+                    m_tilePlacementEvent?.Invoke(new TilePlacement(cell, groundInstance));
 
                     var sampletDeposits = depositTiles
                         .Select(tile => tile.SamplePosition(i, j))
@@ -132,20 +138,25 @@ namespace Project.Map.Generation
 
                     var deposit = sampletDeposits.FirstOrDefault();
                     if (deposit == null) continue;
-                    m_mapManager.PlaceTile(cell, Instantiate(deposit.Tile));
+                    var depositInstance = Instantiate(deposit.Tile);
+                    m_tilePlacementEvent?.Invoke(new TilePlacement(cell, depositInstance));
                 }
             }
+
+            var focusCell = new Vector2Int(
+                Mathf.RoundToInt(m_focusX * (texture.width - 1)),
+                Mathf.RoundToInt(m_focusY * (texture.height - 1)));
+            m_onMapReadyEvent?.Invoke(focusCell);
         }
 
         public void SelectTilesAvailableToBuild(Tile tile)
         {
         }
 
-        public void BuildTile(Tile tile)
+        public void BuildTile(TilePlacement placement)
         {
-            if (m_mapManager.SelectedTile == null) return;
-            var instance = Instantiate(tile);
-            m_mapManager.PlaceTile(m_mapManager.SelectedTile, instance);
+            var instance = Instantiate(placement.Tile);
+            m_tilePlacementEvent?.Invoke(new TilePlacement(placement.Cell, instance));
         }
     }
 }
