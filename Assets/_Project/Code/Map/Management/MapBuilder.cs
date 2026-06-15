@@ -51,7 +51,8 @@ namespace Project.Map.Generation
         [SerializeField] private TileCategory m_desertTileCategory = null;
         [Space]
         [SerializeField] private GeneratorEngine  m_generatorEngine = null;
-        [SerializeField] private TilePlacementEvent m_tilePlacementEvent = null;
+        [SerializeField] private TilePlacementEvent m_placeSingleTileEvent =  null;
+        [SerializeField] private TilePlacementsEvent m_placeMultipleTilesEvent = null;
         [Space]
         [SerializeField, Range(0f, 1f)] private float m_focusX = 0.5f;
         [SerializeField, Range(0f, 1f)] private float m_focusY = 0.5f;
@@ -105,7 +106,7 @@ namespace Project.Map.Generation
                 }).ToArray();
             }
         }
-        
+
         private void Start()
         {
             var groundTiles = new RangeCollection<Tile>(m_tileDatabase.GetTilesByCategory(m_groundTileCategory)
@@ -114,22 +115,27 @@ namespace Project.Map.Generation
                     var ground = tile.GetComponent<Ground>();
                     return ground.Order;
                 }));
+            
             var texture = m_generatorEngine.Texture;
             var depositTiles = m_tileDatabase
                 .GetTilesByCategory(m_desertTileCategory)
                 .Select(tile => new DepostiSampler(tile, texture))
                 .ToList();
             
-            for (var i = 0; i < texture.height; i++)
+            var height = texture.height;
+            var width = texture.width;
+
+            var tilePlacementList = new List<TilePlacement>(height * width);
+            for (var i = 0; i < height; i++)
             {
-                for (var j = 0; j < texture.width; j++)
+                for (var j = 0; j < width; j++)
                 {
                     var cell = new Vector3Int(i, j, 0);
                     var color = texture.GetPixel(i, j);
                     var read = color.r;
                     var tile = groundTiles.Get(read);
                     var groundInstance = Instantiate(tile);
-                    m_tilePlacementEvent?.Invoke(new TilePlacement(cell, groundInstance));
+                    tilePlacementList.Add(new TilePlacement(cell, groundInstance));
 
                     var sampletDeposits = depositTiles
                         .Select(tile => tile.SamplePosition(i, j))
@@ -139,24 +145,23 @@ namespace Project.Map.Generation
                     var deposit = sampletDeposits.FirstOrDefault();
                     if (deposit == null) continue;
                     var depositInstance = Instantiate(deposit.Tile);
-                    m_tilePlacementEvent?.Invoke(new TilePlacement(cell, depositInstance));
+                    tilePlacementList.Add(new TilePlacement(cell, depositInstance));
                 }
             }
 
             var focusCell = new Vector2Int(
                 Mathf.RoundToInt(m_focusX * (texture.width - 1)),
                 Mathf.RoundToInt(m_focusY * (texture.height - 1)));
+
+            m_placeMultipleTilesEvent?.Invoke(tilePlacementList);
             m_onMapReadyEvent?.Invoke(focusCell);
         }
 
-        public void SelectTilesAvailableToBuild(Tile tile)
+        public void BuildTile(Tile tile)
         {
-        }
-
-        public void BuildTile(TilePlacement placement)
-        {
-            var instance = Instantiate(placement.Tile);
-            m_tilePlacementEvent?.Invoke(new TilePlacement(placement.Cell, instance));
+            var tileInstance = Instantiate(tile);
+            var placement = new TilePlacement(tileInstance);
+            m_placeSingleTileEvent?.Invoke(placement);
         }
     }
 }

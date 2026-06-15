@@ -14,7 +14,23 @@ namespace Project.Map
         public UnityEvent<TileStack> OnTileSelected = new UnityEvent<TileStack>();
         public TileStack SelectedTile { get; private set; }
 
-        public void PlaceTile(TilePlacement placement) => PlaceTile(placement.Cell, placement.Tile);
+        public void PlaceTile(TilePlacement placement)
+        {
+            if (placement.PlaceOnSelected)
+            {
+                if (SelectedTile == null) return;
+                PlaceTile(SelectedTile, placement.Tile);
+                return;
+            }
+
+            PlaceTile(placement.Cell, placement.Tile);
+        }
+
+        public void PlaceTiles(IEnumerable<TilePlacement> placements)
+        {
+            foreach (var placement in placements) 
+                PlaceTile(placement);
+        }
 
         public void PlaceTile(TileStack destinationStack, Tile tile)
         {
