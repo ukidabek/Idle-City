@@ -150,6 +150,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4916764001750926030}
   - component: {fileID: 8741349893000059098}
+  - component: {fileID: 152504150078778237}
   - component: {fileID: 7484287698089273989}
   m_Layer: 0
   m_Name: CameraController
@@ -205,6 +206,34 @@ MonoBehaviour:
   m_DefaultActionMap: Main
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
+--- !u!114 &152504150078778237
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7698167151756856751}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6b232e6d3fbdb4d419ca3c484e3431e1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Utilities.General::Utilities.General.Events.Vector2IntEventListener
+  Callback:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 7484287698089273989}
+        m_TargetAssemblyTypeName: _Project.CameraManagement.CameraController, Assembly-CSharp
+        m_MethodName: FocusOn
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  m_event: {fileID: 11400000, guid: aa53bf8c5e3d74c6686d6a944b429b01, type: 2}
 --- !u!114 &7484287698089273989
 MonoBehaviour:
   m_ObjectHideFlags: 0

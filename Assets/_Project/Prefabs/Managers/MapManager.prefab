@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 1765913859238272364}
   - component: {fileID: 1402124921845473833}
   - component: {fileID: 1189747114037986183}
+  - component: {fileID: 5925143974686592681}
   - component: {fileID: 3575027027983449288}
   m_Layer: 0
   m_Name: MapManager
@@ -132,6 +133,34 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   m_event: {fileID: 11400000, guid: 89bafb6ca0274234299bad5fc7f2c58d, type: 2}
+--- !u!114 &5925143974686592681
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3523102907327602959}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc7bd7a4a8a724233aa0d23069456088, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Project.Map.Events.TilePlacementEventListener
+  Callback:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 3575027027983449288}
+        m_TargetAssemblyTypeName: Project.Map.MapManager, Assembly-CSharp
+        m_MethodName: PlaceTile
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  m_event: {fileID: 11400000, guid: 3e2723d0cece3426aa3b16c51b9abb58, type: 2}
 --- !u!114 &3575027027983449288
 MonoBehaviour:
   m_ObjectHideFlags: 0
