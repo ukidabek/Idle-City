@@ -824,9 +824,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1085588681}
+  - component: {fileID: 1085588682}
   - component: {fileID: 1085588680}
   m_Layer: 0
-  m_Name: GameObject
+  m_Name: MapBuilder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -844,12 +845,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 58f69512684344d6b5c96b7499614cc8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Project.Map.TileBuilder
-  m_size: {x: 64, y: 64}
   m_tileDatabase: {fileID: 11400000, guid: 1c808cd6af330b548906d809bf3e1ee9, type: 2}
   m_groundTileCategory: {fileID: 3086118456809188769, guid: 517c341c2ae78ba4bb5877525d8a1b92, type: 2}
   m_desertTileCategory: {fileID: 6153787698303020785, guid: 517c341c2ae78ba4bb5877525d8a1b92, type: 2}
-  m_mapManager: {fileID: 1669016555434967004}
   m_generatorEngine: {fileID: 11400000, guid: a211cff2408fe8b4cb0ca87a9e33c401, type: 2}
+  m_placeSingleTileEvent: {fileID: 11400000, guid: 3e2723d0cece3426aa3b16c51b9abb58, type: 2}
+  m_placeMultipleTilesEvent: {fileID: 11400000, guid: cc2838b777faa424ab4d177d29940290, type: 2}
+  m_focusX: 0.5
+  m_focusY: 0.5
+  m_onMapReadyEvent: {fileID: 11400000, guid: aa53bf8c5e3d74c6686d6a944b429b01, type: 2}
 --- !u!4 &1085588681
 Transform:
   m_ObjectHideFlags: 0
@@ -865,6 +869,34 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1085588682
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1085588679}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1b5722f4a5f040c79e5eca4f2bcdb307, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Project.Map.Events.TileEventListener
+  Callback:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1085588680}
+        m_TargetAssemblyTypeName: Project.Map.Generation.MapBuilder, Assembly-CSharp
+        m_MethodName: BuildTile
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  m_event: {fileID: 11400000, guid: d0a866b3e0c31314bac6f1ccf627c9c5, type: 2}
 --- !u!1 &1112025768
 GameObject:
   m_ObjectHideFlags: 0
@@ -1376,6 +1408,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1402124921845473833, guid: d2d14712b6ee85e469eb64362eea43a8, type: 3}
+      propertyPath: Callback.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1669016555434967006}
+    - target: {fileID: 1402124921845473833, guid: d2d14712b6ee85e469eb64362eea43a8, type: 3}
+      propertyPath: Callback.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 2762695731500542621, guid: d2d14712b6ee85e469eb64362eea43a8, type: 3}
       propertyPath: m_generatorEngine
       value: 
@@ -1430,17 +1470,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d2d14712b6ee85e469eb64362eea43a8, type: 3}
---- !u!114 &1669016555434967004 stripped
+--- !u!114 &1669016555434967006 stripped
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3575027027983449288, guid: d2d14712b6ee85e469eb64362eea43a8, type: 3}
+  m_CorrespondingSourceObject: {fileID: 1189747114037986183, guid: d2d14712b6ee85e469eb64362eea43a8, type: 3}
   m_PrefabInstance: {fileID: 1669016555434967003}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8664f7dcfd5e4ea28a4d733d9c020e4c, type: 3}
+  m_Script: {fileID: 11500000, guid: 1b5722f4a5f040c79e5eca4f2bcdb307, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Project.Map.MapManager
+  m_EditorClassIdentifier: Assembly-CSharp::Project.Map.Events.TileEventListener
 --- !u!1001 &2426057639649788499
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1585,6 +1625,10 @@ PrefabInstance:
     - target: {fileID: 4916764001750926030, guid: 47bf2af9e869068499050b992efff809, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7484287698089273989, guid: 47bf2af9e869068499050b992efff809, type: 3}
+      propertyPath: m_speed
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 7698167151756856751, guid: 47bf2af9e869068499050b992efff809, type: 3}
       propertyPath: m_Name

@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 76b3da0bbf3c84100b0c3c8f59c82763, type: 3}
-  m_Name: TilePlacementEvent
+  m_Name: PlaceSingleTileEvent
   m_EditorClassIdentifier: Assembly-CSharp::Project.Map.Events.TilePlacementEvent
-  m_enableLogging: 0
-  m_color: {r: 0, g: 0, b: 0, a: 1}
+  m_enableLogging: 1
+  m_color: {r: 0.5943396, g: 0.16540584, b: 0.16540584, a: 1}
