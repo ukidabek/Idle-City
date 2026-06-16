@@ -815,88 +815,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1085588679
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1085588681}
-  - component: {fileID: 1085588682}
-  - component: {fileID: 1085588680}
-  m_Layer: 0
-  m_Name: MapBuilder
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1085588680
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1085588679}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 58f69512684344d6b5c96b7499614cc8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Project.Map.TileBuilder
-  m_tileDatabase: {fileID: 11400000, guid: 1c808cd6af330b548906d809bf3e1ee9, type: 2}
-  m_groundTileCategory: {fileID: 3086118456809188769, guid: 517c341c2ae78ba4bb5877525d8a1b92, type: 2}
-  m_desertTileCategory: {fileID: 6153787698303020785, guid: 517c341c2ae78ba4bb5877525d8a1b92, type: 2}
-  m_generatorEngine: {fileID: 11400000, guid: a211cff2408fe8b4cb0ca87a9e33c401, type: 2}
-  m_placeSingleTileEvent: {fileID: 11400000, guid: 3e2723d0cece3426aa3b16c51b9abb58, type: 2}
-  m_placeMultipleTilesEvent: {fileID: 11400000, guid: cc2838b777faa424ab4d177d29940290, type: 2}
-  m_focusX: 0.5
-  m_focusY: 0.5
-  m_onMapReadyEvent: {fileID: 11400000, guid: aa53bf8c5e3d74c6686d6a944b429b01, type: 2}
---- !u!4 &1085588681
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1085588679}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -48.76978, y: -0, z: 13997.777}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1085588682
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1085588679}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1b5722f4a5f040c79e5eca4f2bcdb307, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Project.Map.Events.TileEventListener
-  Callback:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1085588680}
-        m_TargetAssemblyTypeName: Project.Map.Generation.MapBuilder, Assembly-CSharp
-        m_MethodName: BuildTile
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  m_event: {fileID: 11400000, guid: d0a866b3e0c31314bac6f1ccf627c9c5, type: 2}
 --- !u!1 &1112025768
 GameObject:
   m_ObjectHideFlags: 0
@@ -1696,6 +1614,63 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 54c63775e12d54249b2d1e1c7a3c9d90, type: 3}
+--- !u!1001 &8349305846603999699
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 3691583087193982070, guid: 1667e47231c03440fae91319528c0291, type: 3}
+      propertyPath: m_Name
+      value: MapBuilder
+      objectReference: {fileID: 0}
+    - target: {fileID: 5573795768999363377, guid: 1667e47231c03440fae91319528c0291, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -48.76978
+      objectReference: {fileID: 0}
+    - target: {fileID: 5573795768999363377, guid: 1667e47231c03440fae91319528c0291, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5573795768999363377, guid: 1667e47231c03440fae91319528c0291, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 13997.777
+      objectReference: {fileID: 0}
+    - target: {fileID: 5573795768999363377, guid: 1667e47231c03440fae91319528c0291, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5573795768999363377, guid: 1667e47231c03440fae91319528c0291, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5573795768999363377, guid: 1667e47231c03440fae91319528c0291, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5573795768999363377, guid: 1667e47231c03440fae91319528c0291, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5573795768999363377, guid: 1667e47231c03440fae91319528c0291, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5573795768999363377, guid: 1667e47231c03440fae91319528c0291, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5573795768999363377, guid: 1667e47231c03440fae91319528c0291, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 1667e47231c03440fae91319528c0291, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -1711,4 +1686,4 @@ SceneRoots:
   - {fileID: 1498788345}
   - {fileID: 1835443920}
   - {fileID: 185065248}
-  - {fileID: 1085588681}
+  - {fileID: 8349305846603999699}
