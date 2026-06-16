@@ -11,10 +11,9 @@ namespace Project.UI.Resources
     {
         [SerializeField] private Image m_image = null;
         [SerializeField] private TMP_Text m_name = null;
-        [SerializeField] private string m_format = "{0:f0}";
-        protected Resource m_resource = null;
-        
 
+        private Resource m_resource = null;
+        
         public void Initialize(Resource data)
         {
             m_resource = data;
@@ -25,8 +24,8 @@ namespace Project.UI.Resources
 
         private void UpdateText(float obj)
         {
-            if(m_name == null) return;
-            m_name.text = string.Format(m_format, obj);
+            if (m_name == null) return;
+            m_name.text = obj.Abbreviate();
         }
 
         public void Clear()

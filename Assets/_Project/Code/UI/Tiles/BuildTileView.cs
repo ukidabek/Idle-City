@@ -19,7 +19,7 @@ namespace Project.UI.Tiles
         [SerializeField] private Transform m_costLayoutHandler = null;
         [SerializeField] private CostView m_costViewPrefab = null;
        
-        private HashSet<CostView> m_activeCostViews = new HashSet<CostView>(3);
+        private readonly HashSet<CostView> m_activeCostViews = new HashSet<CostView>(3);
         private ObjectPool<CostView>  m_pool = null;
         private Structure m_structure;
 

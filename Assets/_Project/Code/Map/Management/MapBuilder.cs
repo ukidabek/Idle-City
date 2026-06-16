@@ -57,10 +57,7 @@ namespace Project.Map.Generation
         [SerializeField, Range(0f, 1f)] private float m_focusX = 0.5f;
         [SerializeField, Range(0f, 1f)] private float m_focusY = 0.5f;
         [SerializeField] private Vector2IntEvent m_onMapReadyEvent = null;
-
-        [Space]
-        UnityEvent<IReadOnlyList<Tile>> OnAvailableTilesSelected = new UnityEvent<IReadOnlyList<Tile>>();
-
+        
         private class RangeCollection<T>
         {
             private class Range<T>
