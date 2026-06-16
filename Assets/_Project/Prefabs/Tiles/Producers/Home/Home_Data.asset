@@ -22,3 +22,5 @@ MonoBehaviour:
   - m_resource: {fileID: 11400000, guid: a9f85ee0c6ab2334c8dbe3a1f23e45c3, type: 2}
     m_amount: 50
   <CostReturnMultiplayer>k__BackingField: 0.5
+  <Exponent>k__BackingField: 1.66
+  <Multiplier>k__BackingField: 1.08
