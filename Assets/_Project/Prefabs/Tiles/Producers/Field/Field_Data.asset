@@ -16,8 +16,8 @@ MonoBehaviour:
   <TileRequirements>k__BackingField:
   - {fileID: 5951234281938972194, guid: 2249f772577da99469269188074d9d0f, type: 2}
   m_costs:
-  - m_resource: {fileID: 11400000, guid: a9f85ee0c6ab2334c8dbe3a1f23e45c3, type: 2}
-    m_amount: 70
+  - <Resource>k__BackingField: {fileID: 11400000, guid: a9f85ee0c6ab2334c8dbe3a1f23e45c3, type: 2}
+    <Amount>k__BackingField: 70
   <CostReturnMultiplayer>k__BackingField: 0.26
-  <Exponent>k__BackingField: 2.16
-  <Multiplier>k__BackingField: 1.2
+  <Exponent>k__BackingField: 0.14
+  <Multiplier>k__BackingField: 1

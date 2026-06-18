@@ -17,10 +17,10 @@ MonoBehaviour:
   - {fileID: 5951234281938972194, guid: 2249f772577da99469269188074d9d0f, type: 2}
   - {fileID: -3279134692063172354, guid: 2249f772577da99469269188074d9d0f, type: 2}
   m_costs:
-  - m_resource: {fileID: 11400000, guid: 10593118195ff9645b777622ae17085d, type: 2}
-    m_amount: 25
-  - m_resource: {fileID: 11400000, guid: a9f85ee0c6ab2334c8dbe3a1f23e45c3, type: 2}
-    m_amount: 50
+  - <Resource>k__BackingField: {fileID: 11400000, guid: 10593118195ff9645b777622ae17085d, type: 2}
+    <Amount>k__BackingField: 50
+  - <Resource>k__BackingField: {fileID: 11400000, guid: a9f85ee0c6ab2334c8dbe3a1f23e45c3, type: 2}
+    <Amount>k__BackingField: 50
   <CostReturnMultiplayer>k__BackingField: 0.5
   <Exponent>k__BackingField: 1.66
   <Multiplier>k__BackingField: 1.08
