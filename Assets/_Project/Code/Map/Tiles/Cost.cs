@@ -1,18 +1,15 @@
 ﻿using System;
 using Project.Resources;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Project.Map
 {
     [Serializable]
-    public class Cost
+    public struct Cost
     {
-        [SerializeField] private Resource m_resource = null;
-        public Resource Resource => m_resource;
-        
-        [SerializeField] private int m_amount = 0;
-        public int Amount => m_amount;
-        
-        public bool CanAfford(float multiplayer = 1f) => m_resource.Value >= m_amount * multiplayer;
+        [field: SerializeField] public Resource Resource { get; set; }
+
+        [field: SerializeField] public float Amount { get; set; }
     }
-}
+} 

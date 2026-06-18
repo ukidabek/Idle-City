@@ -13,11 +13,36 @@ namespace Project.Map
 
         private static readonly Color[] m_curveColors =
         {
-            Color.cyan, 
-            Color.yellow, 
-            Color.magenta, 
-            Color.green, 
-            Color.red
+            Color.cyan,
+            Color.yellow,
+            Color.magenta,
+            Color.green,
+            Color.red,
+            new Color(1f, 0.5f, 0f),       // orange
+            new Color(0.5f, 0f, 1f),       // violet
+            new Color(0f, 1f, 0.5f),       // mint
+            new Color(1f, 0f, 0.5f),       // rose
+            new Color(0f, 0.5f, 1f),       // sky blue
+            new Color(1f, 1f, 0.5f),       // light yellow
+            new Color(0.5f, 1f, 0f),       // lime
+            new Color(1f, 0.5f, 0.5f),     // salmon
+            new Color(0.5f, 0.5f, 1f),     // lavender
+            new Color(0f, 1f, 1f),         // aqua
+            new Color(1f, 0.75f, 0f),      // amber
+            new Color(0.75f, 0f, 1f),      // purple
+            new Color(0f, 0.75f, 0.5f),    // teal
+            new Color(1f, 0.25f, 0.75f),   // hot pink
+            new Color(0.25f, 0.75f, 1f),   // cornflower
+            new Color(0.75f, 1f, 0.25f),   // yellow-green
+            new Color(1f, 0.6f, 0.2f),     // peach
+            new Color(0.2f, 0.6f, 1f),     // dodger blue
+            new Color(0.6f, 1f, 0.6f),     // pale green
+            new Color(1f, 0.4f, 0.4f),     // light red
+            new Color(0.4f, 0.4f, 1f),     // periwinkle
+            new Color(1f, 0.9f, 0.3f),     // gold
+            new Color(0.3f, 1f, 0.9f),     // turquoise
+            new Color(0.9f, 0.3f, 1f),     // orchid
+            new Color(0.6f, 0.8f, 0.2f)    // olive green
         };
 
         public override void OnInspectorGUI()
@@ -28,10 +53,19 @@ namespace Project.Map
             DrawCostGraph(data);
         }
 
+        private static float[] SampleCostCurve(StructureData data, float baseValue)
+        {
+            var samples = new float[SampleCount];
+            for (var n = 0; n < SampleCount; n++)
+                samples[n] = data.CalculateCost(baseValue, n);
+            return samples;
+        }
+
         private void DrawCostGraph(StructureData data)
         {
             var costs = data.Costs;
-            if (costs == null || costs.Count == 0) return;
+            var costsLength = costs.Length;
+            if (costs == null || costsLength == 0) return;
 
             EditorGUILayout.Space();
             EditorGUILayout.LabelField("Cost Curve", EditorStyles.boldLabel);
@@ -39,7 +73,7 @@ namespace Project.Map
             var canvasRect = GUILayoutUtility.GetRect(0, 160, GUILayout.ExpandWidth(true));
             EditorGUI.DrawRect(canvasRect, new Color(0.15f, 0.15f, 0.15f));
 
-            var curveSamples = costs.Select(cost => data.SampleCostCurve(SampleCount, cost.Amount)).ToArray();
+            var curveSamples = costs.Select(cost => SampleCostCurve(data, cost.Amount)).ToArray();
             var allValues = curveSamples.SelectMany(samples => samples);
             var minCost = allValues.Min();
             var maxCost = Mathf.Max(allValues.Max(), minCost + 0.0001f);
@@ -54,20 +88,22 @@ namespace Project.Map
                 Handles.DrawLine(new Vector3(canvasRect.x, gridY), new Vector3(canvasRect.xMax, gridY));
             }
 
-            var values = curveSamples.Select((samples, index) => (samples, index));
-            foreach (var samples in values)
+            var allPolylinePoints = new Vector3[curveSamples.Length][];
+            var delta = maxCost - minCost;
+
+            for (var c = 0; c < curveSamples.Length; c++)
             {
                 var polylinePoints = new Vector3[SampleCount];
-                var delta = maxCost - minCost;
                 for (var n = 0; n < SampleCount; n++)
                 {
                     var t = n / (float)(SampleCount - 1);
                     var x = canvasRect.x + t * canvasRect.width;
-                    var y = canvasRect.yMax - (samples.samples[n] - minCost) / delta * canvasRect.height;
+                    var y = canvasRect.yMax - (curveSamples[c][n] - minCost) / delta * canvasRect.height;
                     polylinePoints[n] = new Vector3(x, y);
                 }
 
-                Handles.color = m_curveColors[samples.index % m_curveColors.Length];
+                allPolylinePoints[c] = polylinePoints;
+                Handles.color = m_curveColors[c % m_curveColors.Length];
                 Handles.DrawAAPolyLine(3f, polylinePoints);
             }
 
@@ -81,9 +117,23 @@ namespace Project.Map
                 GUI.Label(labelRect, value.Abbreviate(), EditorStyles.miniLabel);
             }
 
+            var xCallouts = new[] { 0, 5, 10, 15, SampleCount - 1 };
+            for (var c = 0; c < curveSamples.Length; c++)
+            {
+                var previousColor = GUI.color;
+                GUI.color = m_curveColors[c % m_curveColors.Length];
+                foreach (var n in xCallouts)
+                {
+                    var point = allPolylinePoints[c][n];
+                    var labelRect = new Rect(point.x + 2, point.y - 14, 50, 14);
+                    GUI.Label(labelRect, curveSamples[c][n].Abbreviate(), EditorStyles.miniLabel);
+                }
+                GUI.color = previousColor;
+            }
+
             using (new EditorGUILayout.HorizontalScope())
             {
-                for (var c = 0; c < costs.Count; c++)
+                for (var c = 0; c < costsLength; c++)
                 {
                     var resourceName = costs[c].Resource != null ? costs[c].Resource.name : "Resource";
                     var previousColor = GUI.color;
@@ -95,7 +145,13 @@ namespace Project.Map
                 }
             }
 
-            EditorGUILayout.LabelField($"n: 0–{SampleCount - 1}", EditorStyles.miniLabel);
+            foreach (var n in xCallouts)
+            {
+                var t = n / (float)(SampleCount - 1);
+                var x = canvasRect.x + t * canvasRect.width;
+                var labelRect = new Rect(x - 10, canvasRect.yMax + 2, 20, 14);
+                GUI.Label(labelRect, n.ToString(), EditorStyles.miniLabel);
+            }
         }
     }
 }
