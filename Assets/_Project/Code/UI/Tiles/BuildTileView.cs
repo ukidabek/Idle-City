@@ -48,6 +48,7 @@ namespace Project.UI.Tiles
         public void Build()
         {
             if (!m_structure.CanAfford) return;
+            m_structure.ConsumeResources();
             m_buildTileEvent.Invoke(m_structure.Tile);
         }
 
