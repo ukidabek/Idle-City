@@ -117,10 +117,7 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 122618608886396418, guid: 97ca06653da479a43a30a98fad08032d, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 7174327186653992611}
-    - targetCorrespondingSourceObject: {fileID: 122618608886396418, guid: 97ca06653da479a43a30a98fad08032d, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 5533540944439012878}
+      addedObject: {fileID: 5255100890389062933}
     - targetCorrespondingSourceObject: {fileID: 122618608886396418, guid: 97ca06653da479a43a30a98fad08032d, type: 3}
       insertIndex: -1
       addedObject: {fileID: 8982402105213005706}
@@ -141,7 +138,7 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 122618608886396418, guid: 97ca06653da479a43a30a98fad08032d, type: 3}
   m_PrefabInstance: {fileID: 863890373955578633}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &7174327186653992611
+--- !u!114 &5255100890389062933
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -150,28 +147,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 742679759536184587}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 147d5c344e7449c2baa8a24f8ea14d9b, type: 3}
+  m_Script: {fileID: 11500000, guid: a76d4f18cc03410b8e63fd0cd8cf352f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Project.Map.Producer
   <Tile>k__BackingField: {fileID: 221919947086035347}
-  <Data>k__BackingField: {fileID: 11400000, guid: ef9d16f0cf2682f4986bc485cf0ceb4e, type: 2}
-  <Amount>k__BackingField: 0
-  m_consumers:
-  - {fileID: 5533540944439012878}
---- !u!114 &5533540944439012878
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 742679759536184587}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d791179b219148d8a680e6787d160799, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Project.Map.Consumer
-  <Tile>k__BackingField: {fileID: 221919947086035347}
-  <Data>k__BackingField: {fileID: 11400000, guid: b870a00a0772efa45baaec3797166217, type: 2}
+  <Data>k__BackingField: {fileID: 11400000, guid: d376bd3ba35708149aee1402392f8a4b, type: 2}
   <Amount>k__BackingField: 0
 --- !u!114 &8982402105213005706
 MonoBehaviour:
@@ -187,13 +167,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Project.Map.NeighborValidator
   <Tile>k__BackingField: {fileID: 221919947086035347}
   <Data>k__BackingField: {fileID: 11400000, guid: 9681a9c6022fcc9419a9f0fee549342c, type: 2}
-  m_neighborDirection: 15
-  m_neighborConditions:
-  - m_neighborId: {fileID: -900330210984012729, guid: 2249f772577da99469269188074d9d0f, type: 2}
-    m_type: 1
-    m_value: 0.1
-  m_affectedClients:
-  - {fileID: 7174327186653992611}
+  m_affectedClients: []
 --- !u!4 &5530230152727657273 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5134794832270331952, guid: 97ca06653da479a43a30a98fad08032d, type: 3}

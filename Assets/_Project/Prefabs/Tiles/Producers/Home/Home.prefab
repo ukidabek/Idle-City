@@ -240,13 +240,7 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 122618608886396418, guid: 97ca06653da479a43a30a98fad08032d, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 783398402980156078}
-    - targetCorrespondingSourceObject: {fileID: 122618608886396418, guid: 97ca06653da479a43a30a98fad08032d, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 8279061425452796270}
-    - targetCorrespondingSourceObject: {fileID: 122618608886396418, guid: 97ca06653da479a43a30a98fad08032d, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 8820619024683132741}
+      addedObject: {fileID: 1263516277959769827}
   m_SourcePrefab: {fileID: 100100000, guid: 97ca06653da479a43a30a98fad08032d, type: 3}
 --- !u!114 &77400681769943921 stripped
 MonoBehaviour:
@@ -264,7 +258,7 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 122618608886396418, guid: 97ca06653da479a43a30a98fad08032d, type: 3}
   m_PrefabInstance: {fileID: 719369987657552363}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &783398402980156078
+--- !u!114 &1263516277959769827
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -273,44 +267,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 596753102177134569}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 147d5c344e7449c2baa8a24f8ea14d9b, type: 3}
+  m_Script: {fileID: 11500000, guid: a76d4f18cc03410b8e63fd0cd8cf352f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Project.Map.Producer
   <Tile>k__BackingField: {fileID: 77400681769943921}
-  <Data>k__BackingField: {fileID: 11400000, guid: 73d556e51bc203b4c8da77690a3ffd0a, type: 2}
-  <Amount>k__BackingField: 0
-  m_consumers:
-  - {fileID: 8279061425452796270}
-  - {fileID: 8820619024683132741}
---- !u!114 &8279061425452796270
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 596753102177134569}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d791179b219148d8a680e6787d160799, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Project.Map.Consumer
-  <Tile>k__BackingField: {fileID: 77400681769943921}
-  <Data>k__BackingField: {fileID: 11400000, guid: b870a00a0772efa45baaec3797166217, type: 2}
-  <Amount>k__BackingField: 0
---- !u!114 &8820619024683132741
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 596753102177134569}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d791179b219148d8a680e6787d160799, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Project.Map.Consumer
-  <Tile>k__BackingField: {fileID: 77400681769943921}
-  <Data>k__BackingField: {fileID: 11400000, guid: 460ea6b72546aed4e9b50e522b0c0ecc, type: 2}
+  <Data>k__BackingField: {fileID: 11400000, guid: 167c460c219ecb64ab759961deb0a713, type: 2}
   <Amount>k__BackingField: 0
 --- !u!4 &5672780162649539035 stripped
 Transform:

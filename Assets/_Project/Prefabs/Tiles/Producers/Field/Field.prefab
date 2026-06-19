@@ -335,10 +335,7 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 122618608886396418, guid: 97ca06653da479a43a30a98fad08032d, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 7141042367914624756}
-    - targetCorrespondingSourceObject: {fileID: 122618608886396418, guid: 97ca06653da479a43a30a98fad08032d, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: -8414859400282503961}
+      addedObject: {fileID: 7846774847479723834}
   m_SourcePrefab: {fileID: 100100000, guid: 97ca06653da479a43a30a98fad08032d, type: 3}
 --- !u!4 &213822698800870019 stripped
 Transform:
@@ -350,7 +347,7 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 122618608886396418, guid: 97ca06653da479a43a30a98fad08032d, type: 3}
   m_PrefabInstance: {fileID: 5023152051275489971}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &7141042367914624756
+--- !u!114 &7846774847479723834
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -359,28 +356,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 4901731503132267697}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 147d5c344e7449c2baa8a24f8ea14d9b, type: 3}
+  m_Script: {fileID: 11500000, guid: a76d4f18cc03410b8e63fd0cd8cf352f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Project.Map.Producer
   <Tile>k__BackingField: {fileID: 5574504842554929193}
-  <Data>k__BackingField: {fileID: 11400000, guid: d875d80ba9299aa4595b494a70f4089f, type: 2}
-  <Amount>k__BackingField: 0
-  m_consumers:
-  - {fileID: -8414859400282503961}
---- !u!114 &-8414859400282503961
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4901731503132267697}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d791179b219148d8a680e6787d160799, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Project.Map.Consumer
-  <Tile>k__BackingField: {fileID: 5574504842554929193}
-  <Data>k__BackingField: {fileID: 11400000, guid: 73d556e51bc203b4c8da77690a3ffd0a, type: 2}
+  <Data>k__BackingField: {fileID: 11400000, guid: 4e3b53f3206fbcf4c966e90ce3bb97e0, type: 2}
   <Amount>k__BackingField: 0
 --- !u!114 &5574504842554929193 stripped
 MonoBehaviour:
