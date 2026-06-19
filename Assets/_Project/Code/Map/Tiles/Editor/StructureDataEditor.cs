@@ -56,8 +56,8 @@ namespace Project.Map
         private static float[] SampleCostCurve(StructureData data, float baseValue)
         {
             var samples = new float[SampleCount];
-            for (var n = 0; n < SampleCount; n++)
-                samples[n] = data.CalculateCost(baseValue, n);
+            for (var sample = 0; sample < SampleCount; sample++)
+                samples[sample] = data.CalculateCost(baseValue, sample + 1);
             return samples;
         }
 
@@ -70,11 +70,11 @@ namespace Project.Map
             EditorGUILayout.Space();
             EditorGUILayout.LabelField("Cost Curve", EditorStyles.boldLabel);
 
-            var canvasRect = GUILayoutUtility.GetRect(0, 160, GUILayout.ExpandWidth(true));
+            var canvasRect = GUILayoutUtility.GetRect(0, 160);
             EditorGUI.DrawRect(canvasRect, new Color(0.15f, 0.15f, 0.15f));
 
-            var curveSamples = costs.Select(cost => SampleCostCurve(data, cost.Amount)).ToArray();
-            var allValues = curveSamples.SelectMany(samples => samples);
+            var costValues = costs.Select(cost => SampleCostCurve(data, cost.Amount)).ToArray();
+            var allValues = costValues.SelectMany(samples => samples);
             var minCost = allValues.Min();
             var maxCost = Mathf.Max(allValues.Max(), minCost + 0.0001f);
 
@@ -88,56 +88,58 @@ namespace Project.Map
                 Handles.DrawLine(new Vector3(canvasRect.x, gridY), new Vector3(canvasRect.xMax, gridY));
             }
 
-            var allPolylinePoints = new Vector3[curveSamples.Length][];
+            var allPolylinePoints = new Vector3[costValues.Length][];
             var delta = maxCost - minCost;
 
-            for (var c = 0; c < curveSamples.Length; c++)
+            for (var curveSample = 0; curveSample < costValues.Length; curveSample++)
             {
                 var polylinePoints = new Vector3[SampleCount];
-                for (var n = 0; n < SampleCount; n++)
+                for (var sampleIndex = 0; sampleIndex < SampleCount; sampleIndex++)
                 {
-                    var t = n / (float)(SampleCount - 1);
+                    var t = (sampleIndex + 1) / (float)(SampleCount - 1);
                     var x = canvasRect.x + t * canvasRect.width;
-                    var y = canvasRect.yMax - (curveSamples[c][n] - minCost) / delta * canvasRect.height;
-                    polylinePoints[n] = new Vector3(x, y);
+                    var y = canvasRect.yMax - (costValues[curveSample][sampleIndex] - minCost) / delta * canvasRect.height;
+                    polylinePoints[sampleIndex] = new Vector3(x, y);
                 }
 
-                allPolylinePoints[c] = polylinePoints;
-                Handles.color = m_curveColors[c % m_curveColors.Length];
+                allPolylinePoints[curveSample] = polylinePoints;
+                Handles.color = m_curveColors[curveSample % m_curveColors.Length];
                 Handles.DrawAAPolyLine(3f, polylinePoints);
             }
 
             Handles.EndGUI();
 
-            for (var i = 1; i <= axisSteps; i++)
+            for (var i = 0; i <= axisSteps; i++)
             {
                 var value = minCost + i * (maxCost - minCost) / AxisSteps;
                 var labelY = canvasRect.yMax - i * (canvasRect.height / AxisSteps);
-                var labelRect = new Rect(canvasRect.x + 2, labelY - 8, 60, 16);
+                var labelRect = new Rect(canvasRect.x, labelY, 60, 16);
                 GUI.Label(labelRect, value.Abbreviate(), EditorStyles.miniLabel);
             }
 
-            var xCallouts = new[] { 0, 5, 10, 15, SampleCount - 1 };
-            for (var c = 0; c < curveSamples.Length; c++)
+            var xCallouts = Enumerable.Range(0, SampleCount - 1).ToArray();
+            for (var colorIndex = 0; colorIndex < costValues.Length; colorIndex++)
             {
                 var previousColor = GUI.color;
-                GUI.color = m_curveColors[c % m_curveColors.Length];
+                GUI.color = m_curveColors[colorIndex % m_curveColors.Length];
                 foreach (var n in xCallouts)
                 {
-                    var point = allPolylinePoints[c][n];
-                    var labelRect = new Rect(point.x + 2, point.y - 14, 50, 14);
-                    GUI.Label(labelRect, curveSamples[c][n].Abbreviate(), EditorStyles.miniLabel);
+                    var point = allPolylinePoints[colorIndex][n];
+                    var labelRect = new Rect(point.x, point.y - EditorGUIUtility.singleLineHeight, 50, 14);
+                    GUI.Label(labelRect, costValues[colorIndex][n].Abbreviate(), EditorStyles.miniLabel);
                 }
                 GUI.color = previousColor;
             }
 
+            GUILayout.Space(EditorGUIUtility.singleLineHeight);
+            
             using (new EditorGUILayout.HorizontalScope())
             {
-                for (var c = 0; c < costsLength; c++)
+                for (var constResourceIndex = 0; constResourceIndex < costsLength; constResourceIndex++)
                 {
-                    var resourceName = costs[c].Resource != null ? costs[c].Resource.name : "Resource";
+                    var resourceName = costs[constResourceIndex].Resource != null ? costs[constResourceIndex].Resource.name : "Resource";
                     var previousColor = GUI.color;
-                    GUI.color = m_curveColors[c % m_curveColors.Length];
+                    GUI.color = m_curveColors[constResourceIndex % m_curveColors.Length];
                     GUILayout.Label("■", GUILayout.Width(14));
                     GUI.color = previousColor;
                     GUILayout.Label(resourceName, GUILayout.ExpandWidth(false));
@@ -149,7 +151,7 @@ namespace Project.Map
             {
                 var t = n / (float)(SampleCount - 1);
                 var x = canvasRect.x + t * canvasRect.width;
-                var labelRect = new Rect(x - 10, canvasRect.yMax + 2, 20, 14);
+                var labelRect = new Rect(x, canvasRect.yMax, 20, 14);
                 GUI.Label(labelRect, n.ToString(), EditorStyles.miniLabel);
             }
         }

@@ -4,7 +4,6 @@ using Code.Generator;
 using Project.Map.Events;
 using UnityEngine;
 using UnityEngine.Assertions;
-using UnityEngine.Events;
 using Utilities.General.Events;
 
 namespace Project.Map.Generation
