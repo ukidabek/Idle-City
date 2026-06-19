@@ -14,9 +14,9 @@ namespace Project.UI.Tiles
         [SerializeField] private TileComponentView[] m_views = null;
 
         private Dictionary<Type, TileComponentView> m_viewsDictionary = null;
-        
+
         [SerializeField] private TMP_Text m_text = null;
-        
+
         protected override void Awake()
         {
             base.Awake();
@@ -24,13 +24,13 @@ namespace Project.UI.Tiles
                 .Where(view => view.gameObject.activeSelf)
                 .ToDictionary(view => view.HandledType, view => view);
         }
-        
+
         public void Initialize(Tile data)
         {
             m_text.text = data.ID.name;
             foreach (var component in data.GetComponents<ITielComponent>())
             {
-                if(!m_viewsDictionary.TryGetValue(component.GetType(), out var view)) continue;
+                if (!m_viewsDictionary.TryGetValue(component.GetType(), out var view)) continue;
                 view.Initialize(component);
             }
         }
