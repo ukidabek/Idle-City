@@ -39,7 +39,7 @@
       "depth": 0,
       "source": "git",
       "dependencies": {},
-      "hash": "0e95740d0b9424eb728e4075533047d6ad55c4dc"
+      "hash": "4b96e0a60b1712ad356cc253658cd83c6a7e15ad"
     },
     "com.cooki.values": {
       "version": "file:com.cooki.values",
@@ -70,7 +70,7 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.cinemachine": {
-      "version": "3.1.6",
+      "version": "3.1.7",
       "depth": 0,
       "source": "registry",
       "dependencies": {
@@ -146,7 +146,7 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.probuilder": {
-      "version": "6.0.8",
+      "version": "6.0.9",
       "depth": 0,
       "source": "registry",
       "dependencies": {
