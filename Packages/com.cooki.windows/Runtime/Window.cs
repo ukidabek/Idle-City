@@ -3,6 +3,7 @@ using UnityEngine;
 
 namespace Windows
 {
+    [SelectionBase]
     public abstract class Window : MonoBehaviour
     {
         [SerializeField] protected GameObject m_canvasHolder = null;
