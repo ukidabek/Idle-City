@@ -22,7 +22,7 @@ namespace Project.Map
 
         public void Produce()
         {
-            foreach (var info in Data.ResourcesToConsume) 
+            foreach (var info in Data.ResourcesToProduce) 
                 info.Resource.Value += info.Amount;
         }
         
@@ -32,7 +32,7 @@ namespace Project.Map
 
         private void OnDestroy()
         {
-            m_handler.Dispose();
+            // m_handler.Dispose();
             m_handler = null;
         }
 

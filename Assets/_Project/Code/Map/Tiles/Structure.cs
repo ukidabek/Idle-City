@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using cookie.Logging;
 using UnityEngine;
 
 namespace Project.Map
@@ -13,12 +14,17 @@ namespace Project.Map
         public StructureData Data => m_data;
         public Sprite Image => Data.Image;
         public IReadOnlyList<TileID> TileRequirements => Data.TileRequirements;
-        public Span<Cost> Costs => GetCosts();
-        public bool CanAfford => GetCosts().All(cost => cost.Resource.Value >= cost.Amount);
+        public Span<Cost> Costs => GetCosts(true);
+        public bool CanAfford => GetCosts(true).All(cost => cost.Resource.Value >= cost.Amount);
 
-        private Cost[] GetCosts()
+        private Cost[] GetCosts(bool extrapolate)
         {
-            var count = m_dictionary.TryGetValue(Tile.ID, out var set) ? set.Count + 1 : 1;
+            var count = 0;
+            if (m_dictionary.TryGetValue(Tile.ID, out var set))
+                count = set.Count + (extrapolate ? 1 : 0);
+            else
+                count = 1;
+            
             var costs = Data.Costs;
             var costsCount = costs.Length;
             var currentCosts = new Cost[costsCount];
@@ -27,7 +33,7 @@ namespace Project.Map
                 currentCosts[i] = new Cost()
                 {
                     Resource = costs[i].Resource,
-                    Amount = Data.CalculateCost(costs[i].Amount, count),
+                    Amount = Mathf.Ceil(Data.CalculateCost(costs[i].Amount, count)),
                 };
             }
 
@@ -38,8 +44,14 @@ namespace Project.Map
 
         public void ConsumeResources()
         {
-            foreach (var cost in GetCosts())
-                cost.Resource.Value -= cost.Amount;
+            foreach (var cost in GetCosts(false))
+            {
+                var resource = cost.Resource;
+                var valueBefore = resource.Value;
+                resource.Value -= cost.Amount;
+                var delta = valueBefore - resource.Value;
+                this.Log($"[{resource.name}] before: {valueBefore} | cost: {cost.Amount} | delta: {delta}");
+            }
         }
 
         private void OnEnable()

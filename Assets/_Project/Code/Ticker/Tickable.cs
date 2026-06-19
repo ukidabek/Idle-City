@@ -45,7 +45,7 @@ namespace Code.Ticker
 
     public abstract class Tickable : MonoBehaviour, ILogEnabled
     {
-        public Color Color { get; } = new Color(0.2f, 0.8f, 1f, 1f);
+        [field: SerializeField] public Color Color { get; private set; } = new Color(0.2f, 0.8f, 1f, 1f);
         [field: SerializeField] public LogMode Mode { get; private set; } = LogMode.All;
         [SerializeField, Min(0)] private int m_pace = 0;
         private int m_tickCounter = 0;
