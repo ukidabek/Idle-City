@@ -57,17 +57,17 @@ namespace Project.Map.Generation
         [SerializeField, Range(0f, 1f)] private float m_focusY = 0.5f;
         [SerializeField] private Vector2IntEvent m_onMapReadyEvent = null;
         
-        private class RangeCollection<T>
+        private class RangeCollection<RangeT>
         {
-            private class Range<T>
+            private class Range<ItemT>
             {
                 public readonly float Min;
 
                 public readonly float Max;
 
-                public readonly T Item;
+                public readonly ItemT Item;
 
-                public Range(float min, float max, T item)
+                public Range(float min, float max, ItemT item)
                 {
                     Min = min;
                     Max = max;
@@ -75,9 +75,9 @@ namespace Project.Map.Generation
                 }
             }
             
-            private readonly Range<T>[] m_range;
+            private readonly Range<RangeT>[] m_range;
 
-            public T Get(float value)
+            public RangeT Get(float value)
             {
                 foreach (var range in m_range)
                 {
@@ -88,7 +88,7 @@ namespace Project.Map.Generation
                 return default;
             }
             
-            public RangeCollection(IEnumerable<T> collection)
+            public RangeCollection(IEnumerable<RangeT> collection)
             {
                 var increment = 1f / collection.Count();
 
@@ -96,7 +96,7 @@ namespace Project.Map.Generation
                 m_range = collection.Select(item =>
                 {
                     var nextValue = current + increment;
-                    var instance = new Range<T>(current, nextValue, item);
+                    var instance = new Range<RangeT>(current, nextValue, item);
                     current = nextValue;
                     return instance;
                 }).ToArray();
