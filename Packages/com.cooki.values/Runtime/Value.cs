@@ -5,16 +5,20 @@ namespace Values
 {
 	public abstract class BaseValue<T> : ScriptableObject
 	{
-		private class BulkEditScope<T> : IDisposable
+		private BulkEditScope<T> m_bulkEditScope = null;
+		
+		private class BulkEditScope<BulkEditT> : IDisposable
 		{
-			private readonly BaseValue<T>  m_baseValue;
-			private readonly T m_value;
+			private readonly BaseValue<BulkEditT>  m_baseValue;
+			private BulkEditT m_value;
 			
-			public BulkEditScope(BaseValue<T> baseValue)
+			public BulkEditScope(BaseValue<BulkEditT> baseValue) => m_baseValue = baseValue;
+
+			public void Set(BulkEditT value)
 			{
-				m_baseValue = baseValue;
-				m_value = baseValue.Value;
+				if (m_baseValue.m_isSilent) return;
 				m_baseValue.m_isSilent = true;
+				m_value = value;
 			}
 
 			public void Dispose()
@@ -41,6 +45,11 @@ namespace Values
 			}
 		}
 
-		public IDisposable BulkEdit() => new BulkEditScope<T>(this);
+		public IDisposable BulkEdit()
+		{
+			m_bulkEditScope ??= new BulkEditScope<T>(this);
+			m_bulkEditScope.Set(Value);
+			return m_bulkEditScope;
+		}
 	}
 }
