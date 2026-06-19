@@ -39,7 +39,7 @@
       "depth": 0,
       "source": "git",
       "dependencies": {},
-      "hash": "4b96e0a60b1712ad356cc253658cd83c6a7e15ad"
+      "hash": "d408c2c974e658f87814ffaffbe13db54e9ef3f8"
     },
     "com.cooki.values": {
       "version": "file:com.cooki.values",
