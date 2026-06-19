@@ -15,6 +15,7 @@ namespace Project.Map
         private const float MinWindowHeight = 400f;
         private const string WindowTitle = "Tile Data Browser";
         private const string MenuPath = "Tools/Tile Data Browser";
+        private const string SidebarWidthPrefKey = "TileDataBrowser.SidebarWidth";
 
         private readonly List<TileData> m_allTileData = new List<TileData>(100);
         private readonly List<TileData> m_filteredTileData = new List<TileData>(100);
@@ -52,7 +53,11 @@ namespace Project.Map
             window.Show();
         }
 
-        private void OnEnable() => RefreshAssets();
+        private void OnEnable()
+        {
+            m_sidebarCurrentWidth = EditorPrefs.GetFloat(SidebarWidthPrefKey, SidebarWidth);
+            RefreshAssets();
+        }
         private void OnDisable() => DestroyEditorIfExists();
 
         private void OnGUI()
@@ -329,6 +334,7 @@ namespace Project.Map
             if (currentEvent.type == EventType.MouseDrag)
             {
                 m_sidebarCurrentWidth = Mathf.Clamp(currentEvent.mousePosition.x, 120f, position.width - 300f);
+                EditorPrefs.SetFloat(SidebarWidthPrefKey, m_sidebarCurrentWidth);
                 Repaint();
                 currentEvent.Use();
             }

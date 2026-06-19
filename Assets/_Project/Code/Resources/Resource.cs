@@ -13,9 +13,6 @@ namespace Project.Resources
         
         [field: SerializeField] public Sprite Image { get; private set; }
 
-        private HashSet<IResourceClient> m_consumers = new HashSet<IResourceClient>(30);
-        private HashSet<IResourceClient> m_producers = new HashSet<IResourceClient>(30);
-
         private ModiferHandler m_modifierHandler = null;
         
         public override float Value
@@ -24,23 +21,18 @@ namespace Project.Resources
             set => base.Value = Mathf.Clamp(value, 0, float.MaxValue);
         }
 
-        public void Tick(int tickRate = 1)
+        public void Consume(float amount)
         {
-            using (BulkEdit())
-            
-            foreach (var consumer in m_consumers)
-                Value -= consumer.Amount / tickRate;
-            
-            Value += BaseGain / tickRate;
-            
-            foreach (var producer in m_producers) 
-                Value += producer.Amount / tickRate;
+            Value += amount;
         }
 
+        public void Produce(float amount)
+        {
+            Value += amount;
+        }
+        
         private void OnEnable()
         {
-            m_consumers.Clear();
-            m_producers.Clear();
             Value = 0;
             Gain = BaseGain;
             m_modifierHandler = new ModiferHandler(() => BaseGain, OnValueRecalculated);
@@ -53,22 +45,7 @@ namespace Project.Resources
             m_modifierHandler.Dispose();
             m_modifierHandler = null;
         }
-
-        public void RegisterClient(IResourceClient client) => GetHashSet(client).Add(client);
         
-        public void UnregisterClient(IResourceClient client) => GetHashSet(client).Remove(client);
-
-        private HashSet<IResourceClient> GetHashSet(IResourceClient client)
-        {
-            var set = client.Type switch
-            {
-                ClientType.Consumer => m_consumers,
-                ClientType.Producer => m_producers,
-                _ => throw new ArgumentOutOfRangeException()
-            };
-            return set;
-        }
-
         public void Apply(IEnumerable<AmountModifier> modifiers) => m_modifierHandler.Apply(modifiers);
 
         public void Remove(IEnumerable<AmountModifier> modifiers) => m_modifierHandler.Remove(modifiers);

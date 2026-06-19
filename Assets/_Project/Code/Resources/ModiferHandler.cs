@@ -11,12 +11,14 @@ namespace Project.Resources
         private Func<float> m_baseValue = null;
         
         public event Action<float> OnValueRecalculated;
+        private IEnumerable<AmountModifier> m_modifiersInOrder = null;
         
         public ModiferHandler(Func<float> baseValue, Action<float> onValueRecalculated, int capacity = 10)
         {
             m_baseValue = baseValue;
             m_modifiers = new List<AmountModifier>(capacity);
             OnValueRecalculated = onValueRecalculated;
+            m_modifiersInOrder =  m_modifiers.OrderBy(modifier => modifier.Type);
         }
 
         public void Apply(IEnumerable<AmountModifier> modifiers)
@@ -51,9 +53,9 @@ namespace Project.Resources
         private void RecalculateValue()
         {
             var value = m_baseValue();
-            var modifiers = m_modifiers.OrderBy(modifier => modifier.Type);
-            foreach (var modifier in modifiers)
-                value =  modifier.Apply(value);
+            
+            foreach (var modifier in m_modifiersInOrder)
+                value = modifier.Apply(value);
             OnValueRecalculated?.Invoke(value);
         }
 

@@ -9,7 +9,7 @@ namespace Project.Map
     {
 
         [field: SerializeField] public NeighborValidatorData Data { get; private set; }
-        [SerializeField] private Client[] m_affectedClients = null;
+        [SerializeField] private Producer[] m_affectedClients = null;
         private readonly List<AmountModifier> m_modifiersCache = new List<AmountModifier>(10);
         
         private void Awake() => Tile.OnTilePlaced.AddListener(ValidateNeighbors);
