@@ -12,6 +12,7 @@ namespace Project.Resources
         }
 
         public override ModifierType Type => ModifierType.Percent;
+        public override int Order => 0;
         public override float Apply(float amount) => amount * m_percent;
     }
 }

@@ -1,28 +1,25 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Linq;
-using Project.Resources;
 using UnityEngine;
 
 namespace Project.Map
 {
+    [RequireComponent(typeof(Producer))]
     public class NeighborValidator : TileComponent, IDataTileComponent<NeighborValidatorData>
     {
-
         [field: SerializeField] public NeighborValidatorData Data { get; private set; }
-        [SerializeField] private Producer[] m_affectedClients = null;
-        private readonly List<AmountModifier> m_modifiersCache = new List<AmountModifier>(10);
+        [SerializeField] private Producer m_producer = null;
+        private readonly List<ProducerModifier> m_modifiersCache = new List<ProducerModifier>(10);
         
-        private void Awake() => Tile.OnTilePlaced.AddListener(ValidateNeighbors);
+        private void OnDestroy() => RemoveModifiers();
 
-        private void OnDestroy() => Tile.OnTilePlaced.RemoveListener(ValidateNeighbors);
-
-        private void ValidateNeighbors()
+        public void ValidateNeighbors()
         {
             var map = Tile.Map;
             var cell = Tile.Cell;
-            
+
             m_modifiersCache.Clear();
-            
+
             var conditions = Data.NeighborConditions;
             foreach (var neighborCell in Data.ToOffsets(cell))
             {
@@ -30,12 +27,30 @@ namespace Project.Map
                 var neighborTile = neighbor.Peek();
                 var modifiers = conditions
                     .Select(neighborCondition => neighborCondition.Build(neighborTile))
-                    .Where(modifier => modifier != null);
+                    .Where(modifier => modifier.HasValue)
+                    .Select(modifier => modifier.Value);
                 m_modifiersCache.AddRange(modifiers);
             }
 
-            foreach (var client in m_affectedClients) 
-                client.Apply(m_modifiersCache);
+            ApplyModifiers();
+        }
+
+        protected override void Reset()
+        {
+            base.Reset();
+            m_producer = gameObject.GetComponent<Producer>();
+        }
+
+        private void ApplyModifiers()
+        {
+            foreach (var modifier in m_modifiersCache)
+                m_producer.Apply(modifier.Modifier, modifier.Target);
+        }
+
+        private void RemoveModifiers()
+        {
+            foreach (var modifier in m_modifiersCache)
+                m_producer.Remove(modifier.Modifier, modifier.Target);
         }
     }
 }

@@ -10,6 +10,7 @@
         }
 
         public override ModifierType Type => ModifierType.Value;
+        public override int Order => 1;
         public override float Apply(float amount) => amount + m_value;
     }
 }

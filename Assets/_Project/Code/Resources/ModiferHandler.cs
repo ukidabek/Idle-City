@@ -1,30 +1,34 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Project.Resources
 {
     public class ModiferHandler : IModiferHandler, IDisposable
     {
-        private List<AmountModifier> m_modifiers = null;
+        private static int CompareByOrder(AmountModifier a, AmountModifier b) => a.Order.CompareTo(b.Order);
+        private static readonly Comparison<AmountModifier> ModifierComparison = CompareByOrder;
 
+        private List<AmountModifier> m_modifiers = null;
         private Func<float> m_baseValue = null;
-        
+
         public event Action<float> OnValueRecalculated;
-        private IEnumerable<AmountModifier> m_modifiersInOrder = null;
-        
+
+        public ModiferHandler(int capacity = 10) : this(null, null, capacity)
+        {
+        }
+
         public ModiferHandler(Func<float> baseValue, Action<float> onValueRecalculated, int capacity = 10)
         {
             m_baseValue = baseValue;
             m_modifiers = new List<AmountModifier>(capacity);
             OnValueRecalculated = onValueRecalculated;
-            m_modifiersInOrder =  m_modifiers.OrderBy(modifier => modifier.Type);
         }
 
         public void Apply(IEnumerable<AmountModifier> modifiers)
         {
             m_modifiers.AddRange(modifiers);
-            RecalculateValue(); 
+            m_modifiers.Sort(ModifierComparison);
+            RecalculateValue();
         }
 
         public void Remove(IEnumerable<AmountModifier> modifiers)
@@ -40,6 +44,7 @@ namespace Project.Resources
         public void Apply(AmountModifier modifier)
         {
             m_modifiers.Add(modifier);
+            m_modifiers.Sort(ModifierComparison);
             RecalculateValue();
         }
 
@@ -52,11 +57,21 @@ namespace Project.Resources
 
         private void RecalculateValue()
         {
+            if(m_baseValue == null) return;
             var value = m_baseValue();
-            
-            foreach (var modifier in m_modifiersInOrder)
+
+            foreach (var modifier in m_modifiers)
                 value = modifier.Apply(value);
+            
             OnValueRecalculated?.Invoke(value);
+        }
+
+        public float Calculate(float baseAmount)
+        {
+            var value = baseAmount;
+            foreach (var modifier in m_modifiers)
+                value = modifier.Apply(value);
+            return value;
         }
 
         public void Dispose()
