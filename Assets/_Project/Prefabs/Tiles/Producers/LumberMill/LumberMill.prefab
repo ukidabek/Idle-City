@@ -52,6 +52,34 @@ PrefabInstance:
       propertyPath: m_id
       value: 
       objectReference: {fileID: -8820190904997899372, guid: 2249f772577da99469269188074d9d0f, type: 2}
+    - target: {fileID: 642128757018235546, guid: 97ca06653da479a43a30a98fad08032d, type: 3}
+      propertyPath: OnTilePlaced.m_PersistentCalls.m_Calls.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 642128757018235546, guid: 97ca06653da479a43a30a98fad08032d, type: 3}
+      propertyPath: OnTilePlaced.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 642128757018235546, guid: 97ca06653da479a43a30a98fad08032d, type: 3}
+      propertyPath: OnTilePlaced.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 8982402105213005706}
+    - target: {fileID: 642128757018235546, guid: 97ca06653da479a43a30a98fad08032d, type: 3}
+      propertyPath: OnTilePlaced.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 642128757018235546, guid: 97ca06653da479a43a30a98fad08032d, type: 3}
+      propertyPath: OnTilePlaced.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: ValidateNeighbors
+      objectReference: {fileID: 0}
+    - target: {fileID: 642128757018235546, guid: 97ca06653da479a43a30a98fad08032d, type: 3}
+      propertyPath: OnTilePlaced.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
+      value: Project.Map.NeighborValidator, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 642128757018235546, guid: 97ca06653da479a43a30a98fad08032d, type: 3}
+      propertyPath: OnTilePlaced.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 2926181330486889216, guid: 97ca06653da479a43a30a98fad08032d, type: 3}
       propertyPath: m_data
       value: 
@@ -151,8 +179,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Project.Map.Producer
   <Tile>k__BackingField: {fileID: 221919947086035347}
+  <Color>k__BackingField: {r: 0.8, g: 0.8, b: 0.8, a: 1}
+  <Mode>k__BackingField: 2
   <Data>k__BackingField: {fileID: 11400000, guid: d376bd3ba35708149aee1402392f8a4b, type: 2}
-  <Amount>k__BackingField: 0
 --- !u!114 &8982402105213005706
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -166,8 +195,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Project.Map.NeighborValidator
   <Tile>k__BackingField: {fileID: 221919947086035347}
+  <Color>k__BackingField: {r: 0.8, g: 0.8, b: 0.8, a: 1}
+  <Mode>k__BackingField: 2
   <Data>k__BackingField: {fileID: 11400000, guid: 9681a9c6022fcc9419a9f0fee549342c, type: 2}
-  m_affectedClients: []
+  m_producer: {fileID: 5255100890389062933}
 --- !u!4 &5530230152727657273 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5134794832270331952, guid: 97ca06653da479a43a30a98fad08032d, type: 3}
