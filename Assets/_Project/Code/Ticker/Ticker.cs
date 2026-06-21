@@ -1,4 +1,7 @@
-﻿using cookie.Logging;
+using System.Collections.Generic;
+using System.Linq;
+using cookie.Logging;
+using Unity.Profiling;
 using UnityEngine;
 
 namespace Code.Ticker
@@ -14,11 +17,17 @@ namespace Code.Ticker
 
         [SerializeField] private TimeInfo m_timeInfo = new TimeInfo();
 
+        private static readonly ProfilerMarker UpdateMarker = new ProfilerMarker("Ticker.Update");
+        private Dictionary<Tickable, ProfilerMarker> m_tickMarkers;
+
         private void Awake()
         {
             CalculateInterval();
             m_timeInfo.NextUpdate = Time.time - m_interval;
             m_tickables = GetComponents<Tickable>();
+            m_tickMarkers = m_tickables.ToDictionary(
+                tickable => tickable,
+                tickable => new ProfilerMarker($"Ticker.Tick.{tickable.GetType().Name}"));
         }
 
         private void Update()
@@ -34,11 +43,15 @@ namespace Code.Ticker
             m_timeInfo.NextUpdate = currentTime + m_interval;
 
             this.Log("Updating...", LogType.Log, gameObject);
-            foreach (var resourceHandler in m_tickables)
+            using (UpdateMarker.Auto())
             {
-                if (!resourceHandler.enabled) continue;
-                if (!resourceHandler.IsReadyToTick()) continue;
-                resourceHandler.Tick(m_tickRate, m_timeInfo);
+                foreach (var resourceHandler in m_tickables)
+                {
+                    if (!resourceHandler.enabled) continue;
+                    if (!resourceHandler.IsReadyToTick()) continue;
+                    using (m_tickMarkers[resourceHandler].Auto())
+                        resourceHandler.Tick(m_tickRate, m_timeInfo);
+                }
             }
         }
 
