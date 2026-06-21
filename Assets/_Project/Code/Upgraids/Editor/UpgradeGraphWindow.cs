@@ -56,11 +56,11 @@ namespace Code.Upgrades
         private void OnGUI()
         {
             InitStylesIfNeeded();
-            DrawToolbar();
             HandleInput();
 
             var canvasRect = new Rect(0, ToolbarHeight, position.width, position.height - ToolbarHeight);
             DrawCanvas(canvasRect);
+            DrawToolbar();
         }
         
         private void DrawToolbar()
@@ -86,7 +86,7 @@ namespace Code.Upgrades
         {
             GUI.BeginClip(canvasRect);
 
-            EditorGUI.DrawRect(new Rect(0, 17, canvasRect.width, canvasRect.height - 17), CanvasBackground);
+            EditorGUI.DrawRect(new Rect(0, 0, canvasRect.width, canvasRect.height), CanvasBackground);
             DrawGrid(canvasRect);
 
             var oldMatrix = GUI.matrix;
@@ -146,23 +146,9 @@ namespace Code.Upgrades
                     var t1 = new Vector3(depTop.x,    depTop.y    - tangentStrength, 0);
 
                     Handles.DrawBezier(reqBottom, depTop, t0, t1, edgeColor, null, 2f);
-
-                    if (minLevel > 0)
-                    {
-                        var midPoint = BezierPoint(reqBottom, t0, t1, depTop, 0.5f);
-                        var labelRect = new Rect(midPoint.x - 14f, midPoint.y - 9f, 28f, 18f);
-                        GUI.Label(labelRect, $"≥{minLevel}", m_edgeLabelStyle);
-                    }
                 }
             }
         }
-
-        private static Vector3 BezierPoint(Vector3 p0, Vector3 p1, Vector3 p2, Vector3 p3, float t)
-        {
-            var u = 1f - t;
-            return u * u * u * p0 + 3 * u * u * t * p1 + 3 * u * t * t * p2 + t * t * t * p3;
-        }
-
 
         private void DrawNodes()
         {
