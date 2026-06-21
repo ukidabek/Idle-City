@@ -8,7 +8,6 @@ namespace Code.Upgrades
     {
         private const float NodeWidth = 160f;
         private const float NodeHeight = 52f;
-        private const float ColumnWidth = 200f;
         private const float RowHeight = 110f;
         private const float ToolbarHeight = 26f;
         private const float MinZoom = 0.4f;
@@ -17,7 +16,6 @@ namespace Code.Upgrades
         private const string MenuPath = "Tools/Upgrade Graph";
 
         private static readonly Color NodeLockedColor = new Color(0.22f, 0.22f, 0.22f, 1f);
-        private static readonly Color NodeUnlockedColor = new Color(0.18f, 0.42f, 0.28f, 1f);
         private static readonly Color NodeCanLevelColor = new Color(0.22f, 0.55f, 0.32f, 1f);
         private static readonly Color NodeMaxedColor = new Color(0.20f, 0.38f, 0.42f, 1f);
         private static readonly Color EdgeSatisfiedColor = new Color(0.3f, 0.7f, 0.3f, 0.9f);
@@ -64,9 +62,7 @@ namespace Code.Upgrades
             var canvasRect = new Rect(0, ToolbarHeight, position.width, position.height - ToolbarHeight);
             DrawCanvas(canvasRect);
         }
-
-        // ── Toolbar ────────────────────────────────────────────────────────────
-
+        
         private void DrawToolbar()
         {
             using (new GUILayout.AreaScope(new Rect(0, 0, position.width, ToolbarHeight)))
@@ -84,14 +80,13 @@ namespace Code.Upgrades
                 GUILayout.Label($"Zoom {m_zoom:P0}", EditorStyles.toolbarButton, GUILayout.Width(72));
             }
         }
-
-        // ── Canvas ─────────────────────────────────────────────────────────────
+        
 
         private void DrawCanvas(Rect canvasRect)
         {
             GUI.BeginClip(canvasRect);
 
-            EditorGUI.DrawRect(new Rect(0, 0, canvasRect.width, canvasRect.height), CanvasBackground);
+            EditorGUI.DrawRect(new Rect(0, 17, canvasRect.width, canvasRect.height - 17), CanvasBackground);
             DrawGrid(canvasRect);
 
             var oldMatrix = GUI.matrix;
@@ -130,9 +125,7 @@ namespace Code.Upgrades
             var centreRect = new Rect(canvasRect.width * 0.5f - 150f, canvasRect.height * 0.5f - 20f, 300f, 40f);
             GUI.Label(centreRect, "No Upgrade assets found. Click Refresh.", EditorStyles.centeredGreyMiniLabel);
         }
-
-        // ── Edges ──────────────────────────────────────────────────────────────
-
+        
         private void DrawEdges()
         {
             foreach (var (dependent, deps) in m_edges)
@@ -170,7 +163,6 @@ namespace Code.Upgrades
             return u * u * u * p0 + 3 * u * u * t * p1 + 3 * u * t * t * p2 + t * t * t * p3;
         }
 
-        // ── Nodes ──────────────────────────────────────────────────────────────
 
         private void DrawNodes()
         {
@@ -185,12 +177,10 @@ namespace Code.Upgrades
 
                 DrawNodeBox(nodeRect, upgrade, isSelected);
 
-                if (!clickConsumed && Event.current.type == EventType.MouseDown && nodeRect.Contains(Event.current.mousePosition))
-                {
-                    SelectNode(upgrade);
-                    clickConsumed = true;
-                    Event.current.Use();
-                }
+                if (clickConsumed || Event.current.type != EventType.MouseDown || !nodeRect.Contains(Event.current.mousePosition)) continue;
+                SelectNode(upgrade);
+                clickConsumed = true;
+                Event.current.Use();
             }
         }
 
@@ -219,8 +209,6 @@ namespace Code.Upgrades
             GUI.Label(nameRect, upgrade.name, m_nodeLabelStyle);
             GUI.Label(levelRect, $"Level  {upgrade.CurrentLevel} / {upgrade.Count}", m_nodeSublabelStyle);
         }
-
-        // ── Input ──────────────────────────────────────────────────────────────
 
         private void HandleInput()
         {
@@ -276,8 +264,6 @@ namespace Code.Upgrades
             Repaint();
         }
 
-        // ── Graph build ────────────────────────────────────────────────────────
-
         private void RefreshGraph()
         {
             m_allUpgrades.Clear();
@@ -302,15 +288,14 @@ namespace Code.Upgrades
 
         private void ReadDependencies(Upgrade upgrade)
         {
-            var so = new SerializedObject(upgrade);
-            var depsProp = so.FindProperty("m_dependencies");
-            if (depsProp == null || !depsProp.isArray) return;
-
-            for (var i = 0; i < depsProp.arraySize; i++)
+            var dependencies = upgrade.Dependencies;
+            var lenght = dependencies.Count;
+            
+            for (var i = 0; i < lenght; i++)
             {
-                var elem = depsProp.GetArrayElementAtIndex(i);
-                var required = elem.FindPropertyRelative("m_upgrade")?.objectReferenceValue as Upgrade;
-                var minLevel = elem.FindPropertyRelative("m_minimalLevel")?.intValue ?? 0;
+                var element = dependencies[i];
+                var required = element.Upgrade;
+                var minLevel = element.MinimalLevel;
 
                 if (required == null || !m_edges.ContainsKey(required)) continue;
                 m_edges[upgrade].Add((required, minLevel));
@@ -379,9 +364,7 @@ namespace Code.Upgrades
                 }
             }
         }
-
-        // ── Styles ─────────────────────────────────────────────────────────────
-
+        
         private void InitStylesIfNeeded()
         {
             if (m_stylesInitialised) return;

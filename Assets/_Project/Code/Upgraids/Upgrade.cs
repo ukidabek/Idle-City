@@ -21,12 +21,17 @@ namespace Code.Upgrades
         [SerializeField] private Upgrade m_upgrade = null;
         [SerializeField, Min(0)] private int m_minimalLevel = 0;
 
+        public Upgrade Upgrade => m_upgrade;
+
+        public int MinimalLevel => m_minimalLevel;
+
         public bool IsSatisfied() => m_upgrade != null && m_upgrade.CurrentLevel >= m_minimalLevel;
     }
 
     public abstract class Upgrade : ScriptableObject, IReadOnlyList<Level>
     {
         [SerializeField] private Dependency[] m_dependencies = null;
+        public IReadOnlyList<Dependency> Dependencies => m_dependencies;
         [Space]
         [SerializeField, Min(0)] private int m_level = 0;
         protected abstract Level[] Levels { get; }
