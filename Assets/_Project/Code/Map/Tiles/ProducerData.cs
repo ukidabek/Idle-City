@@ -1,36 +1,58 @@
 using System;
+using System.Collections.Generic;
 using Project.Resources;
 using UnityEngine;
 
 namespace Project.Map
 {
+    public readonly struct ActiveAmount
+    {
+        public readonly Resource Resource;
+        public readonly float Amount;
+
+        public ActiveAmount(Resource resource, float amount)
+        {
+            Resource = resource;
+            Amount = amount;
+        }
+    }
     [CreateAssetMenu(menuName = "Map/Tiles/ClientData", fileName = "ClientData")]
-    public class ProducerData : TileData
+    public class ProducerData : TileData, IProducer
     {
         [field: SerializeField] public ClientResourceInfo[] ResourcesToConsume { get; private set; } = Array.Empty<ClientResourceInfo>();
         [field: SerializeField] public ClientResourceInfo[] ResourcesToProduce { get; private set; } = Array.Empty<ClientResourceInfo>();
-
-        private ModiferHandler m_produceHandler;
-        private ModiferHandler m_consumeHandler;
-
+        private ProducerModifierRouter m_router = null;
+        
         private void OnEnable()
         {
-            m_produceHandler = new ModiferHandler(() => 0f, _ => { });
-            m_consumeHandler = new ModiferHandler(() => 0f, _ => { });
+            m_router = new ProducerModifierRouter();
         }
 
         private void OnDisable()
         {
-            m_produceHandler?.Dispose(); m_produceHandler = null;
-            m_consumeHandler?.Dispose(); m_consumeHandler = null;
+            m_router.Dispose();
+            m_router = null;
         }
+    
+        public void Apply(ProducerModifier modifier) => m_router.Apply(modifier);
+        
+        public void Remove(ProducerModifier modifier) => m_router.Remove(modifier);
+        
 
-        public float GetEffectiveAmount(float baseAmount, ModifierTarget target) => HandlerFor(target).Calculate(baseAmount);
+        public IEnumerable<ActiveAmount> GetEffectiveAmount(Flow flow)
+        {
+            var info = flow switch
+            {
+                Flow.Consumption => ResourcesToConsume,
+                Flow.Production => ResourcesToProduce
+            };
 
-        public void Apply(AmountModifier modifier, ModifierTarget target) => HandlerFor(target).Apply(modifier);
-        public void Remove(AmountModifier modifier, ModifierTarget target) => HandlerFor(target).Remove(modifier);
-
-        private ModiferHandler HandlerFor(ModifierTarget target)
-            => target == ModifierTarget.Production ? m_produceHandler : m_consumeHandler;
+            foreach (var _info in info)
+            {
+                yield return new ActiveAmount(
+                    _info.Resource,
+                    m_router.GetEffectiveAmount(_info.Resource, flow, _info.Amount));
+            }
+        }
     }
 }

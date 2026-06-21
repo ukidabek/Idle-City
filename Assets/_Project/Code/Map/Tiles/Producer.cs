@@ -7,28 +7,20 @@ namespace Project.Map
     {
         [field: SerializeField] public ProducerData Data { get; private set; }
 
-        private ModiferHandler m_produceHandler;
-        private ModiferHandler m_consumeHandler;
-
-        private void Awake()
-        {
-            m_produceHandler = new ModiferHandler();
-            m_consumeHandler = new ModiferHandler();
-        }
-
-        public void Apply(AmountModifier modifier, ModifierTarget target) => HandlerFor(target)?.Apply(modifier);
-        public void Remove(AmountModifier modifier, ModifierTarget target) => HandlerFor(target)?.Remove(modifier);
-
-        private ModiferHandler HandlerFor(ModifierTarget target)
-            => target == ModifierTarget.Production ? m_produceHandler : m_consumeHandler;
+        private ProducerModifierRouter m_router = new ProducerModifierRouter();
+        
+        public void Apply(ProducerModifier modifier) => m_router?.Apply(modifier);
+        public void Remove(ProducerModifier modifier) => m_router?.Remove(modifier);
 
         public bool Consume()
         {
-            foreach (var info in Data.ResourcesToConsume)
+            const Flow flow = Flow.Consumption;
+            foreach (var info in Data.GetEffectiveAmount(flow))
             {
-                var effectiveAmount = Data.GetEffectiveAmount(info.Amount, ModifierTarget.Consumption);
-                var amount = m_consumeHandler.Calculate(effectiveAmount);
-                if (info.Resource.Value < amount) return false;
+                var amount = m_router.GetEffectiveAmount(info.Resource, flow, info.Amount);
+                if (info.Resource.Value < amount) 
+                    return false;
+                
                 info.Resource.Value -= amount;
             }
             return true;
@@ -36,10 +28,11 @@ namespace Project.Map
 
         public void Produce()
         {
-            foreach (var info in Data.ResourcesToProduce)
+            const Flow flow = Flow.Production;
+            foreach (var info in Data.GetEffectiveAmount(flow))
             {
-                var effectiveAmount = Data.GetEffectiveAmount(info.Amount, ModifierTarget.Production);
-                info.Resource.Value += m_produceHandler.Calculate(effectiveAmount);
+                var amount = m_router.GetEffectiveAmount(info.Resource, flow, info.Amount);
+                info.Resource.Value += amount;
             }
         }
 
@@ -49,8 +42,8 @@ namespace Project.Map
 
         private void OnDestroy()
         {
-            m_produceHandler?.Dispose(); m_produceHandler = null;
-            m_consumeHandler?.Dispose(); m_consumeHandler = null;
+            m_router.Dispose();
+            m_router = null;
         }
     }
 }

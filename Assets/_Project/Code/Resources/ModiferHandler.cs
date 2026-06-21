@@ -1,9 +1,10 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 
 namespace Project.Resources
 {
-    public class ModiferHandler : IModiferHandler, IDisposable
+    public class ModiferHandler : IModiferHandler, IReadOnlyList<AmountModifier>, IDisposable
     {
         private static int CompareByOrder(AmountModifier a, AmountModifier b) => a.Order.CompareTo(b.Order);
         private static readonly Comparison<AmountModifier> ModifierComparison = CompareByOrder;
@@ -73,6 +74,11 @@ namespace Project.Resources
                 value = modifier.Apply(value);
             return value;
         }
+
+        public int Count => m_modifiers.Count;
+        public AmountModifier this[int index] => m_modifiers[index];
+        public IEnumerator<AmountModifier> GetEnumerator() => m_modifiers.GetEnumerator();
+        IEnumerator IEnumerable.GetEnumerator() => m_modifiers.GetEnumerator();
 
         public void Dispose()
         {

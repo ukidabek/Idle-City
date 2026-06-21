@@ -44,7 +44,7 @@ public class GameObjectScreenshotWindow : EditorWindow
         EditorGUILayout.LabelField("GameObject Screenshot", EditorStyles.boldLabel);
         EditorGUILayout.LabelField("Captures selected prefabs or scene objects to transparent PNGs.", EditorStyles.miniLabel);
         EditorGUILayout.Space(4);
-        EditorGUILayout.LabelField("Target", EditorStyles.boldLabel);
+        EditorGUILayout.LabelField("Flow", EditorStyles.boldLabel);
 
         var selectedObjects = GetSelectedObjects();
         var helpBoxStyle    = new GUIStyle(EditorStyles.helpBox);

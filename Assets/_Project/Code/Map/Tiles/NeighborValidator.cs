@@ -44,13 +44,13 @@ namespace Project.Map
         private void ApplyModifiers()
         {
             foreach (var modifier in m_modifiersCache)
-                m_producer.Apply(modifier.Modifier, modifier.Target);
+                m_producer.Apply(modifier);
         }
 
         private void RemoveModifiers()
         {
             foreach (var modifier in m_modifiersCache)
-                m_producer.Remove(modifier.Modifier, modifier.Target);
+                m_producer.Remove(modifier);
         }
     }
 }
