@@ -15,5 +15,16 @@ MonoBehaviour:
   m_neighborDirection: 15
   m_neighborConditions:
   - m_neighborId: {fileID: -900330210984012729, guid: 2249f772577da99469269188074d9d0f, type: 2}
-    m_type: 1
-    m_value: 0.1
+    m_info:
+      m_info:
+        <Type>k__BackingField: 1
+        <Value>k__BackingField: -0.1
+      m_target: {fileID: 11400000, guid: 771cffa6f95876d418ee2caa7f65b270, type: 2}
+      m_flow: 1
+  - m_neighborId: {fileID: -900330210984012729, guid: 2249f772577da99469269188074d9d0f, type: 2}
+    m_info:
+      m_info:
+        <Type>k__BackingField: 1
+        <Value>k__BackingField: 0.1
+      m_target: {fileID: 0}
+      m_flow: 0
