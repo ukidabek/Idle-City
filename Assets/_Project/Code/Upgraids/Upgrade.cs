@@ -36,7 +36,7 @@ namespace Code.Upgrades
         [SerializeField, Min(0)] private int m_level = 0;
         protected abstract Level[] Levels { get; }
         
-        public bool IsUnlocked => m_level > 0;
+        public bool IsUnlocked => m_level > 0 || m_dependencies == null || m_dependencies.Length == 0;
         public int CurrentLevel => m_level;
         public bool CanLevelUp => Levels != null && m_level < Levels.Length;
 
