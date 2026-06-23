@@ -1,0 +1,90 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &7116560111365455576
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 249570571798857828}
+  - component: {fileID: 2594914223044789978}
+  - component: {fileID: 8199251065738150994}
+  - component: {fileID: 3369884670606473236}
+  m_Layer: 0
+  m_Name: Ticker
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &249570571798857828
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7116560111365455576}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1000.67633, y: 0.00001, z: 6887.446}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2594914223044789978
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7116560111365455576}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 42314ef16a7c4294b68b0c4d7a99693a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Code.Ticker.Ticker
+  <Mode>k__BackingField: 0
+  m_tickRate: 1
+  m_timeInfo:
+    LastUpdate: 0
+    NextUpdate: 0
+    DeltaUpdate: 0
+    DeltaTime: 0
+    TimeScale: 0
+--- !u!114 &8199251065738150994
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7116560111365455576}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ad5668ca0a6d78640b7d408da028ad8b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Project.Resources.ResourceGainTickable
+  <Color>k__BackingField: {r: 0.2, g: 0.8, b: 1, a: 1}
+  <Mode>k__BackingField: 2
+  m_pace: 0
+  m_resources: {fileID: 11400000, guid: 08c01293704d092498023caf12301470, type: 2}
+  m_counter: 0
+--- !u!114 &3369884670606473236
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7116560111365455576}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0f0773eb62b04de1a0cb2e70fdd88f53, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Project.Map.ClientTickable
+  <Color>k__BackingField: {r: 0.2, g: 0.8, b: 1, a: 1}
+  <Mode>k__BackingField: 2
+  m_pace: 0
+  m_resolution: {fileID: 11400000, guid: 08c01293704d092498023caf12301470, type: 2}
+  m_counter: 0
