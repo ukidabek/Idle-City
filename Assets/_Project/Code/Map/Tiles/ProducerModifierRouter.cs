@@ -32,7 +32,8 @@ namespace Project.Map
             var dictionary = flow switch
             {
                 Flow.Production  => m_produceHandlerCache,
-                Flow.Consumption => m_consumeHandlerCache
+                Flow.Consumption => m_consumeHandlerCache,
+                _ => null
             };
             
             if(dictionary.TryGetValue(resource, out var modiferHandler))
@@ -50,7 +51,8 @@ namespace Project.Map
             flow switch
             {
                 Flow.Consumption => m_consumeHandler,
-                Flow.Production => m_produceHandler
+                Flow.Production => m_produceHandler,
+                _ => null
             };
 
         public void Dispose()

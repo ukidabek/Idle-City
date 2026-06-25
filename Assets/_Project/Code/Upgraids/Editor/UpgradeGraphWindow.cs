@@ -24,6 +24,7 @@ namespace Code.Upgrades
         private static readonly Color CanvasBackground = new Color(0.15f, 0.15f, 0.15f, 1f);
         private static readonly Color GridLineColor = new Color(1f, 1f, 1f, 0.04f);
 
+        private UpgradeCollection m_upgradeCollection = null;
         private readonly List<Upgrade> m_allUpgrades = new(32);
         private readonly Dictionary<Upgrade, Vector2> m_nodePositions = new(32);
         private readonly Dictionary<Upgrade, List<(Upgrade, int)>> m_edges = new(32);
@@ -76,6 +77,16 @@ namespace Code.Upgrades
 
                 GUILayout.Space(8);
                 GUILayout.Label($"{m_allUpgrades.Count} upgrades", EditorStyles.toolbarButton, GUILayout.Width(90));
+
+                GUILayout.Space(8);
+                var newCollection = (UpgradeCollection) EditorGUILayout.ObjectField(
+                    m_upgradeCollection, typeof(UpgradeCollection), false, GUILayout.Width(160));
+                if (newCollection != m_upgradeCollection)
+                {
+                    m_upgradeCollection = newCollection;
+                    RefreshGraph();
+                }
+
                 GUILayout.FlexibleSpace();
                 GUILayout.Label($"Zoom {m_zoom:P0}", EditorStyles.toolbarButton, GUILayout.Width(72));
             }
@@ -256,13 +267,32 @@ namespace Code.Upgrades
             m_edges.Clear();
             m_nodePositions.Clear();
 
-            var guids = AssetDatabase.FindAssets($"t:{nameof(Upgrade)}");
-            foreach (var guid in guids)
+            if (m_upgradeCollection == null)
             {
-                var upgrade = AssetDatabase.LoadAssetAtPath<Upgrade>(AssetDatabase.GUIDToAssetPath(guid));
-                if (upgrade == null) continue;
-                m_allUpgrades.Add(upgrade);
-                m_edges[upgrade] = new List<(Upgrade, int)>();
+                var collectionGuids = AssetDatabase.FindAssets($"t:{nameof(UpgradeCollection)}");
+                if (collectionGuids.Length > 0)
+                    m_upgradeCollection = AssetDatabase.LoadAssetAtPath<UpgradeCollection>(
+                        AssetDatabase.GUIDToAssetPath(collectionGuids[0]));
+            }
+
+            if (m_upgradeCollection != null)
+            {
+                foreach (var upgrade in (IReadOnlyList<Upgrade>) m_upgradeCollection)
+                {
+                    m_allUpgrades.Add(upgrade);
+                    m_edges[upgrade] = new List<(Upgrade, int)>();
+                }
+            }
+            else
+            {
+                var guids = AssetDatabase.FindAssets($"t:{nameof(Upgrade)}");
+                foreach (var guid in guids)
+                {
+                    var upgrade = AssetDatabase.LoadAssetAtPath<Upgrade>(AssetDatabase.GUIDToAssetPath(guid));
+                    if (upgrade == null) continue;
+                    m_allUpgrades.Add(upgrade);
+                    m_edges[upgrade] = new List<(Upgrade, int)>();
+                }
             }
 
             foreach (var upgrade in m_allUpgrades)
@@ -275,9 +305,9 @@ namespace Code.Upgrades
         private void ReadDependencies(Upgrade upgrade)
         {
             var dependencies = upgrade.Dependencies;
-            var lenght = dependencies.Count;
-            
-            for (var i = 0; i < lenght; i++)
+            var length = dependencies.Count;
+
+            for (var i = 0; i < length; i++)
             {
                 var element = dependencies[i];
                 var required = element.Upgrade;
@@ -290,32 +320,14 @@ namespace Code.Upgrades
 
         private void ComputeLayout()
         {
-            var depthMap = new Dictionary<Upgrade, int>(m_allUpgrades.Count);
+            var rowsByDepth = UpgradeCollection.GetValue(m_allUpgrades);
+            if (rowsByDepth == null) return;
 
-            int ComputeDepth(Upgrade upgrade)
-            {
-                if (depthMap.TryGetValue(upgrade, out var cached)) return cached;
-                depthMap[upgrade] = 0; // guard against cycles
-                var maxChildDepth = -1;
-                foreach (var (dep, _) in m_edges[upgrade])
-                    maxChildDepth = Mathf.Max(maxChildDepth, ComputeDepth(dep));
-                var depth = maxChildDepth + 1;
-                depthMap[upgrade] = depth;
-                return depth;
-            }
-
-            foreach (var upgrade in m_allUpgrades)
-                ComputeDepth(upgrade);
-
-            var columns = new Dictionary<int, List<Upgrade>>();
-            foreach (var upgrade in m_allUpgrades)
-            {
-                var depth = depthMap[upgrade];
-                if (!columns.ContainsKey(depth)) columns[depth] = new List<Upgrade>();
-                columns[depth].Add(upgrade);
-            }
-
-            const float NodePadding = 16f;
+            const float MinGap = 16f;
+            var maxNodesInRow = 1;
+            foreach (var row in rowsByDepth.Values)
+                if (row.Count > maxNodesInRow) maxNodesInRow = row.Count;
+            var totalRowWidth = maxNodesInRow * (NodeWidth + MinGap);
 
             float IdealX(Upgrade u)
             {
@@ -326,12 +338,8 @@ namespace Code.Upgrades
                 return count > 0 ? sum / count - NodeWidth * 0.5f : float.MaxValue;
             }
 
-            var sortedDepths = new List<int>(columns.Keys);
-            sortedDepths.Sort();
-
-            foreach (var depth in sortedDepths)
+            foreach (var (depth, rowUpgrades) in rowsByDepth)
             {
-                var rowUpgrades = columns[depth];
                 rowUpgrades.Sort((a, b) =>
                 {
                     var ia = IdealX(a); var ib = IdealX(b);
@@ -340,13 +348,12 @@ namespace Code.Upgrades
                     return ia.CompareTo(ib);
                 });
 
-                var cursor = 20f;
-                foreach (var u in rowUpgrades)
+                var n = rowUpgrades.Count;
+                var gap = (totalRowWidth - n * NodeWidth) / (n + 1);
+                for (var i = 0; i < n; i++)
                 {
-                    var ideal = IdealX(u);
-                    var x = ideal == float.MaxValue ? cursor : Mathf.Max(cursor, ideal);
-                    m_nodePositions[u] = new Vector2(x, depth * RowHeight + 20f);
-                    cursor = x + NodeWidth + NodePadding;
+                    var x = gap + i * (NodeWidth + gap);
+                    m_nodePositions[rowUpgrades[i]] = new Vector2(x, depth * RowHeight + 20f);
                 }
             }
         }

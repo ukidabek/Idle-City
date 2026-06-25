@@ -44,7 +44,8 @@ namespace Project.Map
             var info = flow switch
             {
                 Flow.Consumption => ResourcesToConsume,
-                Flow.Production => ResourcesToProduce
+                Flow.Production => ResourcesToProduce,
+                _ => null
             };
 
             foreach (var _info in info)

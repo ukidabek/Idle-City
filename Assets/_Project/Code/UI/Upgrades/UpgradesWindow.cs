@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using Code.Upgrades;
 using Windows;
@@ -40,10 +41,27 @@ namespace Project.UI.Upgrades
                 foreach (var upgradeView in rowView.UpgradeViews)
                     m_upgradeViewMap[upgradeView.Upgrade] = upgradeView;
             }
+
+            foreach (var upgradeView in m_upgradeViewMap.Values)
+                upgradeView.OnLevelChanged.AddListener(OnAnyUpgradeLevelChanged);
         }
 
-        private void Start()
+        private void OnDestroy()
         {
+            foreach (var upgradeView in m_upgradeViewMap.Values)
+                upgradeView.OnLevelChanged.RemoveListener(OnAnyUpgradeLevelChanged);
+        }
+
+        private void OnAnyUpgradeLevelChanged()
+        {
+            foreach (var upgradeView in m_upgradeViewMap.Values)
+                upgradeView.Refresh();
+        }
+
+        protected override IEnumerator Start()
+        {
+            yield return base.Start();
+            
             Canvas.ForceUpdateCanvases();
 
             var allUpgrades = m_upgradeCollection as IReadOnlyList<Upgrade>;

@@ -2,6 +2,7 @@ using Code.Upgrades;
 using TMPro;
 using Windows.View;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
@@ -16,12 +17,15 @@ namespace Project.UI.Upgrades
         private Upgrade m_upgrade = null;
 
         public Upgrade Upgrade => m_upgrade;
+        public UnityEvent OnLevelChanged = new UnityEvent();
 
         public void Initialize(Upgrade upgrade)
         {
             m_upgrade = upgrade;
             m_upgradeName.text = upgrade.name;
             m_levelUpButton.onClick.AddListener(OnLevelUpClicked);
+            m_upgrade.OnLevelUp += OnLevelChanged.Invoke;
+            OnLevelChanged.AddListener(Refresh);
             Refresh();
         }
 
@@ -29,16 +33,14 @@ namespace Project.UI.Upgrades
         {
             if (m_upgrade == null) return;
             m_levelUpButton.onClick.RemoveListener(OnLevelUpClicked);
+            m_upgrade.OnLevelUp -= OnLevelChanged.Invoke;
+            OnLevelChanged.RemoveListener(Refresh);
             m_upgrade = null;
         }
 
-        private void OnLevelUpClicked()
-        {
-            m_upgrade.LevelUp();
-            Refresh();
-        }
+        private void OnLevelUpClicked() => m_upgrade.LevelUp();
 
-        private void Refresh()
+        public void Refresh()
         {
             m_upgradeLevel.text = $"{m_upgrade.CurrentLevel}/{m_upgrade.Count}";
             m_levelUpButton.interactable = m_upgrade.IsUnlocked;

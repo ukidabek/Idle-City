@@ -25,30 +25,42 @@ namespace Code.Upgrades
 
         public int MinimalLevel => m_minimalLevel;
 
-        public bool IsSatisfied() => m_upgrade != null && m_upgrade.CurrentLevel >= m_minimalLevel;
+        public bool IsSatisfied() => m_upgrade != null && m_upgrade.CurrentLevel > m_minimalLevel;
     }
 
     public abstract class Upgrade : ScriptableObject, IReadOnlyList<Level>
     {
         [SerializeField] private Dependency[] m_dependencies = null;
         public IReadOnlyList<Dependency> Dependencies => m_dependencies;
-        [Space]
         [SerializeField, Min(0)] private int m_level = 0;
         protected abstract Level[] Levels { get; }
-        
-        public bool IsUnlocked => m_level > 0 || m_dependencies == null || m_dependencies.Length == 0;
+        public bool IsUnlocked
+        {
+            get
+            {
+                if (m_dependencies == null || m_dependencies.Length == 0) return true;
+                return m_dependencies.All(dependency => dependency.IsSatisfied());
+            }
+        }
+
         public int CurrentLevel => m_level;
         public bool CanLevelUp => Levels != null && m_level < Levels.Length;
-
         public Cost[] Cost => Levels[m_level].Const;
+
+        public event Action OnLevelUp;
+        
+        private void OnEnable() => m_level = 0;
 
         public void LevelUp()
         {
             if (!CanLevelUp) 
                 return;
+            
             if (m_level > 0)
                 OnRevertLevel();
+            
             m_level++;
+            OnLevelUp?.Invoke();
             OnApplyLevel();
         }
 
